@@ -7,12 +7,30 @@ import { IAdGroupAdReturnValue } from './AdGroupAdReturnValue';
 import { IAdGroupAdOperation } from './AdGroupAdOperation';
 import { IAdGroupAdPage } from './AdGroupAdPage';
 import { IAdGroupAd } from './AdGroupAd';
+import _ from 'lodash';
+import { IExpandedTextAd, IResponsiveDisplayAd } from './Ad';
 
 interface IAdGroupAdServiceOpts {
   soapService: SoapService;
 }
 
 class AdGroupAdService extends AdwordsOperartionService {
+  // TODO: better type guard
+  public static isExpandedTextAd(ad: Partial<IExpandedTextAd | IResponsiveDisplayAd>): ad is IExpandedTextAd {
+    return _.every(['headlinePart1', 'description'], (prop) => prop in ad);
+  }
+  public static isResponsiveDisplayAd(ad: Partial<IExpandedTextAd | IResponsiveDisplayAd>): ad is IResponsiveDisplayAd {
+    return _.every(['dynamicDisplayAdSettings', 'shortHeadline'], (prop) => prop in ad);
+  }
+
+  public static setType(operand: IAdGroupAd) {
+    if (AdGroupAdService.isExpandedTextAd(operand.ad)) {
+      operand.ad.attributes = { 'xsi:type': 'ExpandedTextAd' };
+    } else if (AdGroupAdService.isResponsiveDisplayAd(operand.ad)) {
+      operand.ad.attributes = { 'xsi:type': 'ResponsiveDisplayAd' };
+    }
+    return operand;
+  }
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-AdGroupAdService
    *
@@ -228,10 +246,7 @@ class AdGroupAdService extends AdwordsOperartionService {
     const operations: IAdGroupAdOperation[] = adGroupAds.map((adGroupAd: IAdGroupAd) => {
       const operation: IAdGroupAdOperation = {
         operator: Operator.ADD,
-        operand: adGroupAd,
-        attributes: {
-          'xsi:type': 'AdGroupAdOperation',
-        },
+        operand: AdGroupAdService.setType(adGroupAd),
       };
       return operation;
     });
@@ -243,9 +258,6 @@ class AdGroupAdService extends AdwordsOperartionService {
       const operation: IAdGroupAdOperation = {
         operator: Operator.SET,
         operand: adGroupAd,
-        attributes: {
-          'xsi:type': 'AdGroupAdOperation',
-        },
       };
       return operation;
     });
@@ -264,10 +276,12 @@ class AdGroupAdService extends AdwordsOperartionService {
   protected async mutate<Operation = IAdGroupAdOperation, Rval = IAdGroupAdReturnValue>(
     operations: Operation[],
   ): Promise<Rval | undefined> {
-    return this.soapService.mutateAsync<Operation, Rval>(operations).then((rval) => {
-      console.log('mutate ad group ads successfully. rval: ', pd.json(rval));
-      return rval;
-    });
+    return this.soapService
+      .mutateAsync<Operation, Rval>(operations, /** operationType = */ 'AdGroupAdOperation')
+      .then((rval) => {
+        console.log('mutate ad group ads successfully. rval: ', pd.json(rval));
+        return rval;
+      });
   }
 }
 
