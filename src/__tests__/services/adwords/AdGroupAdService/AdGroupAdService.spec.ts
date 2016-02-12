@@ -5,10 +5,9 @@ import { IPaging } from '../../../../types/adwords';
 import { IAdGroupAd } from '../../../../services/adwords/AdGroupAdService/AdGroupAd';
 import { IExpandedTextAd, IResponsiveDisplayAd } from '../../../../services/adwords/AdGroupAdService/Ad';
 import { AdGroupAd } from '../../../../services/adwords/AdGroupAdService/enum/AdGroupAd';
-import { DisplayAdFormatSetting } from '../../../../services/adwords/AdGroupAdService/enum/DisplayAdFormatSetting';
 
 describe('AdGroupAdService test suites', () => {
-  const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: true });
+  const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: false });
   it.skip('#getAll', async () => {
     const actualValue = await adGroupAdService.getAll();
   });
@@ -34,29 +33,23 @@ describe('AdGroupAdService test suites', () => {
     const actualValue = await adGroupAdService.getByAdGroupIds(adGroupIds);
   });
 
-  it.skip('#add', async () => {
+  it('#add', async () => {
     const expandedTextAds: IExpandedTextAd[] = [
       {
         finalUrls: [faker.internet.url()],
         headlinePart1: faker.lorem.words(3),
         headlinePart2: faker.lorem.words(3),
         description: faker.lorem.words(3),
-        attributes: {
-          'xsi:type': 'ExpandedTextAd',
-        },
       },
       {
         finalUrls: [faker.internet.url()],
         headlinePart1: faker.lorem.words(3),
         headlinePart2: faker.lorem.words(3),
         description: faker.lorem.words(3),
-        attributes: {
-          'xsi:type': 'ExpandedTextAd',
-        },
       },
     ];
 
-    const adGroupId = '72029524744';
+    const adGroupId = '69748751893';
     const adGroupAds: IAdGroupAd[] = expandedTextAds.map((expandedTextAd: IExpandedTextAd) => {
       const adGroupAd: IAdGroupAd = {
         adGroupId,
@@ -90,7 +83,7 @@ describe('AdGroupAdService test suites', () => {
     const actualValue = await adGroupAdService.update(adGroupAds);
   });
 
-  it('should add responsive display ad with image correctly', async () => {
+  it.skip('should add responsive display ad with image correctly', async () => {
     const responsiveDisplayAds: Array<Partial<IResponsiveDisplayAd>> = [
       {
         finalUrls: [faker.internet.url()], // order is important
