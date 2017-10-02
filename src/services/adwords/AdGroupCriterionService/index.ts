@@ -7,12 +7,50 @@ import { Criterion } from './enum/Criterion';
 import { IAdGroupCriterionOperation } from './AdGroupCriterionOperation';
 import { IAdGroupCriterionReturnValue } from './AdGroupCriterionReturnValue';
 import { IBiddableAdGroupCriterion, INegativeAdGroupCriterion } from './AdGroupCriterion';
+import { CriterionUse } from './enum/CriterionUse';
+import { IKeyword, IGender, IAgeRange } from './Criterion';
 
 interface IAdGroupCriterionServiceOpts {
   soapService: SoapService;
 }
 
 class AdGroupCriterionService extends AdwordsOperartionService {
+  public static setType(operand: IBiddableAdGroupCriterion | INegativeAdGroupCriterion) {
+    if (AdGroupCriterionService.isBiddableAdGroupCriterion(operand)) {
+      operand.attributes = { 'xsi:type': 'BiddableAdGroupCriterion' };
+    } else if (AdGroupCriterionService.isNegativeAdGroupCriterion(operand)) {
+      operand.attributes = { 'xsi:type': 'NegativeAdGroupCriterion' };
+    }
+    if (operand.criterion) {
+      if (AdGroupCriterionService.isKeyword(operand.criterion)) {
+        operand.criterion.attributes = { 'xsi:type': 'Keyword' };
+      } else if (AdGroupCriterionService.isGender(operand.criterion)) {
+        operand.criterion.attributes = { 'xsi:type': 'Gender' };
+      } else if (AdGroupCriterionService.isAgeRange(operand.criterion)) {
+        operand.criterion.attributes = { 'xsi:type': 'AgeRange' };
+      }
+    }
+    console.log('operand: ', JSON.stringify(operand, null, 2));
+    return operand;
+  }
+  public static isBiddableAdGroupCriterion(
+    operand: IBiddableAdGroupCriterion | INegativeAdGroupCriterion,
+  ): operand is IBiddableAdGroupCriterion {
+    return operand.criterionUse === CriterionUse.BIDDABLE;
+  }
+  public static isNegativeAdGroupCriterion(operand: IBiddableAdGroupCriterion | INegativeAdGroupCriterion) {
+    return operand.criterionUse === CriterionUse.NEGATIVE;
+  }
+  public static isKeyword(criterion: IKeyword | IGender | IAgeRange): criterion is IKeyword {
+    return 'matchType' in criterion;
+  }
+  public static isGender(criterion: IKeyword | IGender | IAgeRange): criterion is IGender {
+    return 'genderType' in criterion;
+  }
+  public static isAgeRange(criterion: IKeyword | IGender | IAgeRange): criterion is IAgeRange {
+    return 'ageRangeType' in criterion;
+  }
+
   private static readonly selectorFields: string[] = [
     'AdGroupId',
     'AgeRangeType',
@@ -134,10 +172,7 @@ class AdGroupCriterionService extends AdwordsOperartionService {
       (adGroupCriterion: IBiddableAdGroupCriterion | INegativeAdGroupCriterion) => {
         const adGroupCriterionOperation: IAdGroupCriterionOperation = {
           operator: Operator.ADD,
-          operand: adGroupCriterion,
-          attributes: {
-            'xsi:type': 'AdGroupCriterionOperation',
-          },
+          operand: AdGroupCriterionService.setType(adGroupCriterion),
         };
         return adGroupCriterionOperation;
       },
@@ -157,10 +192,12 @@ class AdGroupCriterionService extends AdwordsOperartionService {
   protected async mutate<Operation = IAdGroupCriterionOperation, Rval = IAdGroupCriterionReturnValue>(
     operaions: Operation[],
   ): Promise<Rval | undefined> {
-    return this.soapService.mutateAsync<Operation, Rval>(operaions).then((rval: Rval) => {
-      console.log('mutate ad group criterion successfully. rval: ', pd.json(rval));
-      return rval;
-    });
+    return this.soapService
+      .mutateAsync<Operation, Rval>(operaions, /** operationType = */ 'AdGroupCriterionOperation')
+      .then((rval: Rval) => {
+        console.log('mutate ad group criterion successfully. rval: ', pd.json(rval));
+        return rval;
+      });
   }
 }
 

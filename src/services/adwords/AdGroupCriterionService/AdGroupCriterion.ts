@@ -1,5 +1,5 @@
 import { CriterionUse } from './enum/CriterionUse';
-import { IKeyword } from './Criterion';
+import { IKeyword, IGender, IAgeRange } from './Criterion';
 import { ITextLabel } from '../CampaignService/Label';
 import { UserStatus } from './enum/UserStatus';
 import { SystemServingStatus } from './enum/SystemServingStatus';
@@ -9,12 +9,13 @@ import { IQualityInfo } from './QualityInfo';
 import { IBiddingStrategyConfiguration } from './BiddingStrategyConfiguration';
 import { IUrlList } from './UrlList';
 import { ICustomParameters } from './CustomParameters';
+import { IAttributes } from '../../../types/adwords';
 
-interface IAdGroupCriterionRaw {
+interface IAdGroupCriterion<Type> extends IAttributes<Type> {
   adGroupId: string;
   readonly criterionUse: CriterionUse;
   // TODO
-  criterion: IKeyword;
+  criterion: IKeyword | IGender | IAgeRange;
   labels: ITextLabel[];
 
   // forwardCompatibilityMap: any;
@@ -23,9 +24,7 @@ interface IAdGroupCriterionRaw {
   'AdGroupCriterion.Type': string;
 }
 
-interface IAdGroupCriterion extends Partial<IAdGroupCriterionRaw> {}
-
-interface IBiddableAdGroupCriterionRaw extends IAdGroupCriterionRaw {
+interface IBiddableAdGroupCriterionRaw<Type> extends IAdGroupCriterion<Type> {
   readonly systemServingStatus: SystemServingStatus;
   readonly approvalStatus: ApprovalStatus;
   readonly disapprovalReasons: string[];
@@ -44,18 +43,8 @@ interface IBiddableAdGroupCriterionRaw extends IAdGroupCriterionRaw {
   urlCustomParameters: ICustomParameters;
 }
 
-interface IBiddableAdGroupCriterion extends Partial<IBiddableAdGroupCriterionRaw> {
-  attributes: {
-    'xsi:type': 'BiddableAdGroupCriterion';
-  };
-}
+interface IBiddableAdGroupCriterion extends Partial<IBiddableAdGroupCriterionRaw<'BiddableAdGroupCriterion'>> {}
+interface INegativeAdGroupCriterionRaw<Type> extends IAdGroupCriterion<Type> {}
+interface INegativeAdGroupCriterion extends Partial<INegativeAdGroupCriterionRaw<'NegativeAdGroupCriterion'>> {}
 
-interface INegativeAdGroupCriterionRaw extends IAdGroupCriterionRaw {}
-
-interface INegativeAdGroupCriterion extends Partial<INegativeAdGroupCriterionRaw> {
-  attributes: {
-    'xsi:type': 'NegativeAdGroupCriterion';
-  };
-}
-
-export { IAdGroupCriterion, IBiddableAdGroupCriterion, INegativeAdGroupCriterion };
+export { IBiddableAdGroupCriterion, INegativeAdGroupCriterion };
