@@ -6,11 +6,11 @@ import { BudgetService, Budget, IBudget } from '../../../../services/adwords/Bud
 
 describe('BudgetService test suites', () => {
   const budgetService = adwordsService.getService('BudgetService', { verbose: false });
-  it('#getAll', async () => {
+  it.skip('#getAll', async () => {
     const actualValue = await budgetService.getAll();
   });
 
-  it.skip('#getByPage', async () => {
+  it('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
       numberResults: 2,
