@@ -8,7 +8,9 @@
     <ns1:RequestHeader xmlns:ns1="https://adwords.google.com/api/adwords/cm/v201809" 
       xmlns="https://adwords.google.com/api/adwords/cm/v201809">
       <ns1:clientCustomerId>153-935-9847</ns1:clientCustomerId>
-      <ns1:developerToken>dGt8TodFY_jYjS3R_QkBXw</ns1:developerToken>
+      <ns1:developerToken>
+        <!-- developToken -->
+      </ns1:developerToken>
       <ns1:userAgent>Nodejs Google adwords</ns1:userAgent>
       <ns1:validateOnly>false</ns1:validateOnly>
       <ns1:partialFailure>false</ns1:partialFailure>
