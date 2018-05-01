@@ -42,6 +42,22 @@ class SoapService {
     this.verbose = val;
   }
 
+  public async mutateAsync<Operation>(operations: Operation[]) {
+    const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
+    await this.createSoapClient(this.url, credentials);
+
+    if (!this.client) {
+      throw new Error('soap client does not exist');
+    }
+
+    try {
+      const response = await this.client.mutateAsync({ operations });
+      return response[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /**
    * get operation
    *

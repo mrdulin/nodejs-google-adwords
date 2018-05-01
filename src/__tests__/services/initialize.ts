@@ -1,4 +1,4 @@
-import { AdWordsService } from '../../services';
+import { AdWordsService } from '../../services/adwords';
 import { credentials } from '../../credentials';
 
 const adwordsService = new AdWordsService({
