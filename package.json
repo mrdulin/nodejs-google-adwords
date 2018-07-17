@@ -1,0 +1,35 @@
+{
+  "name": "graphql-yoga-lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrdulin/graphql-yoga-lab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrdulin/graphql-yoga-lab/issues"
+  },
+  "homepage": "https://github.com/mrdulin/graphql-yoga-lab#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.4",
+    "@types/mongodb": "^3.1.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.1.1",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.14.12",
+    "prisma-binding": "^2.1.0"
+  }
+}
