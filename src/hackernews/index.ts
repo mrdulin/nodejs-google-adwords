@@ -2,36 +2,24 @@ import { GraphQLServer } from 'graphql-yoga';
 import * as path from 'path';
 import { Prisma } from 'prisma-binding';
 
+import Query from './resolvers/Query';
+import Mutation from './resolvers/Mutation';
+import AuthPayload from './resolvers/AuthPayload';
+
 // const links = [{ id: 'link-0', description: 'Fullstack tutorial for GraphQL', url: 'www.howtographql.com' }];
 // let idCount = links.length;
 
 // 解析器函数中的context是解析器函数间通信用的
 const resolvers = {
-  Query: {
-    info: () => 'This is the API of a Hackernews Clone',
-    feed: (root: any, args: any, context: any, info: any) => {
-      return context.db.query.links({}, info);
-    }
-  },
-  Mutation: {
-    post: (root: any, args: any, context: any, info: any) => {
-      return context.db.mutation.createLink(
-        {
-          data: {
-            url: args.url,
-            description: args.description
-          }
-        },
-        info
-      );
-    }
-  },
+  Query,
+  Mutation,
+  AuthPayload
   // 可以删除Link解析器函数，字段都是标量类型，graphql会自动推断
-  Link: {
-    id: (root: any) => root.id,
-    description: (root: any) => root.description,
-    url: (root: any) => root.url
-  }
+  // Link: {
+  //   id: (root: any) => root.id,
+  //   description: (root: any) => root.description,
+  //   url: (root: any) => root.url
+  // }
 };
 
 const server = new GraphQLServer({

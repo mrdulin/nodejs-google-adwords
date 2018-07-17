@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/mrdulin/graphql-yoga-lab#readme",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.1",
     "@types/chai": "^4.1.4",
+    "@types/jsonwebtoken": "^7.2.8",
     "@types/mocha": "^5.2.4",
     "@types/mongodb": "^3.1.0",
     "chai": "^4.1.2",
@@ -29,7 +31,9 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.14.12",
+    "jsonwebtoken": "^8.3.0",
     "prisma-binding": "^2.1.0"
   }
 }
