@@ -1,9 +1,11 @@
 import { pd } from 'pretty-data';
 import _ from 'lodash';
 
-import { SoapService } from '../core';
-import { ISelector, PredicateOperator, IPaging } from '../../models/adwords';
-import { AdwordsOperartionService } from './AdwordsOperationService';
+import { SoapService } from '../../core';
+import { ISelector, PredicateOperator, IPaging } from '../../../models/adwords';
+import { AdwordsOperartionService } from '../AdwordsOperationService';
+import { ICampaignOperation } from './CampaignOperation';
+import { ICampaignReturnValue } from './CampaignReturnValue';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
@@ -116,6 +118,18 @@ class CampaignService extends AdwordsOperartionService {
       ]
     };
     return this.get(serviceSelector);
+  }
+
+  protected async mutate<Operation = ICampaignOperation, Response = ICampaignReturnValue>(
+    operations: Operation[]
+  ): Promise<Response> {
+    try {
+      const response = await this.soapService.mutateAsync<Operation, Response>(operations);
+      console.log('mutate campaign successfully. response: ', pd.json(response));
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 
   protected async get<ServiceSelector = ISelector, Response = any>(

@@ -5,6 +5,35 @@ import { SoapService } from '../core';
 import { ISelector, IPaging, PredicateOperator } from '../../models/adwords';
 import { AdwordsOperartionService } from './AdwordsOperationService';
 
+interface IFieldPathElement {
+  field: string;
+  index: number;
+}
+
+interface IApiError {
+  fieldPath: string;
+  fieldPathElements: IFieldPathElement;
+  trigger: string;
+  errorString: string;
+  'ApiError.Type'?: string;
+}
+
+interface IListReturnValue {
+  'ListReturnValue.Type'?: string;
+}
+interface IPage {
+  totalNumEntries: number;
+  'Page.Type'?: string;
+}
+interface IBudgetPage extends IPage {
+  entries: IBudget[];
+}
+
+interface IBudgetReturnValue extends IListReturnValue {
+  value: IBudget[];
+  partialFailureErrors: IApiError[];
+}
+
 namespace Budget {
   export enum BudgetDeliveryMethod {
     STANDARD = 'STANDARD',
@@ -154,7 +183,7 @@ class BudgetService extends AdwordsOperartionService {
     return this.mutate([operation]);
   }
 
-  protected async get<ServiceSelector = ISelector, Response = any>(
+  protected async get<ServiceSelector = ISelector, Response = { rval: IBudgetPage }>(
     serviceSelector: ServiceSelector
   ): Promise<Response> {
     return this.soapService.get<ServiceSelector, Response>(serviceSelector).then((response: Response) => {
@@ -163,9 +192,11 @@ class BudgetService extends AdwordsOperartionService {
     });
   }
 
-  protected async mutate<Operation = IBudgetOperation, Response = any>(operations: Operation[]): Promise<Response> {
+  protected async mutate<Operation = IBudgetOperation, Response = IBudgetReturnValue>(
+    operations: Operation[]
+  ): Promise<Response> {
     try {
-      const response = await this.soapService.mutateAsync<Operation>(operations);
+      const response = await this.soapService.mutateAsync<Operation, Response>(operations);
       console.log('mutate budget successfully. response: ', pd.json(response));
       return response;
     } catch (error) {
@@ -174,4 +205,4 @@ class BudgetService extends AdwordsOperartionService {
   }
 }
 
-export { BudgetService, IBudgetOperation, IBudget, Budget };
+export { BudgetService, IBudgetOperation, IBudget, Budget, IBudgetPage };

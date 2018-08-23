@@ -15,7 +15,12 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.getByPage(paging);
   });
 
-  it('#getById', async () => {
+  it.skip('#getById', async () => {
+    const id = '1677467977';
+    const actualValue = await campaignService.getById(id);
+  });
+
+  it.skip('#getById', async () => {
     const id = '1677467977';
     const actualValue = await campaignService.getById(id);
   });
