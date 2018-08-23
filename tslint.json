@@ -23,6 +23,7 @@
     "no-reference": false,
     "no-var-requires": false,
     "comment-format": [false],
-    "arrow-parens": false
+    "arrow-parens": false,
+    "no-empty-interface": false
   }
 }

@@ -44,7 +44,17 @@ class SoapService extends AdwordsOperartionService {
     this.verbose = val;
   }
 
-  public async mutateAsync<Operation>(operations: Operation[]) {
+  /**
+   * mutate operation
+   *
+   * @author dulin
+   * @template Operation
+   * @template Response
+   * @param {Operation[]} operations
+   * @returns {Promise<Response>}
+   * @memberof SoapService
+   */
+  public async mutateAsync<Operation, Response>(operations: Operation[]): Promise<Response> {
     const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
     await this.createSoapClient(this.url, credentials);
 
