@@ -29,17 +29,16 @@ class XMLService {
    * @static
    * @param {string} xml
    * @param {string} element
-   * @returns
+   * @returns {(string | undefined)}
    * @memberof XMLService
    */
-  public static extractValueFromElement(xml: string, element: string) {
+  public static extractValueFromElement(xml: string, element: string): string | undefined {
     const pattern = `<${element}>(.*?)<\/${element}>`;
     const matcher = new RegExp(pattern, 'g');
     const matchArray: RegExpMatchArray | null = xml.match(matcher);
     if (matchArray && matchArray.length) {
       return matchArray[0].replace(/(<([^>]+)>)/gi, '');
     }
-    return '';
   }
 }
 

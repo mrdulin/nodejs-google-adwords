@@ -2,12 +2,12 @@ function getSelectorFields(serviceName, stringify = true, unique = true, version
   const id = `#${version}-${serviceName}`;
   const $wrapper = document.querySelector(`${id} ~ .devsite-table-wrapper`);
   const $trs = $wrapper.querySelectorAll('tr:not(:first-child)');
-  const $tds = [...$trs].map($tr => $tr.querySelector('td:first-child'));
-  const rawFields = $tds.map($td => {
+  const $tds = [...$trs].map(($tr) => $tr.querySelector('td:first-child'));
+  const rawFields = $tds.map(($td) => {
     return $td.textContent;
   });
 
-  const fields = unique ? uniqueArray(fields) : rawFields;
+  const fields = unique ? uniqueArray(rawFields) : rawFields;
   return stringify ? JSON.stringify(fields) : fields;
 }
 
