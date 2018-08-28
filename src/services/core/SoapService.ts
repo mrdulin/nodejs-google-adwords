@@ -310,9 +310,12 @@ class SoapService extends AdwordsOperartionService {
           console.log('Soap response: ', pd.json(response));
         }
 
-        const operations: string = XMLService.extractValueFromElement(body, 'operations');
-        const responseTime: string = XMLService.extractValueFromElement(body, 'responseTime');
-        console.log(`Soap requestId: ${eid}, operations: ${operations}, responseTime: ${responseTime}ms`);
+        const operations: string | undefined = XMLService.extractValueFromElement(body, 'operations');
+        const responseTime: string | undefined = XMLService.extractValueFromElement(body, 'responseTime');
+        let message = `Soap requestId: ${eid}`;
+        message += operations ? `, operations: ${operations}` : '';
+        message += responseTime ? `, responseTime: ${responseTime}ms` : '';
+        console.log(message);
       });
     }
   }

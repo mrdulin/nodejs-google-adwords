@@ -1,0 +1,33 @@
+{
+  "entries": [
+    {
+      "attributes": {
+        "xsi:type": "Image"
+      },
+      "mediaId": "12560961085",
+      "type": "IMAGE",
+      "referenceId": "-3408199002905116672",
+      "dimensions": [
+        {
+          "key": "FULL",
+          "value": {
+            "width": 696,
+            "height": 911
+          }
+        }
+      ],
+      "urls": [
+        {
+          "key": "FULL",
+          "value": "https://tpc.googlesyndication.com/simgad/2920333573233790931"
+        }
+      ],
+      "mimeType": "IMAGE_PNG",
+      "sourceUrl": "",
+      "name": "",
+      "fileSize": "76831",
+      "Media.Type": "Image"
+    }
+  ],
+  "totalNumEntries": 1
+}

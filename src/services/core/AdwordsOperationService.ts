@@ -18,6 +18,10 @@ abstract class AdwordsOperartionService {
   protected mutateLabelAsync<Operation, Rval>(operations: Operation[]): Promise<Rval | undefined> {
     throw new Error('The method mutateLabelAsync does not overrided.');
   }
+
+  protected upload<Media>(medias: Media[]) {
+    throw new Error('The method upload does not overrided.');
+  }
 }
 
 export { AdwordsOperartionService };

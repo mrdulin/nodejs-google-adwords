@@ -1,0 +1,7 @@
+export enum BatchJobStatus {
+  AWAITING_FILE = 'AWAITING_FILE',
+  ACTIVE = 'ACTIVE',
+  CANCELING = 'CANCELING',
+  CANCELED = 'CANCELED',
+  DONE = 'DONE',
+}
