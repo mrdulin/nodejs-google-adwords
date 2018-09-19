@@ -1,7 +1,9 @@
 import * as soap from 'soap';
+import _ from 'lodash';
 import { pd } from 'pretty-data';
 
 import { IOAuthRefreshedCredential, IAuthService } from './AuthService';
+import { ISelector } from '../../models/adwords';
 
 interface ISoapServiceOpts {
   authService: IAuthService;
@@ -10,6 +12,11 @@ interface ISoapServiceOpts {
   xmlns: string;
   header: any;
   verbose: boolean;
+}
+
+interface IGetInput {
+  selector?: ISelector;
+  serviceSelector?: ISelector;
 }
 
 class SoapService {
@@ -45,7 +52,6 @@ class SoapService {
    * @memberof SoapService
    */
   public async get<T>(serviceSelector: T) {
-    console.log('get');
     const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
     await this.createSoapClient(this.url, credentials);
 
@@ -53,7 +59,8 @@ class SoapService {
       if (!this.client) {
         return reject(new Error('soap client does not exist'));
       }
-      this.client.get({ serviceSelector }, (error: Error, result: any) => {
+      const parameter = this.formGetParameter<T>(serviceSelector);
+      this.client.get(parameter, (error: Error, result: any) => {
         if (error) {
           return reject(error);
         }
@@ -62,6 +69,42 @@ class SoapService {
     });
   }
 
+  /**
+   * form get parameter
+   * https://github.com/mrdulin/nodejs-google-adwords/issues/2
+   *
+   * @author dulin
+   * @private
+   * @template T
+   * @param {T} serviceSelector
+   * @returns
+   * @memberof SoapService
+   */
+  private formGetParameter<T>(serviceSelector: T) {
+    const getInput: IGetInput = _.get(
+      this.description,
+      [this.serviceName, `${this.serviceName}InterfacePort`, 'get', 'input'],
+      {}
+    );
+    let parameter = {};
+    if (getInput.selector) {
+      parameter = { selector: serviceSelector };
+    } else if (getInput.serviceSelector) {
+      parameter = { serviceSelector };
+    }
+    return parameter;
+  }
+
+  /**
+   * create soap client
+   *
+   * @author dulin
+   * @private
+   * @param {string} url
+   * @param {IOAuthRefreshedCredential} credentials
+   * @returns {Promise<void>}
+   * @memberof SoapService
+   */
   private async createSoapClient(url: string, credentials: IOAuthRefreshedCredential): Promise<void> {
     try {
       this.client = await soap.createClientAsync(url, {});
@@ -78,6 +121,13 @@ class SoapService {
     }
   }
 
+  /**
+   * handle soap client events
+   *
+   * @author dulin
+   * @private
+   * @memberof SoapService
+   */
   private listenSoapClientEvents(): void {
     if (this.client) {
       this.client.on('request', (xml: string, eid: string) => {
