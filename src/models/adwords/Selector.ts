@@ -1,7 +1,14 @@
+/**
+ * The operator to use for filtering the data returned.
+ * https://developers.google.com/adwords/api/docs/reference/v201809/AdGroupAdService.Predicate.Operator
+ *
+ * @enum {number}
+ */
 enum PredicateOperator {
   EQUALS = 'EQUALS',
   NOT_EQUALS = 'NOT_EQUALS',
-  IN = 'IN'
+  IN = 'IN',
+  CONTAINS_ALL = 'CONTAINS_ALL'
 }
 
 enum SortOrder {
@@ -19,6 +26,12 @@ interface IDateRange {
   max: string;
 }
 
+/**
+ * Specifies how an entity (eg. adgroup, campaign, criterion, ad) should be filtered.
+ *
+ * @author dulin
+ * @interface IPredicates
+ */
 interface IPredicates {
   field: string;
   operator: PredicateOperator;
@@ -38,4 +51,4 @@ interface ISelector {
   paging?: IPaging;
 }
 
-export { ISelector };
+export { ISelector, PredicateOperator, IPaging };

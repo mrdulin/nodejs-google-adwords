@@ -65,7 +65,7 @@ class AuthService implements IAuthService {
     return this.httpService
       .request(options)
       .then(response => {
-        console.log('refresh token success. response: ', response);
+        console.log('refresh token success. response: ', pd.json(response));
         return response;
       })
       .catch(error => {
