@@ -2,7 +2,7 @@ import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 import { SoapService } from '../../core';
-import { ISelector, IPaging, Operator } from '../../../models/adwords';
+import { ISelector, IPaging, Operator } from '../../../types/adwords';
 import { AdwordsOperartionService } from '../../core/AdwordsOperationService';
 import { ICampaignOperation } from './CampaignOperation';
 import { ICampaignReturnValue } from './CampaignReturnValue';
@@ -11,6 +11,9 @@ import { ICampaign } from './Campaign';
 import { Predicate } from './enum/Predicate';
 import { CampaignStatus } from './enum/CampaignStatus';
 import { ServingStatus } from './enum/ServingStatus';
+import { ICampaignLabelOperation } from './CampaignLabelOperation';
+import { ICampaignLabelReturnValue } from './CampaignLabelReturnValue';
+import { ICampaignLabel } from './CampaignLabel';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
@@ -206,13 +209,33 @@ class CampaignService extends AdwordsOperartionService {
     return this.mutate(operations);
   }
 
+  public async addLabel(campaignLabel: ICampaignLabel) {
+    // TODO: validate campaignLabel
+    const operations: ICampaignLabelOperation[] = [
+      {
+        operator: Operator.ADD,
+        operand: campaignLabel
+      }
+    ];
+    return this.mutateLabelAsync(operations);
+  }
+
+  protected async mutateLabelAsync<Operation = ICampaignLabelOperation, Rval = ICampaignLabelReturnValue>(
+    operations: Operation[]
+  ) {
+    return this.soapService.mutateLabelAsync<Operation, Rval>(operations).then((rval: Rval | undefined) => {
+      console.log('mutate label for campaign successfully. rval: ', rval);
+      return rval;
+    });
+  }
+
   protected async mutate<Operation = ICampaignOperation, Rval = ICampaignReturnValue>(
     operations: Operation[]
   ): Promise<Rval> {
     try {
-      const response = await this.soapService.mutateAsync<Operation, Rval>(operations);
-      console.log('mutate campaign successfully. response: ', pd.json(response));
-      return response;
+      const rval = await this.soapService.mutateAsync<Operation, Rval>(operations);
+      console.log('mutate campaign successfully. rval: ', pd.json(rval));
+      return rval;
     } catch (error) {
       throw error;
     }
@@ -221,9 +244,9 @@ class CampaignService extends AdwordsOperartionService {
   protected async get<ServiceSelector = ISelector, Rval = ICampaignPage>(
     serviceSelector: ServiceSelector
   ): Promise<Rval | undefined> {
-    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(response => {
-      console.log('get campaigns successfully. response: ', pd.json(response));
-      return response;
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(rval => {
+      console.log('get campaigns successfully. rval: ', pd.json(rval));
+      return rval;
     });
   }
 }

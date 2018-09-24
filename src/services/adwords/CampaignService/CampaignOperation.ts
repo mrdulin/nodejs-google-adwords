@@ -1,5 +1,5 @@
 import { ICampaign } from './Campaign';
-import { IOperation } from '../../../models/adwords';
+import { IOperation } from '../../../types/adwords';
 
 interface ICampaignOperation extends IOperation {
   operand: ICampaign;

@@ -30,6 +30,7 @@ curl \
 ## TODO
 
 - [ ] https://developers.google.com/adwords/api/docs/guides/batch-jobs
+- [ ] http://adwordsapi.blogspot.in/2011/03/concurrency-management-in-adwords-api.html
 
 ## references
 

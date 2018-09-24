@@ -1,5 +1,5 @@
 import { adwordsService } from '../../initialize';
-import { IPaging } from '../../../../models/adwords';
+import { IPaging } from '../../../../types/adwords';
 
 describe('AdGroupAdService test suites', () => {
   const adGroupAdService = adwordsService.getService('AdGroupAdService');
