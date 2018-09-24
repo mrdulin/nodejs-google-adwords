@@ -1,0 +1,31 @@
+<!-- Soap request (Envelope) including headers:   -->
+<!-- soap:Client: Unmarshalling Error: cvc-complex-type.2.4.d: Invalid content was found starting with element 'campaignId'. No child element is expected at this point. -->
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:tns="https://adwords.google.com/api/adwords/cm/v201809" 
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+  <soap:Header>
+    <ns1:RequestHeader xmlns:ns1="https://adwords.google.com/api/adwords/cm/v201809" 
+      xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <ns1:clientCustomerId>153-935-9847</ns1:clientCustomerId>
+      <ns1:developerToken>
+        <!-- developerToken -->
+      </ns1:developerToken>
+      <ns1:userAgent>Nodejs Google adwords</ns1:userAgent>
+      <ns1:validateOnly>false</ns1:validateOnly>
+      <ns1:partialFailure>false</ns1:partialFailure>
+    </ns1:RequestHeader>
+  </soap:Header>
+  <soap:Body>
+    <mutateLabel xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <operations>
+        <operator>ADD</operator>
+        <operand>
+          <labelId>3763644304</labelId>
+          <campaignId>1677467977</campaignId>
+        </operand>
+      </operations>
+    </mutateLabel>
+  </soap:Body>
+</soap:Envelope>

@@ -1,7 +1,7 @@
 import faker from 'faker';
 
 import { adwordsService } from '../../initialize';
-import { IPaging } from '../../../../models/adwords';
+import { IPaging } from '../../../../types/adwords';
 import { BudgetService, IBudget, Budget } from '../../../../services/adwords';
 
 describe('BudgetService test suites', () => {

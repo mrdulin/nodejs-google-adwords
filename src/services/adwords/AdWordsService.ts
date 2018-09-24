@@ -38,7 +38,7 @@ class AdWordsService {
     this.authService = AuthService.getInstance({
       clientId: options.clientId,
       clientSecret: options.clientSecret,
-      refreshToken: options.credentials.refresh_token
+      credentials: options.credentials
     });
   }
 
@@ -57,10 +57,10 @@ class AdWordsService {
    * @returns {IServiceMap[K]}
    * @memberof AdWordsService
    */
-  public getService<
-    K extends keyof IServiceMap,
-    Opts extends { verbose?: boolean; validateOnly?: boolean; partialFailure?: boolean; version?: string }
-  >(key: K, options?: Opts): IServiceMap[K] {
+  public getService<K extends keyof IServiceMap>(
+    key: K,
+    options?: { verbose?: boolean; validateOnly?: boolean; partialFailure?: boolean; version?: string }
+  ): IServiceMap[K] {
     const ServiceClass: IServiceMap[K] | undefined = this.registryService.get<K>(key);
     if (!ServiceClass) {
       throw new Error(`Service: ${key} has not been registered yet.`);

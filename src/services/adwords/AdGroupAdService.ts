@@ -1,8 +1,8 @@
 import { pd } from 'pretty-data';
 
 import { SoapService } from '../core';
-import { ISelector, Predicate, IPaging } from '../../models/adwords';
-import * as Ad from '../../models/adwords/Ad';
+import { ISelector, Predicate, IPaging } from '../../types/adwords';
+import * as Ad from '../../types/adwords/Ad';
 import { AdwordsOperartionService } from '../core/AdwordsOperationService';
 
 interface IAdGroupAdServiceOpts {
@@ -197,10 +197,10 @@ class AdGroupAdService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
-  protected async get<ServiceSelector = ISelector, Response = any>(
+  protected async get<ServiceSelector = ISelector, Rval = any>(
     serviceSelector: ServiceSelector
-  ): Promise<Response> {
-    return this.soapService.get<ServiceSelector, Response>(serviceSelector).then(response => {
+  ): Promise<Rval | undefined> {
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(response => {
       console.log('get Ad Group ads successfully. response: ', pd.json(response));
       return response;
     });

@@ -2,8 +2,8 @@ import * as soap from 'soap';
 import _ from 'lodash';
 import { pd } from 'pretty-data';
 
-import { IOAuthRefreshedCredential, IAuthService } from './AuthService';
-import { ISelector } from '../../models/adwords';
+import { IOAuthRefreshedCredential, IAuthService, IOAuthCredential } from './AuthService';
+import { ISelector } from '../../types/adwords';
 import { AdwordsOperartionService } from './AdwordsOperationService';
 
 interface ISoapServiceOpts {
@@ -58,18 +58,11 @@ class SoapService extends AdwordsOperartionService {
    * @returns {Promise<Response>}
    * @memberof SoapService
    */
-  public async mutateAsync<Operation, Response>(operations: Operation[]): Promise<Response> {
-    const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
-    await this.createSoapClient(this.url, credentials);
-
-    if (!this.client) {
-      throw new Error('soap client does not exist');
-    }
-
+  public async mutateAsync<Operation, Rval>(operations: Operation[]): Promise<Rval> {
     try {
-      const response = await this.client.mutateAsync({ operations });
-      console.log('response: ', response);
-      return this.parseMutateResponse(response);
+      const client = await this.beforeSendRequest();
+      const response = await client.mutateAsync({ operations });
+      return this.parseMutateResponse<Rval>(response);
     } catch (error) {
       throw error;
     }
@@ -84,8 +77,18 @@ class SoapService extends AdwordsOperartionService {
    * @returns
    * @memberof SoapService
    */
-  public parseMutateResponse<Response>(response: Response) {
-    return _.get(response, [0], {});
+  public parseMutateResponse<Rval>(response: IResponse<Rval>) {
+    return _.get(response, [0, 'rval'], {});
+  }
+
+  public async mutateLabelAsync<Operation, Rval>(operations: Operation[]): Promise<Rval> {
+    try {
+      const client = await this.beforeSendRequest();
+      const response = await client.mutateLabelAsync({ operations });
+      return this.parseMutateResponse<Rval>(response);
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -99,15 +102,15 @@ class SoapService extends AdwordsOperartionService {
    * @memberof SoapService
    */
   public async get<ServiceSelector, Rval>(serviceSelector: ServiceSelector): Promise<Rval | undefined> {
-    const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
+    const credentials: IOAuthCredential = await this.authService.refreshCredentials();
     await this.createSoapClient(this.url, credentials);
 
     return new Promise<Rval>((resolve, reject) => {
       if (!this.client) {
         return reject(new Error('soap client does not exist'));
       }
-      const parameter = this.formGetParameter<ServiceSelector>(serviceSelector);
-      this.client.get(parameter, (error: Error, response: IResponse<Rval>) => {
+      const request = this.formGetRequest<ServiceSelector>(serviceSelector);
+      this.client.get(request, (error: Error, response: IResponse<Rval>) => {
         if (error) {
           return reject(error);
         }
@@ -127,7 +130,19 @@ class SoapService extends AdwordsOperartionService {
    * @memberof SoapService
    */
   public parseGetResponse<Rval>(response: IResponse<Rval>): Rval | undefined {
+    console.log('response: ', response);
     return _.get(response, ['rval'], undefined);
+  }
+
+  private async beforeSendRequest(): Promise<soap.Client> {
+    const credentials: IOAuthCredential = await this.authService.refreshCredentials();
+    await this.createSoapClient(this.url, credentials);
+
+    if (!this.client) {
+      throw new Error('soap client does not exist');
+    }
+
+    return this.client;
   }
 
   /**
@@ -141,7 +156,7 @@ class SoapService extends AdwordsOperartionService {
    * @returns
    * @memberof SoapService
    */
-  private formGetParameter<T>(serviceSelector: T) {
+  private formGetRequest<T>(serviceSelector: T) {
     const getInput: IGetInput = _.get(
       this.description,
       [this.serviceName, `${this.serviceName}InterfacePort`, 'get', 'input'],
@@ -156,6 +171,25 @@ class SoapService extends AdwordsOperartionService {
     return parameter;
   }
 
+  private formMutateLabelRequest<Operation>(operations: Operation[]) {
+    const mutateLabelInput: { 'operation[]': Operation } = _.get(
+      this.description,
+      [this.serviceName, `${this.serviceName}InterfacePort`, 'mutateLabel', 'input'],
+      {}
+    );
+    const operationsDefinition = _.get(mutateLabelInput, ['operations[]'], {});
+    const operandDefinition = operationsDefinition.operand;
+
+    // TODO: support multiple operations
+
+    if (operandDefinition) {
+      const operand = _.get(operations, [0, 'operand'], undefined);
+      if (operand) {
+        //
+      }
+    }
+  }
+
   /**
    * create soap client
    *
@@ -166,7 +200,7 @@ class SoapService extends AdwordsOperartionService {
    * @returns {Promise<void>}
    * @memberof SoapService
    */
-  private async createSoapClient(url: string, credentials: IOAuthRefreshedCredential): Promise<void> {
+  private async createSoapClient(url: string, credentials: IOAuthCredential): Promise<void> {
     try {
       this.client = await soap.createClientAsync(url, {});
       this.client.addSoapHeader(this.header, this.serviceName, this.namespace, this.xmlns);

@@ -1,8 +1,11 @@
 import { adwordsService } from '../../initialize';
-import { IPaging } from '../../../../models/adwords';
+import { IPaging } from '../../../../types/adwords';
+import { ICampaignLabel } from '../../../../services/adwords/CampaignService/CampaignLabel';
 
 describe('CampaignService test suites', () => {
-  const campaignService = adwordsService.getService('CampaignService');
+  const campaignService = adwordsService.getService('CampaignService', {
+    verbose: false
+  });
   it.skip('#getAll', async () => {
     const actualValue = await campaignService.getAll();
   });
@@ -20,7 +23,7 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.getById(id);
   });
 
-  it.skip('#getAllEnabled', async () => {
+  it('#getAllEnabled', async () => {
     const actualValue = await campaignService.getAllEnabled();
   });
   it.skip('#getAllButRemoved', async () => {
@@ -30,5 +33,14 @@ describe('CampaignService test suites', () => {
   it.skip('#remove', async () => {
     const campaignId = '1726553725';
     const actualValue = await campaignService.remove(campaignId);
+  });
+
+  it.skip('#addLabel', async () => {
+    // properties order is important
+    const campaignLabel: ICampaignLabel = {
+      labelId: '3763644304',
+      campaignId: '1677467977'
+    };
+    const actualValue = await campaignService.addLabel(campaignLabel);
   });
 });

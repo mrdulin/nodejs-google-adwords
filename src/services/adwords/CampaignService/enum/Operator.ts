@@ -1,1 +1,1 @@
-export { Operator } from '../../../../models/adwords';
+export { Operator } from '../../../../types/adwords';

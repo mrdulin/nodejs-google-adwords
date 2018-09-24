@@ -1,1 +1,1 @@
-export { Predicate } from '../../../../models/adwords';
+export { Predicate } from '../../../../types/adwords';

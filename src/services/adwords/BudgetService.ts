@@ -2,7 +2,7 @@ import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 import { SoapService } from '../core';
-import { ISelector, IPaging, Predicate, IOperation, Operator } from '../../models/adwords';
+import { ISelector, IPaging, Predicate, IOperation, Operator } from '../../types/adwords';
 import { AdwordsOperartionService } from '../core/AdwordsOperationService';
 
 interface IFieldPathElement {
@@ -172,10 +172,10 @@ class BudgetService extends AdwordsOperartionService {
     return this.mutate([operation]);
   }
 
-  protected async get<ServiceSelector = ISelector, Response = { rval: IBudgetPage }>(
+  protected async get<ServiceSelector = ISelector, Rval = IBudgetPage>(
     serviceSelector: ServiceSelector
-  ): Promise<Response> {
-    return this.soapService.get<ServiceSelector, Response>(serviceSelector).then((response: Response) => {
+  ): Promise<Rval | undefined> {
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((response: Rval | undefined) => {
       console.log('get budgets successfully. response: ', pd.json(response));
       return response;
     });

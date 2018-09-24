@@ -1,7 +1,9 @@
-import { HttpService, OptionsWithUri } from './HttpService';
 import { pd } from 'pretty-data';
+import _ from 'lodash';
+import moment from 'moment';
 
-import { Omit } from '../../models/core';
+import { HttpService, OptionsWithUri } from './HttpService';
+import { Omit } from '../../types/core';
 
 interface IOAuthCredential {
   access_token?: string;
@@ -16,11 +18,11 @@ interface IOAuthRefreshedCredential extends Required<Omit<IOAuthCredential, 'ref
 interface IAuthServiceOpts {
   clientId: string;
   clientSecret: string;
-  refreshToken: string;
+  credentials: IOAuthCredential;
 }
 
 interface IAuthService {
-  refreshCredentials(): Promise<IOAuthRefreshedCredential>;
+  refreshCredentials(): Promise<IOAuthCredential>;
 }
 
 interface IAuthServiceClass {
@@ -42,22 +44,26 @@ class AuthService implements IAuthService {
   private readonly authURL: string = 'https://www.googleapis.com/oauth2/v4/token';
   private clientId: string;
   private clientSecret: string;
-  private refreshToken: string;
+  private credentials: IOAuthCredential;
+  private tokenExpiresInMs: number = 0;
 
   private constructor(options: IAuthServiceOpts) {
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
-    this.refreshToken = options.refreshToken;
+    this.credentials = options.credentials;
     this.httpService = new HttpService();
   }
-  public async refreshCredentials(): Promise<IOAuthRefreshedCredential> {
+  public async refreshCredentials(): Promise<IOAuthCredential> {
+    if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
+      return Promise.resolve(this.credentials);
+    }
     const options: OptionsWithUri = {
       uri: this.authURL,
       method: 'POST',
       body: {
         client_id: this.clientId,
         client_secret: this.clientSecret,
-        refresh_token: this.refreshToken,
+        refresh_token: this.credentials.refresh_token,
         grant_type: 'refresh_token'
       }
     };
@@ -66,6 +72,11 @@ class AuthService implements IAuthService {
       .request(options)
       .then(response => {
         console.log('refresh token success. response: ', pd.json(response));
+        this.tokenExpiresInMs = moment()
+          .add(1, 'hour')
+          .toDate()
+          .getTime();
+        this.credentials = _.defaults(response, this.credentials);
         return response;
       })
       .catch(error => {
