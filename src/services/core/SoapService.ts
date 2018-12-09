@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { pd } from 'pretty-data';
 
 import { IAuthService, IOAuthCredential } from './AuthService';
-import { ISelector } from '../../types/adwords';
+import { ISelector, IOperation, Operator } from '../../types/adwords';
 import { AdwordsOperartionService } from './AdwordsOperationService';
 import { CoreOptions } from './HttpService';
 import { XMLService } from './XMLService';
@@ -83,7 +83,8 @@ class SoapService extends AdwordsOperartionService {
   public async mutateAsync<Operation, Rval>(operations: Operation[]): Promise<Rval> {
     try {
       const client = await this.beforeSendRequest();
-      const response = await client.mutateAsync({ operations });
+      const request = this.formMutateRequest({ operations, mutateMethod: 'mutate' });
+      const response = await client.mutateAsync(request);
       return this.parseMutateResponse<Rval>(response);
     } catch (error) {
       throw error;
@@ -103,10 +104,21 @@ class SoapService extends AdwordsOperartionService {
     return _.get(response, [0, 'rval'], {});
   }
 
+  /**
+   * mutate label
+   *
+   * @author dulin
+   * @template Operation
+   * @template Rval
+   * @param {Operation[]} operations
+   * @returns {Promise<Rval>}
+   * @memberof SoapService
+   */
   public async mutateLabelAsync<Operation, Rval>(operations: Operation[]): Promise<Rval> {
     try {
       const client = await this.beforeSendRequest();
-      const response = await client.mutateLabelAsync({ operations });
+      const request = this.formMutateRequest({ operations, mutateMethod: 'mutateLabel' });
+      const response = await client.mutateLabelAsync(request);
       return this.parseMutateResponse<Rval>(response);
     } catch (error) {
       throw error;
@@ -208,22 +220,77 @@ class SoapService extends AdwordsOperartionService {
     return parameter;
   }
 
-  private formMutateLabelRequest<Operation>(operations: Operation[]) {
-    const mutateLabelInput: { 'operation[]': Operation } = _.get(
-      this.description,
-      [this.serviceName, `${this.serviceName}InterfacePort`, 'mutateLabel', 'input'],
-      {},
-    );
-    const operationsDefinition = _.get(mutateLabelInput, ['operations[]'], {});
-    const operandDefinition = operationsDefinition.operand;
-    // TODO: support multiple operations
+  private formMutateRequest(options: any) {
+    const request: { operations: Array<IOperation<any>> } = { operations: [] };
+    const mutateMethod = this.description[this.serviceName][`${this.serviceName}InterfacePort`][options.mutateMethod];
+    const operations = options.operations;
 
-    if (operandDefinition) {
-      const operand = _.get(operations, [0, 'operand'], undefined);
-      if (operand) {
-        //
-      }
+    if (_.keys(mutateMethod.input).indexOf('operations[]') > -1) {
+      _.each(operations, (operation) => {
+        operation.operand = this.matchJSONKeyOrder(operation.operand, mutateMethod.input['operations[]'].operand);
+        request.operations.push(operation);
+      });
     }
+    return request;
+  }
+
+  /**
+   * XML element order matters
+   *
+   * @author dulin
+   * @private
+   * @param {*} src
+   * @param {*} toMatch
+   * @returns
+   * @memberof SoapService
+   */
+  private matchJSONKeyOrder(src: any, toMatch: any) {
+    const orderedObj = {};
+    const self = this;
+
+    _.mapKeys(
+      toMatch,
+      (v, k): any => {
+        // Check and remove [] at the end
+        if (typeof k !== 'string') {
+          return;
+        }
+        let canBeMore = false;
+
+        if (k.substr(-2) === '[]') {
+          k = k.substr(0, k.length - 2);
+          canBeMore = true;
+        }
+
+        if (src[k] === undefined) {
+          return;
+        }
+
+        if (!canBeMore && typeof src[k] === 'object' && typeof v === 'object') {
+          orderedObj[k] = self.matchJSONKeyOrder(src[k], v);
+        } else if (canBeMore && typeof v === 'object' && _.isArray(src[k])) {
+          orderedObj[k] = [];
+          _.each(src[k], function(item) {
+            orderedObj[k].push(self.matchJSONKeyOrder(item, v));
+          });
+        } else {
+          orderedObj[k] = src[k];
+        }
+      },
+    );
+
+    // Add keys not present in toMatch object, at the end
+    const currentKeys = _.keys(orderedObj);
+    _.mapKeys(
+      src,
+      (v, k): any => {
+        if (currentKeys.indexOf(k) === -1) {
+          orderedObj[k] = src[k];
+        }
+      },
+    );
+
+    return orderedObj;
   }
 
   /**

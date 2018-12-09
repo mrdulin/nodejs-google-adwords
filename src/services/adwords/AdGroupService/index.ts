@@ -10,6 +10,14 @@ import { IAdGroup } from './AdGroup';
 interface IAdGroupServiceOpts {
   soapService: SoapService;
 }
+
+/**
+ * https://developers.google.com/adwords/api/docs/reference/v201809/AdGroupService
+ *
+ * @author dulin
+ * @class AdGroupService
+ * @extends {AdwordsOperartionService}
+ */
 class AdGroupService extends AdwordsOperartionService {
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields?hl=zh-cn#v201809-AdGroupService
@@ -87,6 +95,9 @@ class AdGroupService extends AdwordsOperartionService {
       {
         operator: Operator.ADD,
         operand: adGroup,
+        attributes: {
+          'xsi:type': 'AdGroupOperation',
+        },
       },
     ];
     return this.mutate(operations);

@@ -20,4 +20,4 @@ interface IFrequencyCap {
   level?: Level;
 }
 
-export { IFrequencyCap };
+export { IFrequencyCap, TimeUnit, Level };

@@ -1,3 +1,5 @@
 export interface IAttributes<Type> {
-  'xsi:type': Type;
+  attributes?: {
+    'xsi:type': Type;
+  };
 }

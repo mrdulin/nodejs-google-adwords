@@ -8,7 +8,7 @@ import { IImage } from './Media';
 import { IDynamicSettings } from './DynamicSettings';
 import { DisplayAdFormatSetting } from './enum/DisplayAdFormatSetting';
 
-interface IAdRaw<Type> {
+interface IAdRaw<Type> extends IAttributes<Type> {
   id: string;
   url: string;
   displayUrl: string;
@@ -24,7 +24,6 @@ interface IAdRaw<Type> {
   devicePreference: string;
   readonly systemManagedEntitySource: SystemManagedEntitySource;
   'Ad.Type': string;
-  attributes: IAttributes<Type>;
 }
 
 interface IAd<Type = ''> extends Partial<IAdRaw<Type>> {}

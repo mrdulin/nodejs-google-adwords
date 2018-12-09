@@ -2,15 +2,15 @@ import faker from 'faker';
 
 import { adwordsService } from '../../initialize';
 import { IPaging } from '../../../../types/adwords';
-import { BudgetService, Budget } from '../../../../services/adwords/BudgetService';
+import { BudgetService, Budget, IBudget } from '../../../../services/adwords/BudgetService';
 
 describe('BudgetService test suites', () => {
   const budgetService = adwordsService.getService('BudgetService', { verbose: false });
-  it.skip('#getAll', async () => {
+  it('#getAll', async () => {
     const actualValue = await budgetService.getAll();
   });
 
-  it('#getByPage', async () => {
+  it.skip('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
       numberResults: 2,
@@ -48,5 +48,10 @@ describe('BudgetService test suites', () => {
       isExplicitlyShared: true,
     };
     const actualValue = await budgetService.update(budget);
+  });
+
+  it.skip('#remove', async () => {
+    const budgetIds: string[] = ['1902117292'];
+    const actualValue = await budgetService.remove(budgetIds);
   });
 });
