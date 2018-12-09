@@ -3,7 +3,7 @@ import { IMedia_Size_DimensionsMapEntry } from './Media_Size_DimensionsMapEntry'
 import { IMedia_Size_StringMapEntry } from './Media_Size_StringMapEntry';
 import { IAttributes } from '../../../types/adwords/Attributes';
 
-interface IMediaRaw<Type> {
+interface IMediaRaw<Type> extends IAttributes<Type> {
   mediaId: string;
   type: Media.MediaType;
   referenceId: string;
@@ -15,7 +15,6 @@ interface IMediaRaw<Type> {
   fileSize: string;
   creationTime: string;
   'Media.Type': string;
-  attributes: IAttributes<Type>;
 }
 
 interface IMedia<Type> extends Partial<IMediaRaw<Type>> {}

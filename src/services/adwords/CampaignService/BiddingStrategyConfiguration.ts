@@ -21,14 +21,14 @@ enum BiddingStrategySource {
 }
 
 interface IBiddingStrategyConfiguration {
-  biddingStrategyId: string;
+  biddingStrategyId?: string;
   biddingStrategyName: string;
   biddingStrategyType: BiddingStrategyType;
   readonly biddingStrategySource?: BiddingStrategySource;
   // TODO:
-  biddingScheme: any;
-  bids: Array<ICpcBid | ICpaBid | ICpmBid>;
-  targetRoasOverride: number;
+  biddingScheme?: any;
+  bids?: Array<ICpcBid | ICpaBid | ICpmBid>;
+  targetRoasOverride?: number;
 }
 
-export { IBiddingStrategyConfiguration };
+export { IBiddingStrategyConfiguration, BiddingStrategyType };

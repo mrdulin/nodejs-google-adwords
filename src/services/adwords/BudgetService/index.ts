@@ -96,11 +96,14 @@ class BudgetService extends AdwordsOperartionService {
 
   public async add(budget: IBudget) {
     // TODO: validate budget
-    const operation: IBudgetOperation = {
-      operator: Operator.ADD,
-      operand: budget,
-    };
-    return this.mutate([operation]);
+    // TODO: support multiple add
+    const operations: IBudgetOperation[] = [
+      {
+        operator: Operator.ADD,
+        operand: budget,
+      },
+    ];
+    return this.mutate(operations);
   }
 
   public async update(budget: IBudget) {
@@ -109,6 +112,19 @@ class BudgetService extends AdwordsOperartionService {
       operand: budget,
     };
     return this.mutate([operation]);
+  }
+
+  public async remove(budgetIds: string[]) {
+    const operations: IBudgetOperation[] = budgetIds.map((budgetId: string) => {
+      const operand: IBudget = { budgetId };
+      const operation: IBudgetOperation = {
+        operator: Operator.REMOVE,
+        operand,
+      };
+      return operation;
+    });
+
+    return this.mutate(operations);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IBudgetPage>(

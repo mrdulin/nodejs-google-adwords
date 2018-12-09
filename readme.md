@@ -46,12 +46,79 @@ ADWORDS_REFRESH_TOKEN=<OAuth Refresh Token>
 
 Put above environment variables into `.env` file for local development.
 
+## Usage
+
+Initialize `AdwordsService` with above environment variables
+
+```ts
+const adwordsService = new AdWordsService({
+  clientCustomerId: credentials.ADWORDS_CLIENT_CUSTOMER_ID,
+  developerToken: credentials.ADWORDS_DEVELOPER_TOKEN,
+  userAgent: credentials.ADWORDS_USER_AGENT,
+  clientId: credentials.ADWORDS_CLIENT_ID,
+  clientSecret: credentials.ADWORDS_SECRET,
+  credentials: {
+    refresh_token: credentials.ADWORDS_REFRESH_TOKEN,
+  },
+});
+```
+
+Get budgets by page:
+
+```ts
+async function getByPage() {
+  const budgetService = adwordsService.getService('BudgetService');
+  const paging: IPaging = {
+    startIndex: 0,
+    numberResults: 2,
+  };
+  const actualValue = await budgetService.getByPage(paging);
+}
+```
+
+Create a budget:
+
+```ts
+async function createBudget() {
+  const budgetService = adwordsService.getService('BudgetService');
+
+  const budget: IBudget = {
+    name: faker.lorem.word(),
+    amount: {
+      microAmount: BudgetService.UNIT,
+    },
+    deliveryMethod: Budget.BudgetDeliveryMethod.STANDARD,
+    isExplicitlyShared: false,
+    status: Budget.BudgetStatus.ENABLED,
+  };
+
+  const actualValue = await budgetService.add(budget);
+}
+```
+
+Get campaigns by page:
+
+```ts
+async function getCampaignsByPages() {
+  const paging: IPaging = {
+    startIndex: 0,
+    numberResults: 1,
+  };
+  const actualValue = await campaignService.getByPage(paging);
+}
+```
+
+Same usage for other Google Adwords resources
+
 ## TODO
 
 - [ ] <https://developers.google.com/adwords/api/docs/guides/batch-jobs>
 - [ ] <http://adwordsapi.blogspot.in/2011/03/concurrency-management-in-adwords-api.html>
+- [ ] Add model layer and object schema validation
+- [ ] Improve error handling
+- [ ] Improve `TypeScript` types
 
-## references
+## References
 
 - <https://developers.google.com/adwords/api/docs/reference/release-notes/v201809?refresh=1>
 - <https://github.com/googleads/googleads-python-lib/wiki>

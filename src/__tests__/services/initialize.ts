@@ -10,8 +10,6 @@ const adwordsService = new AdWordsService({
   credentials: {
     refresh_token: credentials.ADWORDS_REFRESH_TOKEN,
   },
-  // validateOnly: true,
-  // partialFailure: true
 });
 adwordsService.setVerbose(false);
 

@@ -3,7 +3,7 @@ import { INetworkSetting } from './NetworkSetting';
 import { ITextLabel } from './Label';
 import { IFrequencyCap } from './FrequencyCap';
 import { IConversionOptimizerEligibility } from './ConversionOptimizerEligibility';
-import { ISetting } from './Setting';
+import { IGeoTargetTypeSetting } from './Setting';
 import { IBiddingStrategyConfiguration } from './BiddingStrategyConfiguration';
 import { CampaignStatus } from './enum/CampaignStatus';
 import { ServingStatus } from './enum/ServingStatus';
@@ -23,10 +23,11 @@ interface ICampaignRaw {
   startDate: string;
   endDate: string;
   budget: IBudget;
-  conversionOptimizerEligibility: IConversionOptimizerEligibility;
+  readonly conversionOptimizerEligibility: IConversionOptimizerEligibility;
   adServingOptimizationStatus: AdServingOptimizationStatus;
   frequencyCap: IFrequencyCap;
-  settings: ISetting[];
+  // TODO: add more settings
+  settings: IGeoTargetTypeSetting | any;
   advertisingChannelType: AdvertisingChannelType;
   advertisingChannelSubType: AdvertisingChannelSubType;
   networkSetting: INetworkSetting;
@@ -39,7 +40,7 @@ interface ICampaignRaw {
   finalUrlSuffix: string;
   urlCustomParameters: ICustomParameters;
 
-  // TODO
+  // TODO: add types
   vanityPharma: any;
   universalAppCampaignInfo: any;
   selectiveOptimization: any;

@@ -26,6 +26,7 @@ interface ICampaignServiceOpts {
  * @extends {AdWordsService}
  */
 class CampaignService extends AdwordsOperartionService {
+  public static readonly dateFormat: string = 'YYYYMMDD';
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-CampaignService
    *
@@ -182,6 +183,19 @@ class CampaignService extends AdwordsOperartionService {
       ],
     };
     return this.get(serviceSelector);
+  }
+
+  public async add(campaign: ICampaign) {
+    const operations: ICampaignOperation[] = [
+      {
+        operator: Operator.ADD,
+        operand: campaign,
+        attributes: {
+          'xsi:type': 'CampaignOperation',
+        },
+      },
+    ];
+    return this.mutate(operations);
   }
 
   public async update(campaign: ICampaign) {
