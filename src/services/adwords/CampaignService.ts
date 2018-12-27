@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { SoapService } from '../core';
 import { ISelector, PredicateOperator, IPaging } from '../../models/adwords';
+import { AdwordsOperartionService } from './AdwordsOperationService';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
@@ -14,7 +15,7 @@ interface ICampaignServiceOpts {
  * @class CampaignService
  * @extends {AdWordsService}
  */
-class CampaignService {
+class CampaignService extends AdwordsOperartionService {
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-CampaignService
    *
@@ -79,7 +80,8 @@ class CampaignService {
   ];
 
   private soapService: SoapService;
-  constructor(options: ICampaignServiceOpts) {
+  private constructor(options: ICampaignServiceOpts) {
+    super();
     this.soapService = options.soapService;
   }
 
@@ -116,14 +118,14 @@ class CampaignService {
     return this.get(serviceSelector);
   }
 
-  private async get(serviceSelector: ISelector) {
-    return this.soapService.get<ISelector>(serviceSelector).then(response => {
+  protected async get<ServiceSelector = ISelector, Response = any>(
+    serviceSelector: ServiceSelector
+  ): Promise<Response> {
+    return this.soapService.get<ServiceSelector, Response>(serviceSelector).then(response => {
       console.log('get campaigns successfully. response: ', pd.json(response));
       return response;
     });
   }
-
-  // public parseGetResponse(response) {}
 }
 
 export { CampaignService, ICampaignServiceOpts };

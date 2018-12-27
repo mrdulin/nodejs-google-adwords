@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { SoapService } from '../core';
 import { ISelector, IPaging, PredicateOperator } from '../../models/adwords';
+import { AdwordsOperartionService } from './AdwordsOperationService';
 
 namespace Budget {
   export enum BudgetDeliveryMethod {
@@ -38,12 +39,12 @@ interface IMoney extends IComparableValue {
 
 interface IBudget {
   budgetId?: string;
-  name: string;
-  amount: IMoney;
-  deliveryMethod: Budget.BudgetDeliveryMethod;
+  name?: string;
+  amount?: IMoney;
+  deliveryMethod?: Budget.BudgetDeliveryMethod;
   referenceCount?: number;
   isExplicitlyShared?: boolean;
-  status: Budget.BudgetStatus;
+  status?: Budget.BudgetStatus;
 }
 
 interface IBudgetOperation extends IOperation {
@@ -53,9 +54,10 @@ interface IBudgetOperation extends IOperation {
 interface IBudgetServiceOpts {
   soapService: SoapService;
 }
-class BudgetService {
+class BudgetService extends AdwordsOperartionService {
   /**
-   * Budget amounts need to be in units.  $1 = 1,000,000 units
+   * Budget amounts need to be in units.  1,000,000 units = $1.00 / ¥1.00 / ...
+   * Based on the selected settlement currency
    *
    * @static
    * @memberof BudgetService
@@ -82,6 +84,7 @@ class BudgetService {
 
   private soapService: SoapService;
   private constructor(options: IBudgetServiceOpts) {
+    super();
     this.soapService = options.soapService;
   }
 
@@ -151,16 +154,18 @@ class BudgetService {
     return this.mutate([operation]);
   }
 
-  private async get(serviceSelector: ISelector) {
-    return this.soapService.get(serviceSelector).then(response => {
+  protected async get<ServiceSelector = ISelector, Response = any>(
+    serviceSelector: ServiceSelector
+  ): Promise<Response> {
+    return this.soapService.get<ServiceSelector, Response>(serviceSelector).then((response: Response) => {
       console.log('get budgets successfully. response: ', pd.json(response));
       return response;
     });
   }
 
-  private async mutate(operations: IBudgetOperation[]) {
+  protected async mutate<Operation = IBudgetOperation, Response = any>(operations: Operation[]): Promise<Response> {
     try {
-      const response = await this.soapService.mutateAsync<IBudgetOperation>(operations);
+      const response = await this.soapService.mutateAsync<Operation>(operations);
       console.log('mutate budget successfully. response: ', pd.json(response));
       return response;
     } catch (error) {
