@@ -6,7 +6,7 @@ import { BudgetService, IBudget, Budget } from '../../../../services/adwords';
 
 describe('BudgetService test suites', () => {
   const budgetService = adwordsService.getService('BudgetService', { verbose: false });
-  it('#getAll', async () => {
+  it.skip('#getAll', async () => {
     const actualValue = await budgetService.getAll();
   });
 
@@ -40,5 +40,13 @@ describe('BudgetService test suites', () => {
     };
 
     const actualValue = await budgetService.add(budget);
+  });
+
+  it('#update', async () => {
+    const budget: IBudget = {
+      budgetId: '1865779148',
+      isExplicitlyShared: true
+    };
+    const actualValue = await budgetService.update(budget);
   });
 });

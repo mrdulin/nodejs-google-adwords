@@ -3,12 +3,13 @@ import { pd } from 'pretty-data';
 import { SoapService } from '../core';
 import { ISelector, PredicateOperator, IPaging } from '../../models/adwords';
 import * as Ad from '../../models/adwords/Ad';
+import { AdwordsOperartionService } from './AdwordsOperationService';
 
 interface IAdGroupAdServiceOpts {
   soapService: SoapService;
 }
 
-class AdGroupAdService {
+class AdGroupAdService extends AdwordsOperartionService {
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-AdGroupAdService
    *
@@ -153,7 +154,8 @@ class AdGroupAdService {
   ];
 
   private soapService: SoapService;
-  constructor(options: IAdGroupAdServiceOpts) {
+  private constructor(options: IAdGroupAdServiceOpts) {
+    super();
     this.soapService = options.soapService;
   }
 
@@ -195,8 +197,10 @@ class AdGroupAdService {
     return this.get(serviceSelector);
   }
 
-  private async get(serviceSelector: ISelector) {
-    return this.soapService.get(serviceSelector).then(response => {
+  protected async get<ServiceSelector = ISelector, Response = any>(
+    serviceSelector: ServiceSelector
+  ): Promise<Response> {
+    return this.soapService.get<ServiceSelector, Response>(serviceSelector).then(response => {
       console.log('get Ad Group ads successfully. response: ', pd.json(response));
       return response;
     });

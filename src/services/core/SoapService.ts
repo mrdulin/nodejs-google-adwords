@@ -4,6 +4,7 @@ import { pd } from 'pretty-data';
 
 import { IOAuthRefreshedCredential, IAuthService } from './AuthService';
 import { ISelector } from '../../models/adwords';
+import { AdwordsOperartionService } from '../adwords';
 
 interface ISoapServiceOpts {
   authService: IAuthService;
@@ -19,7 +20,7 @@ interface IGetInput {
   serviceSelector?: ISelector;
 }
 
-class SoapService {
+class SoapService extends AdwordsOperartionService {
   private url: string;
   private authService: IAuthService;
   private client: soap.Client | undefined;
@@ -30,6 +31,7 @@ class SoapService {
   private description: any;
   private xmlns: string;
   constructor(options: ISoapServiceOpts) {
+    super();
     this.authService = options.authService;
     this.url = options.url;
     this.serviceName = options.serviceName;
@@ -62,25 +64,26 @@ class SoapService {
    * get operation
    *
    * @author dulin
-   * @template T
-   * @param {T} serviceSelector
-   * @returns
+   * @template ServiceSelector
+   * @template Response
+   * @param {ServiceSelector} serviceSelector
+   * @returns {Promise<Response>}
    * @memberof SoapService
    */
-  public async get<T>(serviceSelector: T) {
+  public async get<ServiceSelector, Response>(serviceSelector: ServiceSelector): Promise<Response> {
     const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
     await this.createSoapClient(this.url, credentials);
 
-    return new Promise((resolve, reject) => {
+    return new Promise<Response>((resolve, reject) => {
       if (!this.client) {
         return reject(new Error('soap client does not exist'));
       }
-      const parameter = this.formGetParameter<T>(serviceSelector);
-      this.client.get(parameter, (error: Error, result: any) => {
+      const parameter = this.formGetParameter<ServiceSelector>(serviceSelector);
+      this.client.get(parameter, (error: Error, response: Response) => {
         if (error) {
           return reject(error);
         }
-        resolve(result);
+        resolve(response);
       });
     });
   }
