@@ -1,8 +1,7 @@
 import { pd } from 'pretty-data';
 import _ from 'lodash';
 import moment from 'moment';
-
-import { HttpService, OptionsWithUri } from './HttpService';
+import request, { OptionsWithUri } from 'request-promise';
 import { Omit } from '../../types/core';
 
 interface IOAuthCredential {
@@ -39,7 +38,6 @@ class AuthService implements IAuthService {
     return this.instance;
   }
   private static instance: AuthService;
-  private httpService: HttpService;
 
   private readonly authURL: string = 'https://www.googleapis.com/oauth2/v4/token';
   private clientId: string;
@@ -51,7 +49,6 @@ class AuthService implements IAuthService {
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
     this.credentials = options.credentials;
-    this.httpService = new HttpService();
   }
   public async refreshCredentials(): Promise<IOAuthCredential> {
     if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
@@ -65,11 +62,11 @@ class AuthService implements IAuthService {
         client_secret: this.clientSecret,
         refresh_token: this.credentials.refresh_token,
         grant_type: 'refresh_token'
-      }
+      },
+      json: true
     };
 
-    return this.httpService
-      .request(options)
+    return request(options)
       .then(response => {
         console.log('refresh token success. response: ', pd.json(response));
         this.tokenExpiresInMs = moment()
@@ -80,7 +77,7 @@ class AuthService implements IAuthService {
         return response;
       })
       .catch(error => {
-        console.error(error.message);
+        console.error(error);
         return Promise.reject(new Error('refresh token failed.'));
       });
   }

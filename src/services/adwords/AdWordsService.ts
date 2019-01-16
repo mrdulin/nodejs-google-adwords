@@ -1,10 +1,21 @@
 import _ from 'lodash';
 import { pd } from 'pretty-data';
-import { RegistryService, IOAuthCredential, IAuthService, AuthService, SoapService, ISoapServiceOpts } from '../core';
+import {
+  RegistryService,
+  IOAuthCredential,
+  IAuthService,
+  AuthService,
+  SoapService,
+  ISoapServiceOpts,
+  ISoapHeader,
+  HttpService,
+  IHttpServiceOpts
+} from '../core';
 import { registryService, IServiceMap } from './registry';
+import { OptionalUriUrl } from 'request';
 
 interface IAdWordsServiceOpts {
-  clientCustomerId?: string;
+  clientCustomerId: string;
   developerToken: string;
   clientId: string;
   clientSecret: string;
@@ -20,6 +31,7 @@ interface IServiceOpts {
   partialFailure: boolean;
   version: string;
   gzip: boolean;
+  clientCustomerId: string;
 }
 
 class AdWordsService {
@@ -29,17 +41,15 @@ class AdWordsService {
   private registryService: RegistryService<IServiceMap> = registryService;
   private authService: IAuthService;
   private verbose: boolean = true;
-  private soapHeader: any;
+  private soapHeader: ISoapHeader;
 
   constructor(options: IAdWordsServiceOpts) {
     this.soapHeader = {
-      RequestHeader: {
-        clientCustomerId: options.clientCustomerId,
-        developerToken: options.developerToken,
-        userAgent: options.userAgent,
-        validateOnly: options.validateOnly || false,
-        partialFailure: options.partialFailure || false
-      }
+      clientCustomerId: options.clientCustomerId,
+      developerToken: options.developerToken,
+      userAgent: options.userAgent,
+      validateOnly: options.validateOnly || false,
+      partialFailure: options.partialFailure || false
     };
 
     this.authService = AuthService.getInstance({
@@ -73,11 +83,13 @@ class AdWordsService {
     const namespace = _.get(options, ['namespace'], _.get(ServiceClass, ['namespace'], AdWordsService.namespace));
     const xmlns = `${namespace}/${ver}`;
     const url = `${xmlns}/${serviceName}${AdWordsService.suffix}`;
+    const verbose = _.get(options, ['verbose'], this.verbose);
 
+    this.soapHeader.clientCustomerId = _.get(options, ['clientCustomerId'], this.soapHeader.clientCustomerId);
     let soapServiceOptions: ISoapServiceOpts = {
       authService: this.authService,
       header: this.soapHeader,
-      verbose: this.verbose,
+      verbose,
       url,
       serviceName,
       xmlns
@@ -85,12 +97,21 @@ class AdWordsService {
     if (options) {
       soapServiceOptions = _.merge(soapServiceOptions, options);
     }
-    if (this.verbose) {
+    if (verbose) {
       console.log('soapServiceOptions: ', pd.json(soapServiceOptions));
     }
     const soapService = new SoapService(soapServiceOptions);
+    const httpServiceOpts: IHttpServiceOpts = {
+      headers: {
+        clientCustomerId: this.soapHeader.clientCustomerId,
+        developerToken: this.soapHeader.developerToken
+      },
+      authService: this.authService,
+      verbose
+    };
+    const httpService = new HttpService(httpServiceOpts);
 
-    return new (ServiceClass as any)(Object.assign({}, options, { soapService }));
+    return new (ServiceClass as any)(Object.assign({}, options, { soapService, httpService }));
   }
 }
 
