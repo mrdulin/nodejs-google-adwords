@@ -19,9 +19,7 @@ interface ISoapServiceOpts {
   url: string;
   serviceName: string;
   xmlns: string;
-  header: {
-    RequestHeader: ISoapHeader;
-  };
+  header: ISoapHeader;
   verbose: boolean;
   gzip?: boolean;
 }
@@ -35,11 +33,13 @@ interface IResponse<Rval> {
   rval: Rval;
 }
 
+type SoapClient = soap.Client;
+
 class SoapService extends AdwordsOperartionService {
   private url: string;
   private authService: IAuthService;
   private client: soap.Client | undefined;
-  private header: any;
+  private header: ISoapHeader;
   private verbose: boolean = false;
   private serviceName: string;
   private namespace: string = 'ns1';
@@ -238,7 +238,7 @@ class SoapService extends AdwordsOperartionService {
   private async createSoapClient(url: string, credentials: IOAuthCredential): Promise<void> {
     try {
       this.client = await soap.createClientAsync(url, {});
-      this.client.addSoapHeader(this.header, this.serviceName, this.namespace, this.xmlns);
+      this.client.addSoapHeader({ RequestHeader: this.header }, this.serviceName, this.namespace, this.xmlns);
       if (!credentials.access_token) {
         throw new Error('access_token required.');
       }
@@ -271,7 +271,7 @@ class SoapService extends AdwordsOperartionService {
       gzip: this.gzip
     };
     if (this.gzip && options.headers) {
-      options.headers['User-Agent'] = `${this.header.RequestHeader.userAgent} (gzip)`;
+      options.headers['User-Agent'] = `${this.header.userAgent} (gzip)`;
       options.headers['Accept-Encoding'] = 'gzip';
     }
     return options;
@@ -313,4 +313,4 @@ class SoapService extends AdwordsOperartionService {
   }
 }
 
-export { SoapService, ISoapServiceOpts, IResponse };
+export { SoapService, ISoapServiceOpts, IResponse, SoapClient, ISoapHeader };
