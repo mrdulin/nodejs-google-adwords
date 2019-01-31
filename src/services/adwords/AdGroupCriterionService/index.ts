@@ -120,6 +120,14 @@ class AdGroupCriterionService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
+  /**
+   * add ad group criterion such as Keyword, Gender
+   *
+   * @author dulin
+   * @param {(Array<IBiddableAdGroupCriterion | INegativeAdGroupCriterion>)} adGroupCriterions
+   * @returns
+   * @memberof AdGroupCriterionService
+   */
   public async add(adGroupCriterions: Array<IBiddableAdGroupCriterion | INegativeAdGroupCriterion>) {
     const operaions: IAdGroupCriterionOperation[] = adGroupCriterions.map(
       (adGroupCriterion: IBiddableAdGroupCriterion | INegativeAdGroupCriterion) => {

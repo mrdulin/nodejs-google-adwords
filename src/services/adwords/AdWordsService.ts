@@ -15,6 +15,14 @@ interface IAdWordsServiceOpts {
   credentials: IOAuthCredential;
 }
 
+interface IServiceOpts {
+  verbose: boolean;
+  validateOnly: boolean;
+  partialFailure: boolean;
+  version: string;
+  gzip: boolean;
+}
+
 class AdWordsService {
   public static readonly namespace: string = 'https://adwords.google.com/api/adwords/cm';
   public static readonly version: string = 'v201809';
@@ -51,16 +59,12 @@ class AdWordsService {
    *
    * @author dulin
    * @template K
-   * @template Opts
    * @param {K} key
-   * @param {Opts} [options]
+   * @param {Partial<IServiceOpts>} [options]
    * @returns {IServiceMap[K]}
    * @memberof AdWordsService
    */
-  public getService<K extends keyof IServiceMap>(
-    key: K,
-    options?: { verbose?: boolean; validateOnly?: boolean; partialFailure?: boolean; version?: string }
-  ): IServiceMap[K] {
+  public getService<K extends keyof IServiceMap>(key: K, options?: Partial<IServiceOpts>): IServiceMap[K] {
     const ServiceClass: IServiceMap[K] | undefined = this.registryService.get<K>(key);
     if (!ServiceClass) {
       throw new Error(`Service: ${key} has not been registered yet.`);

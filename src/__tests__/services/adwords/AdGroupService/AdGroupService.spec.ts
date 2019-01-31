@@ -6,7 +6,7 @@ import { AdGroupStatus } from '../../../../services/adwords/AdGroupService/enum/
 import { AdGroupType } from '../../../../services/adwords/AdGroupService/enum/AdGroupType';
 
 describe('AdGroupService test suites', () => {
-  const adGroupService = adwordsService.getService('AdGroupService');
+  const adGroupService = adwordsService.getService('AdGroupService', { verbose: true });
   it.skip('#getAll', async () => {
     const actualValue = await adGroupService.getAll();
   });
