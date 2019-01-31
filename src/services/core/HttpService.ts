@@ -1,5 +1,6 @@
 import request, { OptionsWithUri } from 'request-promise';
 import _ from 'lodash';
+import { CoreOptions } from 'request';
 
 class HttpService {
   public async request(options: OptionsWithUri) {
@@ -12,4 +13,4 @@ class HttpService {
   }
 }
 
-export { HttpService, OptionsWithUri };
+export { HttpService, OptionsWithUri, CoreOptions };

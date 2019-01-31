@@ -5,14 +5,25 @@ import { pd } from 'pretty-data';
 import { IAuthService, IOAuthCredential } from './AuthService';
 import { ISelector } from '../../types/adwords';
 import { AdwordsOperartionService } from './AdwordsOperationService';
+import { CoreOptions } from './HttpService';
 
+interface ISoapHeader {
+  clientCustomerId: string;
+  developerToken: string;
+  userAgent: string;
+  validateOnly: boolean;
+  partialFailure: boolean;
+}
 interface ISoapServiceOpts {
   authService: IAuthService;
   url: string;
   serviceName: string;
   xmlns: string;
-  header: any;
+  header: {
+    RequestHeader: ISoapHeader;
+  };
   verbose: boolean;
+  gzip?: boolean;
 }
 
 interface IGetInput {
@@ -34,6 +45,8 @@ class SoapService extends AdwordsOperartionService {
   private namespace: string = 'ns1';
   private description: any;
   private xmlns: string;
+  private gzip: boolean;
+
   constructor(options: ISoapServiceOpts) {
     super();
     this.authService = options.authService;
@@ -42,6 +55,7 @@ class SoapService extends AdwordsOperartionService {
     this.xmlns = options.xmlns;
     this.header = options.header;
     this.verbose = options.verbose;
+    this.gzip = options.gzip || true;
   }
 
   public setVerbose(val: boolean) {
@@ -110,13 +124,18 @@ class SoapService extends AdwordsOperartionService {
         return reject(new Error('soap client does not exist'));
       }
       const request = this.formGetRequest<ServiceSelector>(serviceSelector);
-      this.client.get(request, (error: Error, response: IResponse<Rval>) => {
-        if (error) {
-          return reject(error);
-        }
-        const rval = this.parseGetResponse<Rval>(response);
-        resolve(rval);
-      });
+      const requestOptions: CoreOptions = this.formHttpRequestOptions();
+      this.client.get(
+        request,
+        (error: Error, response: IResponse<Rval>) => {
+          if (error) {
+            return reject(error);
+          }
+          const rval = this.parseGetResponse<Rval>(response);
+          resolve(rval);
+        },
+        requestOptions
+      );
     });
   }
 
@@ -131,6 +150,17 @@ class SoapService extends AdwordsOperartionService {
    */
   public parseGetResponse<Rval>(response: IResponse<Rval>): Rval | undefined {
     return _.get(response, ['rval'], undefined);
+  }
+
+  /**
+   * enable/disable http request gzip
+   *
+   * @author dulin
+   * @param {boolean} val
+   * @memberof SoapService
+   */
+  public enableGzip(val: boolean) {
+    this.gzip = val;
   }
 
   private async beforeSendRequest(): Promise<soap.Client> {
@@ -213,6 +243,32 @@ class SoapService extends AdwordsOperartionService {
       console.error(error);
       throw new Error('create soap client failed.');
     }
+  }
+
+  /**
+   * form http request core options
+   *
+   * gzip compress
+   * https://developers.google.com/adwords/api/docs/guides/bestpractices#use_compression
+   * For backwards-compatibility, response compression is not supported by default. To accept gzip-compressed responses, set the gzip option to true
+   *
+   * @author dulin
+   * @private
+   * @returns {CoreOptions}
+   * @memberof SoapService
+   */
+  private formHttpRequestOptions(): CoreOptions {
+    const options: CoreOptions = {
+      headers: {
+        Connection: 'keep-alive'
+      },
+      gzip: this.gzip
+    };
+    if (this.gzip && options.headers) {
+      options.headers['User-Agent'] = `${this.header.RequestHeader.userAgent} (gzip)`;
+      options.headers['Accept-Encoding'] = 'gzip';
+    }
+    return options;
   }
 
   /**
