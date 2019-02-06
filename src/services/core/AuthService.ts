@@ -1,4 +1,4 @@
-import request, { OptionsWithUri } from 'request-promise';
+import { HttpService, OptionsWithUri } from './HttpService';
 import { pd } from 'pretty-data';
 
 import { Omit } from '../../models/core';
@@ -37,6 +37,7 @@ class AuthService implements IAuthService {
     return this.instance;
   }
   private static instance: AuthService;
+  private httpService: HttpService;
 
   private readonly authURL: string = 'https://www.googleapis.com/oauth2/v4/token';
   private clientId: string;
@@ -47,6 +48,7 @@ class AuthService implements IAuthService {
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
     this.refreshToken = options.refreshToken;
+    this.httpService = new HttpService();
   }
   public async refreshCredentials(): Promise<IOAuthRefreshedCredential> {
     const options: OptionsWithUri = {
@@ -57,12 +59,11 @@ class AuthService implements IAuthService {
         client_secret: this.clientSecret,
         refresh_token: this.refreshToken,
         grant_type: 'refresh_token'
-      },
-      json: true,
-      timeout: 10 * 1000
+      }
     };
 
-    return request(options)
+    return this.httpService
+      .request(options)
       .then(response => {
         console.log('refresh token success. response: ', response);
         return response;

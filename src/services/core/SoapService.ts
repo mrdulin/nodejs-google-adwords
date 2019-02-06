@@ -9,6 +9,7 @@ interface ISoapServiceOpts {
   serviceName: string;
   xmlns: string;
   header: any;
+  verbose: boolean;
 }
 
 class SoapService {
@@ -27,16 +28,21 @@ class SoapService {
     this.serviceName = options.serviceName;
     this.xmlns = options.xmlns;
     this.header = options.header;
+    this.verbose = options.verbose;
   }
+
+  public setVerbose(val: boolean) {
+    this.verbose = val;
+  }
+
   /**
    * get operation
    *
    * @author dulin
-   * @protected
    * @template T
    * @param {T} serviceSelector
    * @returns
-   * @memberof AdWordsService
+   * @memberof SoapService
    */
   public async get<T>(serviceSelector: T) {
     console.log('get');
