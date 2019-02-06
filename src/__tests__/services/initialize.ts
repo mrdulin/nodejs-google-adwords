@@ -11,5 +11,6 @@ const adwordsService = new AdWordsService({
     refresh_token: credentials.ADWORDS_REFRESH_TOKEN
   }
 });
+adwordsService.setVerbose(false);
 
 export { adwordsService };

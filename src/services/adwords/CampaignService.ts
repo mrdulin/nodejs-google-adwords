@@ -1,75 +1,47 @@
 import { pd } from 'pretty-data';
 import { SoapService } from '../core';
+import { ISelector } from '../../models/adwords';
 
-enum PredicateOperator {
-  EQUALS = 'EQUALS',
-  NOT_EQUALS = 'NOT_EQUALS',
-  IN = 'IN'
-}
-
-enum SortOrder {
-  ASCENDING = 'ASCENDING',
-  DESCENDING = 'DESCENDING'
-}
-
-interface IPaging {
-  startIndex: number;
-  numberResults: number;
-}
-
-interface IDateRange {
-  min: string;
-  max: string;
-}
-
-interface IPredicates {
-  field: string;
-  operator: PredicateOperator;
-  values: string[];
-}
-
-interface IOrderBy {
-  field: string;
-  sortOrder: SortOrder;
-}
-
-interface ICampaignServiceSelector {
-  fields: string[];
-  predicates?: IPredicates[];
-  dateRange?: IDateRange;
-  ordering?: IOrderBy[];
-  paging?: IPaging;
-}
-
-interface ICampaignService {
+interface ICampaignServiceOpts {
   soapService: SoapService;
 }
 
 /**
- * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-CampaignService
  *
  * @author dulin
  * @class CampaignService
  * @extends {AdWordsService}
  */
 class CampaignService {
+  /**
+   * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-CampaignService
+   *
+   * @private
+   * @static
+   * @memberof CampaignService
+   */
+  private static readonly selectorFields = ['Id', 'Name', 'Status'];
+
   private soapService: SoapService;
-  constructor(options: ICampaignService) {
-    const defaultOptions = {
-      validateOnly: false,
-      partialFailure: false
-    };
+  constructor(options: ICampaignServiceOpts) {
     this.soapService = options.soapService;
   }
 
-  public async getCampaigns(selector: ICampaignServiceSelector) {
-    return this.soapService.get<ICampaignServiceSelector>(selector).then(response => {
+  public async getAll() {
+    const serviceSelector: ISelector = this.formServiceSelector();
+    return this.soapService.get<ISelector>(serviceSelector).then(response => {
       console.log('get campaigns successfully. response: ', pd.json(response));
       return response;
     });
   }
 
+  private formServiceSelector(): ISelector {
+    return {
+      fields: CampaignService.selectorFields
+    };
+  }
+
   // public parseGetResponse(response) {}
 }
 
-export { CampaignService, ICampaignServiceSelector };
+export { CampaignService, ICampaignServiceOpts };
