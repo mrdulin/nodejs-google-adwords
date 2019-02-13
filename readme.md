@@ -8,7 +8,7 @@ https://accounts.google.com/o/oauth2/auth?client_id=16536262744-tqkl7ugdc363i66t
 
 ```bash
 curl \
-  -d code=4/MQHGD-QaAWj7sa4WA5E9M5-dewVr5mkL5ii8CiKxWaLhFK59xQJ-qnU \
+  -d code=4/MgGqR_qEUkzq95LlP_Am8clUbX8t733PvtoMuZ_xsmAA8NHdjK07xXo \
   -d client_id=16536262744-tqkl7ugdc363i66tf4i64lhg3iubd83j.apps.googleusercontent.com \
   -d client_secret=lcch1lisdrgzrOlNZUaeTGqI \
   -d redirect_uri=urn:ietf:wg:oauth:2.0:oob \

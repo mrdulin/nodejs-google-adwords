@@ -1,8 +1,5 @@
-import { AdWordsService, IAdWordsServiceOpts } from './AdWordsService';
-import { Omit } from '../../models/core';
 import { pd } from 'pretty-data';
-
-interface ICampaignServiceOpts extends Omit<IAdWordsServiceOpts, 'serviceName' | 'partialFailure' | 'validateOnly'> {}
+import { SoapService } from '../core';
 
 enum PredicateOperator {
   EQUALS = 'EQUALS',
@@ -44,6 +41,10 @@ interface ICampaignServiceSelector {
   paging?: IPaging;
 }
 
+interface ICampaignService {
+  soapService: SoapService;
+}
+
 /**
  * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-CampaignService
  *
@@ -51,19 +52,18 @@ interface ICampaignServiceSelector {
  * @class CampaignService
  * @extends {AdWordsService}
  */
-class CampaignService extends AdWordsService {
-  constructor(options: ICampaignServiceOpts) {
+class CampaignService {
+  private soapService: SoapService;
+  constructor(options: ICampaignService) {
     const defaultOptions = {
-      serviceName: 'CampaignService',
       validateOnly: false,
       partialFailure: false
     };
-    super(Object.assign({}, defaultOptions, options));
-    this.setVerbose(true);
+    this.soapService = options.soapService;
   }
 
   public async getCampaigns(selector: ICampaignServiceSelector) {
-    return this.get<ICampaignServiceSelector>(selector).then(response => {
+    return this.soapService.get<ICampaignServiceSelector>(selector).then(response => {
       console.log('get campaigns successfully. response: ', pd.json(response));
       return response;
     });
@@ -72,4 +72,4 @@ class CampaignService extends AdWordsService {
   // public parseGetResponse(response) {}
 }
 
-export { CampaignService, ICampaignServiceSelector, ICampaignServiceOpts };
+export { CampaignService, ICampaignServiceSelector };
