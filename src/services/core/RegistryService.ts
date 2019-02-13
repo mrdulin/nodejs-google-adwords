@@ -1,6 +1,11 @@
-class RegistryService<T extends { [key: string]: any }> {
+class RegistryService<T> {
+  public static instance;
   public static init() {
-    return new RegistryService({});
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new RegistryService({});
+    return this.instance;
   }
   private registry: T;
   private constructor(registry: T) {
