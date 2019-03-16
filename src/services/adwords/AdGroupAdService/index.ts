@@ -200,8 +200,24 @@ class AdGroupAdService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
+  public async getByAdGroupIds(adGroupIds: string[]) {
+    const serviceSelector: ISelector = {
+      fields: AdGroupAdService.selectorFields,
+      predicates: [
+        {
+          field: 'AdGroupId',
+          operator: Predicate.Operator.IN,
+          values: adGroupIds
+        }
+      ]
+    };
+    return this.get(serviceSelector);
+  }
+
   /**
-   * add ad group ad
+   * add ad group ad.
+   *
+   * 当调用 mutate() 时，最好每个请求发送多个操作；避免发送多个请求，而每个请求仅包含一个操作。每个请求发送多个操作可减少到服务器的往返次数，并提高应用性能。
    *
    * @author dulin
    * @param {IAdGroupAd[]} adGroupAds
@@ -212,6 +228,20 @@ class AdGroupAdService extends AdwordsOperartionService {
     const operations: IAdGroupAdOperation[] = adGroupAds.map((adGroupAd: IAdGroupAd) => {
       const operation: IAdGroupAdOperation = {
         operator: Operator.ADD,
+        operand: adGroupAd,
+        attributes: {
+          'xsi:type': 'AdGroupAdOperation'
+        }
+      };
+      return operation;
+    });
+    return this.mutate(operations);
+  }
+
+  public update(adGroupAds: IAdGroupAd[]) {
+    const operations: IAdGroupAdOperation[] = adGroupAds.map((adGroupAd: IAdGroupAd) => {
+      const operation: IAdGroupAdOperation = {
+        operator: Operator.SET,
         operand: adGroupAd,
         attributes: {
           'xsi:type': 'AdGroupAdOperation'

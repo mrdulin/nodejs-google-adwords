@@ -130,7 +130,6 @@ class SoapService extends AdwordsOperartionService {
    * @memberof SoapService
    */
   public parseGetResponse<Rval>(response: IResponse<Rval>): Rval | undefined {
-    console.log('response: ', response);
     return _.get(response, ['rval'], undefined);
   }
 

@@ -1,9 +1,10 @@
-import { IAd } from './Ad';
+import { IExpandedTextAd, IAd } from './Ad';
 import { AdGroupAd } from './enum/AdGroupAd';
 import { ITextLabel } from './Label';
 
 interface IAdGroupAdRaw {
   adGroupId: string;
+  // TODO:
   ad: IAd;
   status: AdGroupAd.Status;
   //TODO

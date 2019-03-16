@@ -3,10 +3,11 @@ import faker from 'faker';
 import { adwordsService } from '../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { IAdGroupAd } from '../../../../services/adwords/AdGroupAdService/AdGroupAd';
-import { IExpandedTextAd } from '../../../../services/adwords/AdGroupAdService/Ad';
+import { IExpandedTextAd, IAd } from '../../../../services/adwords/AdGroupAdService/Ad';
+import { AdGroupAd } from '../../../../services/adwords/AdGroupAdService/enum/AdGroupAd';
 
 describe('AdGroupAdService test suites', () => {
-  const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: false });
+  const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: true });
   it.skip('#getAll', async () => {
     const actualValue = await adGroupAdService.getAll();
   });
@@ -25,6 +26,11 @@ describe('AdGroupAdService test suites', () => {
       numberResults: 3
     };
     const actualValue = await adGroupAdService.getAllExpandedTextAd(paging);
+  });
+
+  it.skip('#getByAdGroupIds', async () => {
+    const adGroupIds = ['72029524744'];
+    const actualValue = await adGroupAdService.getByAdGroupIds(adGroupIds);
   });
 
   it.skip('#add', async () => {
@@ -59,5 +65,27 @@ describe('AdGroupAdService test suites', () => {
     });
 
     const actualValue = await adGroupAdService.add(adGroupAds);
+  });
+
+  it.skip('#update', async () => {
+    const ads: IAd[] = [
+      {
+        id: '331943088184'
+      },
+      {
+        id: '331195148581'
+      }
+    ];
+    const adGroupId = '72029524744';
+    const adGroupAds: IAdGroupAd[] = ads.map((ad: IAd) => {
+      const adGroupAd: IAdGroupAd = {
+        adGroupId,
+        ad,
+        status: AdGroupAd.Status.ENABLED
+      };
+      return adGroupAd;
+    });
+
+    const actualValue = await adGroupAdService.update(adGroupAds);
   });
 });

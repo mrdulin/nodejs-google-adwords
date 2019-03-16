@@ -2,6 +2,8 @@
 
 google adwords and nodejs in action
 
+This is a Node.js library for Google Adwords SOAP + WSDL API
+
 ## OAuth
 
 https://accounts.google.com/o/oauth2/auth?client_id=<Client ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
@@ -29,12 +31,13 @@ curl \
 
 ## TODO
 
-- [ ] https://developers.google.com/adwords/api/docs/guides/batch-jobs
-- [ ] http://adwordsapi.blogspot.in/2011/03/concurrency-management-in-adwords-api.html
+- [ ] <https://developers.google.com/adwords/api/docs/guides/batch-jobs>
+- [ ] <http://adwordsapi.blogspot.in/2011/03/concurrency-management-in-adwords-api.html>
 
 ## references
 
-- https://developers.google.com/adwords/api/docs/reference/release-notes/v201809?refresh=1
-- https://github.com/googleads/googleads-python-lib/wiki
-- https://developers.google.com/adwords/api/docs/guides/authentication
-- https://developers.google.com/adwords/api/docs/guides/objects-methods
+- <https://developers.google.com/adwords/api/docs/reference/release-notes/v201809?refresh=1>
+- <https://github.com/googleads/googleads-python-lib/wiki>
+- <https://developers.google.com/adwords/api/docs/guides/authentication>
+- <https://developers.google.com/adwords/api/docs/guides/objects-methods>
+- <https://developers.google.com/adwords/api/docs/samples/php/basic-operations#add-expanded-text-ads-to-an-ad-group>
