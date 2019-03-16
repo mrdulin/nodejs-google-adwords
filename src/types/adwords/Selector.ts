@@ -36,7 +36,7 @@ interface IDateRange {
  * @author dulin
  * @interface IPredicates
  */
-interface IPredicates {
+interface IPredicate {
   field: string;
   operator: Predicate.Operator;
   values: string[];
@@ -49,7 +49,7 @@ interface IOrderBy {
 
 interface ISelector {
   fields: string[];
-  predicates?: IPredicates[];
+  predicates?: IPredicate[];
   dateRange?: IDateRange;
   ordering?: IOrderBy[];
   paging?: IPaging;

@@ -4,7 +4,7 @@ import { Ad } from './enum/Ad';
 import { SystemManagedEntitySource } from './enum/SystemManagedEntitySource';
 import { Omit } from '../../../types/core';
 
-interface IAd {
+interface IAdRaw {
   id: string;
   url: string;
   displayUrl: string;
@@ -25,6 +25,8 @@ interface IAd {
   };
 }
 
+interface IAd extends Partial<IAdRaw> {}
+
 /**
  * Caution: Expanded text ads do not use url, displayUrl, finalAppUrls, or devicePreference;
  * setting these fields on an expanded text ad will cause an error.
@@ -33,7 +35,7 @@ interface IAd {
  * @interface IExpandedTextAd
  * @extends {(Partial<Omit<IAd, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>>)}
  */
-interface IExpandedTextAd extends Partial<Omit<IAd, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>> {
+interface IExpandedTextAd extends Partial<Omit<IAdRaw, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>> {
   headlinePart1: string;
   headlinePart2: string;
   headlinePart3?: string;
@@ -43,4 +45,4 @@ interface IExpandedTextAd extends Partial<Omit<IAd, 'url' | 'displayUrl' | 'fina
   path2?: string;
 }
 
-export { IExpandedTextAd };
+export { IExpandedTextAd, IAd };
