@@ -4,15 +4,28 @@
   "description": "google adwords and nodejs in action",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "dotenv": "^6.2.0"
+    "@types/dotenv": "^6.1.0",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.11.0",
+    "@types/request": "^2.48.1",
+    "@types/request-promise": "^4.1.42",
+    "dotenv": "^6.2.0",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.13.1",
+    "typescript": "^3.3.3333"
   },
   "dependencies": {
-    "node-adwords": "^201809.0.1"
+    "pretty-data": "^0.40.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "soap": "^0.27.0"
   }
 }
