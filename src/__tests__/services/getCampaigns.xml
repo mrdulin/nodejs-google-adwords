@@ -1,0 +1,108 @@
+<!-- rawRequest -->
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:tns="https://adwords.google.com/api/adwords/cm/v201809" 
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+  <soap:Header>
+    <ns1:RequestHeader xmlns:ns1="https://adwords.google.com/api/adwords/cm/v201809" 
+      xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <ns1:clientCustomerId>153-935-9847</ns1:clientCustomerId>
+      <ns1:developerToken>dGt8TodFY_jYjS3R_QkBXw</ns1:developerToken>
+      <ns1:userAgent>Nodejs Google adwords</ns1:userAgent>
+      <ns1:validateOnly>false</ns1:validateOnly>
+      <ns1:partialFailure>false</ns1:partialFailure>
+    </ns1:RequestHeader>
+  </soap:Header>
+  <soap:Body>
+    <get xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <serviceSelector>
+        <fields>Id</fields>
+        <fields>Name</fields>
+        <fields>Status</fields>
+      </serviceSelector>
+    </get>
+  </soap:Body>
+</soap:Envelope>
+
+
+<!-- rawResponse -->
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Header>
+    <ResponseHeader xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <requestId>000586dd8d297ba10ae9ec18ea00fed2</requestId>
+      <serviceName>CampaignService</serviceName>
+      <methodName>get</methodName>
+      <operations>1</operations>
+      <responseTime>289</responseTime>
+    </ResponseHeader>
+  </soap:Header>
+  <soap:Body>
+    <getResponse xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <rval>
+        <totalNumEntries>10</totalNumEntries>
+        <Page.Type>CampaignPage</Page.Type>
+        <entries>
+          <id>1677467977</id>
+          <name>网站流量-展示广告网络-1</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1677638563</id>
+          <name>Stephanie Kovacek</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1707620863</id>
+          <name>Fletcher Wehner</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1709908769</id>
+          <name>Neva Pagac</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1709932214</id>
+          <name>Noah Baumbach</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1710430510</id>
+          <name>Onie Ledner</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1711147827</id>
+          <name>Dawson MacGyver</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1711156776</id>
+          <name>Amina Dickens</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1712005376</id>
+          <name>ad-name-test-1-119-1550656856452</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+        <entries>
+          <id>1726553725</id>
+          <name>Website traffic-Search-12</name>
+          <status>ENABLED</status>
+          <budget></budget>
+        </entries>
+      </rval>
+    </getResponse>
+  </soap:Body>
+</soap:Envelope>
