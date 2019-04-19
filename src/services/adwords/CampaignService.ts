@@ -1,8 +1,8 @@
 import { AdWordsService, IAdWordsServiceOpts } from './AdWordsService';
-import { Omit } from '../models/core';
+import { Omit } from '../../models/core';
 import { pd } from 'pretty-data';
 
-interface ICampaignServiceOpts extends Omit<IAdWordsServiceOpts, 'serviceName'> {}
+interface ICampaignServiceOpts extends Omit<IAdWordsServiceOpts, 'serviceName' | 'partialFailure' | 'validateOnly'> {}
 
 enum PredicateOperator {
   EQUALS = 'EQUALS',
@@ -54,7 +54,9 @@ interface ICampaignServiceSelector {
 class CampaignService extends AdWordsService {
   constructor(options: ICampaignServiceOpts) {
     const defaultOptions = {
-      serviceName: 'CampaignService'
+      serviceName: 'CampaignService',
+      validateOnly: false,
+      partialFailure: false
     };
     super(Object.assign({}, defaultOptions, options));
     this.setVerbose(true);
