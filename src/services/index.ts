@@ -1,2 +1,1 @@
-export * from './CampaignService';
-export * from './AdWordsService';
+export * from './adwords';

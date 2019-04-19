@@ -1,7 +1,8 @@
 import * as soap from 'soap';
 import request, { OptionsWithUri } from 'request-promise';
-import { Omit } from '../models/core';
+import { Omit } from '../../models/core';
 import { pd } from 'pretty-data';
+import { RegistryService } from '../core';
 
 interface IAdWordsServiceOpts {
   serviceName: string;
@@ -13,6 +14,7 @@ interface IAdWordsServiceOpts {
   validateOnly?: boolean;
   partialFailure?: boolean;
   credentials: IOAuthCredential;
+  registryService: RegistryService<any>;
 }
 
 interface IOAuthCredential {
@@ -39,6 +41,7 @@ class AdWordsService {
   private clientSecret: string = '';
   private verbose: boolean = true;
   private description: any;
+  private registryService: RegistryService<any>;
 
   constructor(options: IAdWordsServiceOpts) {
     this.soapHeader = {
@@ -46,15 +49,20 @@ class AdWordsService {
         clientCustomerId: options.clientCustomerId,
         developerToken: options.developerToken,
         userAgent: options.userAgent,
-        validateOnly: false,
-        partialFailure: false
+        validateOnly: options.validateOnly || false,
+        partialFailure: options.partialFailure || false
       }
     };
+    this.registryService = options.registryService;
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
     this.credentials = options.credentials;
     this.serviceName = options.serviceName;
     this.url = `${this.xmlns}/${options.serviceName}${this.suffix}`;
+  }
+
+  public getService(service: string) {
+    return this.registryService.get(service);
   }
 
   protected setVerbose(val: boolean) {
