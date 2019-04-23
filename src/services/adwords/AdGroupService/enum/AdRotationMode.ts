@@ -1,0 +1,5 @@
+export enum AdRotationMode {
+  UNKNOWN = 'UNKNOWN',
+  OPTIMIZE = 'OPTIMIZE',
+  ROTATE_FOREVER = 'ROTATE_FOREVER'
+}

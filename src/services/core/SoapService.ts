@@ -2,7 +2,7 @@ import * as soap from 'soap';
 import _ from 'lodash';
 import { pd } from 'pretty-data';
 
-import { IOAuthRefreshedCredential, IAuthService, IOAuthCredential } from './AuthService';
+import { IAuthService, IOAuthCredential } from './AuthService';
 import { ISelector } from '../../types/adwords';
 import { AdwordsOperartionService } from './AdwordsOperationService';
 
