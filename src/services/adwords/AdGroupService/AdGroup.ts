@@ -7,15 +7,23 @@ import { ICustomParameters } from './CustomParameters';
 import { AdGroupType } from './enum/AdGroupType';
 import { IAdGroupAdRotationMode } from './AdGroupAdRotationMode';
 
-export interface IAdGroup {
+interface IAdGroupRaw {
   id: string;
   campaignId: string;
-  campaignName: string;
+  readonly campaignName: string;
   name: string;
   status: AdGroupStatus;
   settings: Array<ITargetingSetting | IExplorerAutoOptimizerSetting>;
   labels: ITextLabel[];
-  biddingStrategyConfiguration: IBiddingStrategyConfiguration;
+
+  /**
+   * Note: Starting with v201705, bidding strategies can only be set on campaigns.
+   * In earlier versions, bidding strategies can be set on campaigns, ad groups and ad group criteria.
+   *
+   * @type {IBiddingStrategyConfiguration}
+   * @memberof IAdGroupRaw
+   */
+  // biddingStrategyConfiguration: IBiddingStrategyConfiguration;
   contentBidCriterionTypeGroup: CriterionTypeGroup;
 
   readonly baseCampaignId: string;
@@ -29,3 +37,7 @@ export interface IAdGroup {
   // TODO
   // forwardCompatibilityMap
 }
+
+interface IAdGroup extends Partial<IAdGroupRaw> {}
+
+export { IAdGroup };
