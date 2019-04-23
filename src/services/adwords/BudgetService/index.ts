@@ -1,73 +1,13 @@
 import { pd } from 'pretty-data';
 import _ from 'lodash';
 
-import { SoapService } from '../core';
-import { ISelector, IPaging, Predicate, IOperation, Operator } from '../../types/adwords';
-import { AdwordsOperartionService } from '../core/AdwordsOperationService';
-
-interface IFieldPathElement {
-  field: string;
-  index: number;
-}
-
-interface IApiError {
-  fieldPath: string;
-  fieldPathElements: IFieldPathElement;
-  trigger: string;
-  errorString: string;
-  'ApiError.Type'?: string;
-}
-
-interface IListReturnValue {
-  'ListReturnValue.Type'?: string;
-}
-interface IPage {
-  totalNumEntries: number;
-  'Page.Type'?: string;
-}
-interface IBudgetPage extends IPage {
-  entries: IBudget[];
-}
-
-interface IBudgetReturnValue extends IListReturnValue {
-  value: IBudget[];
-  partialFailureErrors: IApiError[];
-}
-
-namespace Budget {
-  export enum BudgetDeliveryMethod {
-    STANDARD = 'STANDARD',
-    ACCELERATED = 'ACCELERATED',
-    UNKNOWN = 'UNKNOWN'
-  }
-
-  export enum BudgetStatus {
-    ENABLED = 'ENABLED',
-    REMOVED = 'REMOVED',
-    UNKNOWN = 'UNKNOWN'
-  }
-}
-interface IComparableValue {
-  'ComparableValue.Type'?: string;
-}
-
-interface IMoney extends IComparableValue {
-  microAmount: number;
-}
-
-interface IBudget {
-  budgetId?: string;
-  name?: string;
-  amount?: IMoney;
-  deliveryMethod?: Budget.BudgetDeliveryMethod;
-  referenceCount?: number;
-  isExplicitlyShared?: boolean;
-  status?: Budget.BudgetStatus;
-}
-
-interface IBudgetOperation extends IOperation {
-  operand: IBudget;
-}
+import { SoapService, AdwordsOperartionService } from '../../core';
+import { ISelector, IPaging, Predicate, Operator } from '../../../types/adwords';
+import { IBudget } from './Budget';
+import { IBudgetOperation } from './BudgetOperation';
+import { IBudgetPage } from './BudgetPage';
+import { IBudgetReturnValue } from './BudgetReturnValue';
+import { Budget } from './enum/Budget';
 
 interface IBudgetServiceOpts {
   soapService: SoapService;

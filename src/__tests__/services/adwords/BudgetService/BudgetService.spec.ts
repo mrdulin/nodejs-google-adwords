@@ -10,7 +10,7 @@ describe('BudgetService test suites', () => {
     const actualValue = await budgetService.getAll();
   });
 
-  it.skip('#getByPage', async () => {
+  it('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
       numberResults: 2
@@ -42,7 +42,7 @@ describe('BudgetService test suites', () => {
     const actualValue = await budgetService.add(budget);
   });
 
-  it('#update', async () => {
+  it.skip('#update', async () => {
     const budget: IBudget = {
       budgetId: '1865779148',
       isExplicitlyShared: true
