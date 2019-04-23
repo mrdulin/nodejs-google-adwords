@@ -2,8 +2,8 @@ import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 import { SoapService } from '../core';
-import { ISelector, IPaging, PredicateOperator } from '../../models/adwords';
-import { AdwordsOperartionService } from './AdwordsOperationService';
+import { ISelector, IPaging, Predicate, IOperation, Operator } from '../../models/adwords';
+import { AdwordsOperartionService } from '../core/AdwordsOperationService';
 
 interface IFieldPathElement {
   field: string;
@@ -49,17 +49,6 @@ namespace Budget {
 }
 interface IComparableValue {
   'ComparableValue.Type'?: string;
-}
-
-enum Operator {
-  ADD = 'ADD',
-  REMOVE = 'REMOVE',
-  SET = 'SET'
-}
-
-interface IOperation {
-  operator: Operator;
-  'Operation.Type'?: string;
 }
 
 interface IMoney extends IComparableValue {
@@ -142,7 +131,7 @@ class BudgetService extends AdwordsOperartionService {
       predicates: [
         {
           field: 'BudgetId',
-          operator: PredicateOperator.EQUALS,
+          operator: Predicate.Operator.EQUALS,
           values: [id]
         }
       ]
@@ -157,7 +146,7 @@ class BudgetService extends AdwordsOperartionService {
       predicates: [
         {
           field: 'BudgetId',
-          operator: PredicateOperator.IN,
+          operator: Predicate.Operator.IN,
           values: ids
         }
       ]
@@ -167,7 +156,7 @@ class BudgetService extends AdwordsOperartionService {
   }
 
   public async add(budget: IBudget) {
-    // TODO: validate input
+    // TODO: validate budget
     const operation: IBudgetOperation = {
       operator: Operator.ADD,
       operand: budget

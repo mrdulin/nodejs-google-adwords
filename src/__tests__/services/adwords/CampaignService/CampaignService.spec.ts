@@ -20,8 +20,15 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.getById(id);
   });
 
-  it.skip('#getById', async () => {
-    const id = '1677467977';
-    const actualValue = await campaignService.getById(id);
+  it.skip('#getAllEnabled', async () => {
+    const actualValue = await campaignService.getAllEnabled();
+  });
+  it.skip('#getAllButRemoved', async () => {
+    const actualValue = await campaignService.getAllButRemoved();
+  });
+
+  it.skip('#remove', async () => {
+    const campaignId = '1726553725';
+    const actualValue = await campaignService.remove(campaignId);
   });
 });

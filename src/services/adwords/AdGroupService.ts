@@ -1,7 +1,7 @@
 import { pd } from 'pretty-data';
 import { SoapService } from '../core';
 import { ISelector } from '../../models/adwords';
-import { AdwordsOperartionService } from './AdwordsOperationService';
+import { AdwordsOperartionService } from '../core/AdwordsOperationService';
 
 interface IAdGroupServiceOpts {
   soapService: SoapService;

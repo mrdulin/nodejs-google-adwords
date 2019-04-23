@@ -4,11 +4,15 @@
  *
  * @enum {number}
  */
-enum PredicateOperator {
-  EQUALS = 'EQUALS',
-  NOT_EQUALS = 'NOT_EQUALS',
-  IN = 'IN',
-  CONTAINS_ALL = 'CONTAINS_ALL'
+
+namespace Predicate {
+  export enum Operator {
+    EQUALS = 'EQUALS',
+    NOT_EQUALS = 'NOT_EQUALS',
+    IN = 'IN',
+    NOT_IN = 'NOT_IN',
+    CONTAINS_ALL = 'CONTAINS_ALL'
+  }
 }
 
 enum SortOrder {
@@ -34,7 +38,7 @@ interface IDateRange {
  */
 interface IPredicates {
   field: string;
-  operator: PredicateOperator;
+  operator: Predicate.Operator;
   values: string[];
 }
 
@@ -51,4 +55,4 @@ interface ISelector {
   paging?: IPaging;
 }
 
-export { ISelector, PredicateOperator, IPaging };
+export { ISelector, Predicate, IPaging };

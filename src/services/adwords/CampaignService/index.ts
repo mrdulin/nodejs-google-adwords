@@ -2,10 +2,15 @@ import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 import { SoapService } from '../../core';
-import { ISelector, PredicateOperator, IPaging } from '../../../models/adwords';
-import { AdwordsOperartionService } from '../AdwordsOperationService';
+import { ISelector, IPaging, Operator } from '../../../models/adwords';
+import { AdwordsOperartionService } from '../../core/AdwordsOperationService';
 import { ICampaignOperation } from './CampaignOperation';
 import { ICampaignReturnValue } from './CampaignReturnValue';
+import { ICampaignPage } from './CampaignPage';
+import { ICampaign } from './Campaign';
+import { Predicate } from './enum/Predicate';
+import { CampaignStatus } from './enum/CampaignStatus';
+import { ServingStatus } from './enum/ServingStatus';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
@@ -87,9 +92,23 @@ class CampaignService extends AdwordsOperartionService {
     this.soapService = options.soapService;
   }
 
+  /**
+   * get all campaigns
+   *
+   * @author dulin
+   * @returns
+   * @memberof CampaignService
+   */
   public async getAll() {
     const serviceSelector: ISelector = {
-      fields: CampaignService.selectorFields
+      fields: CampaignService.selectorFields,
+      predicates: [
+        {
+          field: 'Status',
+          operator: Predicate.Operator.IN,
+          values: [CampaignStatus.ENABLED, CampaignStatus.PAUSED, CampaignStatus.REMOVED]
+        }
+      ]
     };
     return this.get(serviceSelector);
   }
@@ -112,7 +131,7 @@ class CampaignService extends AdwordsOperartionService {
       predicates: [
         {
           field: 'Id',
-          operator: PredicateOperator.EQUALS,
+          operator: Predicate.Operator.EQUALS,
           values: [id]
         }
       ]
@@ -120,11 +139,78 @@ class CampaignService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
-  protected async mutate<Operation = ICampaignOperation, Response = ICampaignReturnValue>(
+  /**
+   * get all enabled campaigns
+   *
+   * @author dulin
+   * @returns
+   * @memberof CampaignService
+   */
+  public async getAllEnabled() {
+    const serviceSelector: ISelector = {
+      fields: CampaignService.selectorFields,
+      predicates: [
+        {
+          field: 'ServingStatus',
+          operator: Predicate.Operator.IN,
+          values: [ServingStatus.SERVING]
+        }
+      ]
+    };
+    return this.get(serviceSelector);
+  }
+
+  /**
+   * get all campaigns but removed
+   *
+   * @author dulin
+   * @returns
+   * @memberof CampaignService
+   */
+  public async getAllButRemoved() {
+    const serviceSelector: ISelector = {
+      fields: CampaignService.selectorFields,
+      predicates: [
+        {
+          field: 'Status',
+          operator: Predicate.Operator.NOT_IN,
+          values: [CampaignStatus.REMOVED]
+        }
+      ]
+    };
+    return this.get(serviceSelector);
+  }
+
+  public async update(campaign: ICampaign) {
+    // TODO: validate campaign
+    const operation: ICampaignOperation[] = [
+      {
+        operator: Operator.SET,
+        operand: campaign
+      }
+    ];
+    return this.mutate(operation);
+  }
+
+  public async remove(campaignId: string) {
+    const campaign: ICampaign = {
+      id: campaignId,
+      status: CampaignStatus.REMOVED
+    };
+    const operations: ICampaignOperation[] = [
+      {
+        operator: Operator.SET,
+        operand: campaign
+      }
+    ];
+    return this.mutate(operations);
+  }
+
+  protected async mutate<Operation = ICampaignOperation, Rval = ICampaignReturnValue>(
     operations: Operation[]
-  ): Promise<Response> {
+  ): Promise<Rval> {
     try {
-      const response = await this.soapService.mutateAsync<Operation, Response>(operations);
+      const response = await this.soapService.mutateAsync<Operation, Rval>(operations);
       console.log('mutate campaign successfully. response: ', pd.json(response));
       return response;
     } catch (error) {
@@ -132,10 +218,10 @@ class CampaignService extends AdwordsOperartionService {
     }
   }
 
-  protected async get<ServiceSelector = ISelector, Response = any>(
+  protected async get<ServiceSelector = ISelector, Rval = ICampaignPage>(
     serviceSelector: ServiceSelector
-  ): Promise<Response> {
-    return this.soapService.get<ServiceSelector, Response>(serviceSelector).then(response => {
+  ): Promise<Rval | undefined> {
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(response => {
       console.log('get campaigns successfully. response: ', pd.json(response));
       return response;
     });
