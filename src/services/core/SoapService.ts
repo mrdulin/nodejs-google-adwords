@@ -4,7 +4,7 @@ import { pd } from 'pretty-data';
 
 import { IOAuthRefreshedCredential, IAuthService } from './AuthService';
 import { ISelector } from '../../models/adwords';
-import { AdwordsOperartionService } from '../adwords';
+import { AdwordsOperartionService } from './AdwordsOperationService';
 
 interface ISoapServiceOpts {
   authService: IAuthService;
@@ -18,6 +18,10 @@ interface ISoapServiceOpts {
 interface IGetInput {
   selector?: ISelector;
   serviceSelector?: ISelector;
+}
+
+interface IResponse<Rval> {
+  rval: Rval;
 }
 
 class SoapService extends AdwordsOperartionService {
@@ -64,10 +68,24 @@ class SoapService extends AdwordsOperartionService {
 
     try {
       const response = await this.client.mutateAsync({ operations });
-      return response[0];
+      console.log('response: ', response);
+      return this.parseMutateResponse(response);
     } catch (error) {
       throw error;
     }
+  }
+
+  /**
+   * parse mutate response
+   *
+   * @author dulin
+   * @template Response
+   * @param {Response} response
+   * @returns
+   * @memberof SoapService
+   */
+  public parseMutateResponse<Response>(response: Response) {
+    return _.get(response, [0], {});
   }
 
   /**
@@ -75,27 +93,41 @@ class SoapService extends AdwordsOperartionService {
    *
    * @author dulin
    * @template ServiceSelector
-   * @template Response
+   * @template Rval
    * @param {ServiceSelector} serviceSelector
-   * @returns {Promise<Response>}
+   * @returns {Promise<Rval>}
    * @memberof SoapService
    */
-  public async get<ServiceSelector, Response>(serviceSelector: ServiceSelector): Promise<Response> {
+  public async get<ServiceSelector, Rval>(serviceSelector: ServiceSelector): Promise<Rval | undefined> {
     const credentials: IOAuthRefreshedCredential = await this.authService.refreshCredentials();
     await this.createSoapClient(this.url, credentials);
 
-    return new Promise<Response>((resolve, reject) => {
+    return new Promise<Rval>((resolve, reject) => {
       if (!this.client) {
         return reject(new Error('soap client does not exist'));
       }
       const parameter = this.formGetParameter<ServiceSelector>(serviceSelector);
-      this.client.get(parameter, (error: Error, response: Response) => {
+      this.client.get(parameter, (error: Error, response: IResponse<Rval>) => {
         if (error) {
           return reject(error);
         }
-        resolve(response);
+        const rval = this.parseGetResponse<Rval>(response);
+        resolve(rval);
       });
     });
+  }
+
+  /**
+   * parse get response
+   *
+   * @author dulin
+   * @template Rval
+   * @param {IResponse<Rval>} response
+   * @returns {(Rval | undefined)}
+   * @memberof SoapService
+   */
+  public parseGetResponse<Rval>(response: IResponse<Rval>): Rval | undefined {
+    return _.get(response, ['rval'], undefined);
   }
 
   /**

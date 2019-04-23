@@ -1,15 +1,6 @@
 import { ICampaign } from './Campaign';
+import { IOperation } from '../../../models/adwords';
 
-enum Operator {
-  ADD = 'ADD',
-  REMOVE = 'REMOVE',
-  SET = 'SET'
-}
-
-interface IOperation {
-  operator: Operator;
-  'Operation.Type': string;
-}
 interface ICampaignOperation extends IOperation {
   operand: ICampaign;
 }

@@ -1,9 +1,9 @@
 import { pd } from 'pretty-data';
 
 import { SoapService } from '../core';
-import { ISelector, PredicateOperator, IPaging } from '../../models/adwords';
+import { ISelector, Predicate, IPaging } from '../../models/adwords';
 import * as Ad from '../../models/adwords/Ad';
-import { AdwordsOperartionService } from './AdwordsOperationService';
+import { AdwordsOperartionService } from '../core/AdwordsOperationService';
 
 interface IAdGroupAdServiceOpts {
   soapService: SoapService;
@@ -172,7 +172,7 @@ class AdGroupAdService extends AdwordsOperartionService {
       predicates: [
         {
           field: 'AdType',
-          operator: PredicateOperator.IN,
+          operator: Predicate.Operator.IN,
           values: [Ad.Type.MULTI_ASSET_RESPONSIVE_DISPLAY_AD]
         }
       ]
@@ -186,7 +186,7 @@ class AdGroupAdService extends AdwordsOperartionService {
       predicates: [
         {
           field: 'AdType',
-          operator: PredicateOperator.IN,
+          operator: Predicate.Operator.IN,
           values: [Ad.Type.EXPANDED_TEXT_AD]
         }
       ]
