@@ -180,7 +180,7 @@ class AdGroupAdService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
-  public async getAllExpandedTextAd(pageing?: IPaging) {
+  public async getAllExpandedTextAd(paging?: IPaging) {
     const serviceSelector: ISelector = {
       fields: AdGroupAdService.selectorFields,
       predicates: [
@@ -191,8 +191,8 @@ class AdGroupAdService extends AdwordsOperartionService {
         }
       ]
     };
-    if (pageing) {
-      serviceSelector.paging = pageing;
+    if (paging) {
+      serviceSelector.paging = paging;
     }
     return this.get(serviceSelector);
   }

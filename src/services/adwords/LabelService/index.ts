@@ -14,6 +14,14 @@ interface ILabelServiceOpts {
   soapService: SoapService;
 }
 
+/**
+ * https://support.google.com/google-ads/answer/2475865?hl=zh-Hans
+ * https://support.google.com/google-ads/answer/7486653
+ *
+ * @author dulin
+ * @class LabelService
+ * @extends {AdwordsOperartionService}
+ */
 class LabelService extends AdwordsOperartionService {
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields#v201809-LabelService

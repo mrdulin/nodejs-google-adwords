@@ -6,7 +6,7 @@ describe('CampaignService test suites', () => {
   const campaignService = adwordsService.getService('CampaignService', {
     verbose: false
   });
-  it.skip('#getAll', async () => {
+  it('#getAll', async () => {
     const actualValue = await campaignService.getAll();
   });
 
@@ -23,7 +23,7 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.getById(id);
   });
 
-  it('#getAllEnabled', async () => {
+  it.skip('#getAllEnabled', async () => {
     const actualValue = await campaignService.getAllEnabled();
   });
   it.skip('#getAllButRemoved', async () => {
