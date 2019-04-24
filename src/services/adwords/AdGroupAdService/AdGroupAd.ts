@@ -12,7 +12,7 @@ interface IAdGroupAdRaw {
   readonly baseCampaignId: string;
   readonly baseAdGroupId: string;
   // TODO
-  forwardCompatibilityMap: any;
+  // forwardCompatibilityMap: any;
   readonly adStrengthInfo: any;
 }
 

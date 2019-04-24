@@ -2,8 +2,9 @@ import { ICustomParameters } from './CustomParameters';
 import { IUrlData } from './UrlData';
 import { Ad } from './enum/Ad';
 import { SystemManagedEntitySource } from './enum/SystemManagedEntitySource';
+import { Omit } from '../../../types/core';
 
-interface IAdRaw {
+interface IAd {
   id: string;
   url: string;
   displayUrl: string;
@@ -19,8 +20,27 @@ interface IAdRaw {
   devicePreference: string;
   readonly systemManagedEntitySource: SystemManagedEntitySource;
   'Ad.Type': string;
+  attributes: {
+    'xsi:type': string;
+  };
 }
 
-interface IAd extends Partial<IAdRaw> {}
+/**
+ * Caution: Expanded text ads do not use url, displayUrl, finalAppUrls, or devicePreference;
+ * setting these fields on an expanded text ad will cause an error.
+ *
+ * @author dulin
+ * @interface IExpandedTextAd
+ * @extends {(Partial<Omit<IAd, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>>)}
+ */
+interface IExpandedTextAd extends Partial<Omit<IAd, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>> {
+  headlinePart1: string;
+  headlinePart2: string;
+  headlinePart3?: string;
+  description: string;
+  description2?: string;
+  path1?: string;
+  path2?: string;
+}
 
-export { IAd };
+export { IExpandedTextAd };

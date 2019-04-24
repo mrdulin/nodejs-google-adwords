@@ -1,7 +1,7 @@
 import { pd } from 'pretty-data';
 
 import { SoapService, AdwordsOperartionService } from '../../core';
-import { ISelector, Predicate, IPaging } from '../../../types/adwords';
+import { ISelector, Predicate, IPaging, Operator } from '../../../types/adwords';
 import * as Ad from '../../../types/adwords/Ad';
 import { IAdGroupAdReturnValue } from './AdGroupAdReturnValue';
 import { IAdGroupAdOperation } from './AdGroupAdOperation';
@@ -200,8 +200,26 @@ class AdGroupAdService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
+  /**
+   * add ad group ad
+   *
+   * @author dulin
+   * @param {IAdGroupAd[]} adGroupAds
+   * @returns
+   * @memberof AdGroupAdService
+   */
   public add(adGroupAds: IAdGroupAd[]) {
-    const operations: IAdGroupAdOperation[] = [];
+    const operations: IAdGroupAdOperation[] = adGroupAds.map((adGroupAd: IAdGroupAd) => {
+      const operation: IAdGroupAdOperation = {
+        operator: Operator.ADD,
+        operand: adGroupAd,
+        attributes: {
+          'xsi:type': 'AdGroupAdOperation'
+        }
+      };
+      return operation;
+    });
+    return this.mutate(operations);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IAdGroupAdPage>(
@@ -217,6 +235,7 @@ class AdGroupAdService extends AdwordsOperartionService {
     operations: Operation[]
   ): Promise<Rval | undefined> {
     return this.soapService.mutateAsync<Operation, Rval>(operations).then(rval => {
+      console.log('mutate ad group ads successfully. rval: ', rval);
       return rval;
     });
   }

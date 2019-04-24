@@ -4,6 +4,9 @@ import { IExemptionRequest } from './ExemptionRequest';
 
 export interface IAdGroupAdOperation extends IOperation {
   operand: IAdGroupAd;
-  exemptionRequests: IExemptionRequest[];
-  ignorablePolicyTopicIds: string[];
+  exemptionRequests?: IExemptionRequest[];
+  ignorablePolicyTopicIds?: string[];
+  attributes?: {
+    'xsi:type': string;
+  };
 }
