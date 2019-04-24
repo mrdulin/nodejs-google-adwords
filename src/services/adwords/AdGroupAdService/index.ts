@@ -1,9 +1,12 @@
 import { pd } from 'pretty-data';
 
-import { SoapService } from '../core';
-import { ISelector, Predicate, IPaging } from '../../types/adwords';
-import * as Ad from '../../types/adwords/Ad';
-import { AdwordsOperartionService } from '../core/AdwordsOperationService';
+import { SoapService, AdwordsOperartionService } from '../../core';
+import { ISelector, Predicate, IPaging } from '../../../types/adwords';
+import * as Ad from '../../../types/adwords/Ad';
+import { IAdGroupAdReturnValue } from './AdGroupAdReturnValue';
+import { IAdGroupAdOperation } from './AdGroupAdOperation';
+import { IAdGroupAdPage } from './AdGroupAdPage';
+import { IAdGroupAd } from './AdGroupAd';
 
 interface IAdGroupAdServiceOpts {
   soapService: SoapService;
@@ -197,12 +200,24 @@ class AdGroupAdService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
-  protected async get<ServiceSelector = ISelector, Rval = any>(
+  public add(adGroupAds: IAdGroupAd[]) {
+    const operations: IAdGroupAdOperation[] = [];
+  }
+
+  protected async get<ServiceSelector = ISelector, Rval = IAdGroupAdPage>(
     serviceSelector: ServiceSelector
   ): Promise<Rval | undefined> {
-    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(response => {
-      console.log('get Ad Group ads successfully. response: ', pd.json(response));
-      return response;
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(rval => {
+      console.log('get Ad Group ads successfully. rval: ', pd.json(rval));
+      return rval;
+    });
+  }
+
+  protected async mutate<Operation = IAdGroupAdOperation, Rval = IAdGroupAdReturnValue>(
+    operations: Operation[]
+  ): Promise<Rval | undefined> {
+    return this.soapService.mutateAsync<Operation, Rval>(operations).then(rval => {
+      return rval;
     });
   }
 }
