@@ -11,7 +11,7 @@ describe('AdGroupService test suites', () => {
     const actualValue = await adGroupService.getAll();
   });
 
-  it.skip('#getAllByCampaignIds', async () => {
+  it('#getAllByCampaignIds', async () => {
     const campaignIds = ['1677467977'];
     const actualValue = await adGroupService.getAllByCampaignIds(campaignIds);
   });
