@@ -157,7 +157,7 @@ class AdGroupAdService extends AdwordsOperartionService {
   ];
 
   private soapService: SoapService;
-  private constructor(options: IAdGroupAdServiceOpts) {
+  constructor(options: IAdGroupAdServiceOpts) {
     super();
     this.soapService = options.soapService;
   }

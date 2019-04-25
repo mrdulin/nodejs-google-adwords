@@ -20,7 +20,6 @@ interface IServiceOpts {
   partialFailure: boolean;
   version: string;
   gzip: boolean;
-  namespace: string;
 }
 
 class AdWordsService {
@@ -71,7 +70,7 @@ class AdWordsService {
     }
     const serviceName = key;
     const ver = _.get(options, ['version'], AdWordsService.version);
-    const namespace = _.get(options, ['namespace'], AdWordsService.namespace);
+    const namespace = _.get(options, ['namespace'], _.get(ServiceClass, ['namespace'], AdWordsService.namespace));
     const xmlns = `${namespace}/${ver}`;
     const url = `${xmlns}/${serviceName}${AdWordsService.suffix}`;
 

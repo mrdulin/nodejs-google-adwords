@@ -17,6 +17,7 @@ interface IManagedCustomerServiceOpts {
  * @extends {AdwordsOperartionService}
  */
 class ManagedCustomerService extends AdwordsOperartionService {
+  public static readonly namespace = 'https://adwords.google.com/api/adwords/mcm';
   private static readonly selectorFields: string[] = [
     'AccountLabels',
     'CanManageClients',
@@ -28,7 +29,7 @@ class ManagedCustomerService extends AdwordsOperartionService {
   ];
 
   private soapService: SoapService;
-  private constructor(opts: IManagedCustomerServiceOpts) {
+  constructor(opts: IManagedCustomerServiceOpts) {
     super();
     this.soapService = opts.soapService;
   }

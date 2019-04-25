@@ -62,6 +62,13 @@ class SoapService extends AdwordsOperartionService {
     this.verbose = val;
   }
 
+  public async getClient(): Promise<soap.Client> {
+    if (this.client) {
+      return this.client;
+    }
+    return await this.beforeSendRequest();
+  }
+
   /**
    * mutate operation
    *
@@ -208,7 +215,6 @@ class SoapService extends AdwordsOperartionService {
     );
     const operationsDefinition = _.get(mutateLabelInput, ['operations[]'], {});
     const operandDefinition = operationsDefinition.operand;
-
     // TODO: support multiple operations
 
     if (operandDefinition) {
@@ -307,4 +313,4 @@ class SoapService extends AdwordsOperartionService {
   }
 }
 
-export { SoapService, ISoapServiceOpts };
+export { SoapService, ISoapServiceOpts, IResponse };

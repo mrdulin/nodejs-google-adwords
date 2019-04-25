@@ -90,7 +90,7 @@ class CampaignService extends AdwordsOperartionService {
   ];
 
   private soapService: SoapService;
-  private constructor(options: ICampaignServiceOpts) {
+  constructor(options: ICampaignServiceOpts) {
     super();
     this.soapService = options.soapService;
   }

@@ -82,7 +82,7 @@ class AdGroupCriterionService extends AdwordsOperartionService {
   ];
 
   private soapService: SoapService;
-  private constructor(options: IAdGroupCriterionServiceOpts) {
+  constructor(options: IAdGroupCriterionServiceOpts) {
     super();
     this.soapService = options.soapService;
   }

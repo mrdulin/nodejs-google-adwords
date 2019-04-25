@@ -8,7 +8,7 @@ class RegistryService<T> {
     return this.instance;
   }
   private registry: T;
-  private constructor(registry: T) {
+  constructor(registry: T) {
     this.registry = registry;
   }
 
