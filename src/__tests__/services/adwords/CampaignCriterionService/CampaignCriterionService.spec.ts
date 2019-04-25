@@ -1,7 +1,5 @@
-import faker from 'faker';
-
 import { adwordsService } from '../../initialize';
-import { INegativeCampaignCriterion } from '../../../../services/adwords/CampaignCriterionService/CampaignCriterion';
+import { ICampaignCriterion } from '../../../../services/adwords/CampaignCriterionService/CampaignCriterion';
 
 describe('CampaignCriterionService test suites', () => {
   const campaignCriterionService = adwordsService.getService('CampaignCriterionService', { verbose: false });
@@ -15,15 +13,19 @@ describe('CampaignCriterionService test suites', () => {
     const actualValue = await campaignCriterionService.getAllLocationCriterionByCampaignIds(campaignIds);
   });
 
-  // TODO
-  // it.skip('#add', async () => {
-  //   const cmapaignId = '1677467977';
-  //   const campaignCriterionOperations: INegativeCampaignCriterion[] = [
-  //     {
-  //       campaignId,
-  //       criterion:
-  //     }
-  //   ]
-  //   const actualValue = await campaignCriterionService.add(label);
-  // });
+  it('#add', async () => {
+    const campaignId = '1677467977';
+    const campaignCriterions: ICampaignCriterion[] = [
+      {
+        campaignId,
+        criterion: {
+          id: '9001634',
+          attributes: {
+            'xsi:type': 'Location'
+          }
+        }
+      }
+    ];
+    const actualValue = await campaignCriterionService.add(campaignCriterions);
+  });
 });

@@ -43,3 +43,4 @@ curl \
 - <https://developers.google.com/adwords/api/docs/samples/php/basic-operations#add-expanded-text-ads-to-an-ad-group>
 - <https://developers.google.com/adwords/api/docs/guides/bestpractices>
 - <https://developers.google.com/adwords/api/docs/guides/authentication#optimizing_oauth2_requests>
+- <https://developers.google.com/adwords/api/docs/appendix/geotargeting#dma>

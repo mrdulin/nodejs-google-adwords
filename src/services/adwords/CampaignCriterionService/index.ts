@@ -6,7 +6,7 @@ import { ICampaignCriterionPage } from './CampaignCriterionPage';
 import { ICampaignCriterionOperation } from './CampaignCriterionOperation';
 import { ICampaignCriterionReturnValue } from './CampaignCriterionReturnValue';
 import { Criterion } from './enum/Criterion';
-import { INegativeCampaignCriterion } from './CampaignCriterion';
+import { INegativeCampaignCriterion, ICampaignCriterion } from './CampaignCriterion';
 
 interface ICampaignCriterionServiceOpts {
   soapService: SoapService;
@@ -118,9 +118,19 @@ class CampaignCriterionService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
-  public async add(campaignCriterionOperations: INegativeCampaignCriterion[]) {
+  /**
+   * add location to campaign, location criterion id can be found here:
+   * https://docs.google.com/spreadsheets/d/1FIB1WP3OHbjoe0AQ8oNuzY--NnHeuen-W7EWY6uupnA/edit#gid=1905266229
+   *
+   *
+   * @author dulin
+   * @param {ICampaignCriterion[]} campaignCriterionOperations
+   * @returns
+   * @memberof CampaignCriterionService
+   */
+  public async add(campaignCriterionOperations: ICampaignCriterion[]) {
     const opertions: ICampaignCriterionOperation[] = campaignCriterionOperations.map(
-      (campaignCriterionOperation: INegativeCampaignCriterion) => {
+      (campaignCriterionOperation: ICampaignCriterion) => {
         const operation: ICampaignCriterionOperation = {
           operator: Operator.ADD,
           operand: campaignCriterionOperation,
