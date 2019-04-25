@@ -2,7 +2,7 @@
 
 google adwords and nodejs in action
 
-This is a Node.js library for Google Adwords SOAP + WSDL API
+This is a Node.js library for Google Adwords SOAP + WSDL API (v201809)
 
 ## OAuth
 
