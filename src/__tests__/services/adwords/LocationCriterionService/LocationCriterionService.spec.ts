@@ -1,5 +1,3 @@
-import faker from 'faker';
-
 import { adwordsService } from '../../initialize';
 describe('LocationCriterionService test suites', () => {
   const locationCriterionService = adwordsService.getService('LocationCriterionService', { verbose: false });
