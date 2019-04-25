@@ -1,17 +1,19 @@
 import { ILocation } from './Criterion';
 import { CampaignCriterion } from './enum/CampaignCriterion';
 
-interface ICampaignCriterion {
+interface ICampaignCriterionRaw {
   campaignId: string;
   readonly isNegative: boolean;
   //TODO
   criterion: ILocation;
-  bidModifier?: number;
-  campaignCriterionStatus?: CampaignCriterion.CampaignCriterionStatus;
+  bidModifier: number;
+  campaignCriterionStatus: CampaignCriterion.CampaignCriterionStatus;
   readonly baseCampaignId: string;
   // forwardCompatibilityMap: any;
-  'CampaignCriterion.Type'?: string;
+  'CampaignCriterion.Type': string;
 }
+
+interface ICampaignCriterion extends Partial<ICampaignCriterionRaw> {}
 
 interface INegativeCampaignCriterion extends ICampaignCriterion {
   attributes: {

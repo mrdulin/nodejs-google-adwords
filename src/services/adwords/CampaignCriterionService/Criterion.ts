@@ -9,11 +9,14 @@ interface ICriterionRaw {
 
 interface ICriterion extends Partial<ICriterionRaw> {}
 
-interface ILocation extends ICriterion {
+interface ILocationRaw extends ICriterionRaw {
   readonly locationName: string;
   readonly displayType: string;
   readonly targetingStatus: LocationTargetingStatus;
   readonly parentLocations: ILocation[];
+}
+
+interface ILocation extends Partial<ILocationRaw> {
   attributes: {
     'xsi:type': 'Location';
   };
