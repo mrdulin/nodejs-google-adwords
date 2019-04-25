@@ -20,7 +20,7 @@ class LocationCriterionService extends AdwordsOperartionService {
   private static readonly selectorFields: string[] = ['CanonicalName', 'Reach'];
 
   private soapService: SoapService;
-  private constructor(options: ILocationCriterionServiceOpts) {
+  constructor(options: ILocationCriterionServiceOpts) {
     super();
     this.soapService = options.soapService;
   }

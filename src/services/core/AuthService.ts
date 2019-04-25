@@ -47,7 +47,7 @@ class AuthService implements IAuthService {
   private credentials: IOAuthCredential;
   private tokenExpiresInMs: number = 0;
 
-  private constructor(options: IAuthServiceOpts) {
+  constructor(options: IAuthServiceOpts) {
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
     this.credentials = options.credentials;

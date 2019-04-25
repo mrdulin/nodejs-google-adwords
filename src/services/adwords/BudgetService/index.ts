@@ -41,7 +41,7 @@ class BudgetService extends AdwordsOperartionService {
   ];
 
   private soapService: SoapService;
-  private constructor(options: IBudgetServiceOpts) {
+  constructor(options: IBudgetServiceOpts) {
     super();
     this.soapService = options.soapService;
   }

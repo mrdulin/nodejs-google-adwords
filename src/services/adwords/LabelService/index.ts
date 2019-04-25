@@ -34,7 +34,7 @@ class LabelService extends AdwordsOperartionService {
   private static readonly selectorFields: string[] = ['LabelAttribute', 'LabelId', 'LabelName', 'LabelStatus'];
 
   private soapService: SoapService;
-  private constructor(options: ILabelServiceOpts) {
+  constructor(options: ILabelServiceOpts) {
     super();
     this.soapService = options.soapService;
   }
