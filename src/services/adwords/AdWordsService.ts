@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { pd } from 'pretty-data';
 import { RegistryService, IOAuthCredential, IAuthService, AuthService, SoapService, ISoapServiceOpts } from '../core';
 import { registryService, IServiceMap } from './registry';
-import { version } from 'bluebird';
 
 interface IAdWordsServiceOpts {
   clientCustomerId?: string;
@@ -21,6 +20,7 @@ interface IServiceOpts {
   partialFailure: boolean;
   version: string;
   gzip: boolean;
+  namespace: string;
 }
 
 class AdWordsService {
@@ -70,11 +70,9 @@ class AdWordsService {
       throw new Error(`Service: ${key} has not been registered yet.`);
     }
     const serviceName = key;
-    let ver = AdWordsService.version;
-    if (options && options.version) {
-      ver = options.version;
-    }
-    const xmlns = `${AdWordsService.namespace}/${ver}`;
+    const ver = _.get(options, ['version'], AdWordsService.version);
+    const namespace = _.get(options, ['namespace'], AdWordsService.namespace);
+    const xmlns = `${namespace}/${ver}`;
     const url = `${xmlns}/${serviceName}${AdWordsService.suffix}`;
 
     let soapServiceOptions: ISoapServiceOpts = {
