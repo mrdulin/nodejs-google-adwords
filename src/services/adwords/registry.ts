@@ -10,7 +10,7 @@ import { LocationCriterionService } from './LocationCriterionService';
 import { ManagedCustomerService } from './ManagedCustomerService';
 import { CustomerService } from './CustomerService';
 import { ReportDefinitionService } from './ReportDefinitionService';
-import { ReportService } from './ReportService';
+import { CampaignPerformanceReportService } from './Reports/CampaignPerformanceReportService';
 
 interface IServiceMap {
   CampaignService: CampaignService;
@@ -24,7 +24,7 @@ interface IServiceMap {
   ManagedCustomerService: ManagedCustomerService;
   CustomerService: CustomerService;
   ReportDefinitionService: ReportDefinitionService;
-  ReportService: ReportService;
+  CampaignPerformanceReportService: CampaignPerformanceReportService;
 }
 
 const registryService = RegistryService.init()
@@ -39,6 +39,6 @@ const registryService = RegistryService.init()
   .register(ManagedCustomerService.name, ManagedCustomerService)
   .register(CustomerService.name, CustomerService)
   .register(ReportDefinitionService.name, ReportDefinitionService)
-  .register(ReportService.name, ReportService);
+  .register(CampaignPerformanceReportService.name, CampaignPerformanceReportService);
 
 export { registryService, IServiceMap };

@@ -44,3 +44,4 @@ curl \
 - <https://developers.google.com/adwords/api/docs/guides/bestpractices>
 - <https://developers.google.com/adwords/api/docs/guides/authentication#optimizing_oauth2_requests>
 - <https://developers.google.com/adwords/api/docs/appendix/geotargeting#dma>
+- <https://developers.google.com/adwords/api/docs/guides/reporting>

@@ -3,51 +3,47 @@ import _ from 'lodash';
 import { pd } from 'pretty-data';
 
 import { HttpService, OptionsWithUri } from '../../core';
-import { ISelector } from '../../../types/adwords';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
+import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
+import { XMLService } from '../../core';
 
 interface IReportServiceOpts {
   httpService: HttpService;
 }
 
-enum DateRangeType {
-  TODAY = 'TODAY',
-  YESTERDAY = 'YESTERDAY',
-  LAST_7_DAYS = 'LAST_7_DAYS',
-  LAST_30_DAYS = 'LAST_30_DAYS',
-  ALL_TIME = 'ALL_TIME'
-}
-
-enum DownloadFormatType {
-  CSV = 'CSV',
-  XML = 'XML'
-}
-
-interface IReportDefinition {
-  selector: ISelector;
-  reportName: string;
-  reportType: ReportDefinition.ReportType;
-  dateRangeType: DateRangeType;
-  downloadFormat?: DownloadFormatType;
+interface IReportDownloadOptions {
+  json: boolean;
+  skipReportHeader: boolean;
+  skipColumnHeader: boolean;
+  skipReportSummary: boolean;
+  useRawEnumValues: boolean;
+  includeZeroImpressions: boolean;
 }
 
 class ReportService {
   public static readonly URL: string = 'https://adwords.google.com/api/adwords/reportdownload/v201809';
+
   private httpService: HttpService;
   constructor(options: IReportServiceOpts) {
     this.httpService = options.httpService;
   }
 
-  public async reportDownload(reportDefinition: IReportDefinition) {
+  public async reportDownload(reportDefinition: IReportDefinition, options?: Partial<IReportDownloadOptions>) {
     const reportDef = _.defaults(reportDefinition, {
-      downloadFormat: DownloadFormatType.XML
+      downloadFormat: ReportDefinition.DownloadFormatType.XML
     });
     const xml = this.buildObjectToXML<{ reportDefinition: IReportDefinition }>({ reportDefinition: reportDef });
-    const options: OptionsWithUri = {
+
+    const requestOptions: OptionsWithUri = {
       uri: ReportService.URL,
       method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        skipReportHeader: _.get(options, ['skipReportHeader'], false),
+        skipColumnHeader: _.get(options, ['skipColumnHeader'], false),
+        skipReportSummary: _.get(options, ['skipReportSummary'], true),
+        useRawEnumValues: _.get(options, ['useRawEnumValues'], false),
+        includeZeroImpressions: _.get(options, ['includeZeroImpressions'], false)
       },
       formData: {
         __rdxml: xml
@@ -55,21 +51,31 @@ class ReportService {
     };
 
     return this.httpService
-      .request(options)
+      .request(requestOptions)
       .then(rval => {
-        console.log('get report successfully. rval: ', pd.xml(rval));
+        console.log(`get ${reportDefinition.reportName} successfully. rval: `, pd.xml(rval));
+        return rval;
+      })
+      .then(rval => {
+        if (options && options.json) {
+          return this.xmlParse(rval);
+        }
         return rval;
       })
       .catch(error => {
-        console.error('get report failed.');
+        console.error(`get ${reportDefinition.reportName} failed.`);
         console.error(error);
       });
   }
 
-  public buildObjectToXML<T>(obj: T) {
+  private buildObjectToXML<T>(obj: T) {
     const builder = new xml2js.Builder();
     return builder.buildObject(obj);
   }
+
+  private async xmlParse(xml: string) {
+    return XMLService.parseStringPromise(xml);
+  }
 }
 
-export { ReportService, IReportDefinition, DateRangeType, DownloadFormatType };
+export { ReportService };

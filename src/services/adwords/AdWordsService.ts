@@ -12,7 +12,7 @@ import {
   IHttpServiceOpts
 } from '../core';
 import { registryService, IServiceMap } from './registry';
-import { OptionalUriUrl } from 'request';
+import { ReportService } from './ReportService';
 
 interface IAdWordsServiceOpts {
   clientCustomerId: string;
@@ -110,8 +110,9 @@ class AdWordsService {
       verbose
     };
     const httpService = new HttpService(httpServiceOpts);
+    const reportService = new ReportService({ httpService });
 
-    return new (ServiceClass as any)(Object.assign({}, options, { soapService, httpService }));
+    return new (ServiceClass as any)(Object.assign({}, options, { soapService, httpService, reportService }));
   }
 }
 
