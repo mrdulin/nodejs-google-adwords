@@ -1,4 +1,4 @@
-import soap from 'soap';
+import * as soap from 'soap';
 import _ from 'lodash';
 import { pd } from 'pretty-data';
 
@@ -6,6 +6,7 @@ import { IAuthService, IOAuthCredential } from './AuthService';
 import { ISelector } from '../../types/adwords';
 import { AdwordsOperartionService } from './AdwordsOperationService';
 import { CoreOptions } from './HttpService';
+import { XMLService } from './XMLService';
 
 interface ISoapHeader {
   clientCustomerId: string;
@@ -279,6 +280,7 @@ class SoapService extends AdwordsOperartionService {
 
   /**
    * handle soap client events
+   * https://developers.google.com/adwords/api/docs/guides/call-structure#response_headers
    *
    * @author dulin
    * @private
@@ -306,8 +308,11 @@ class SoapService extends AdwordsOperartionService {
         if (this.verbose) {
           console.log('Soap response body: ', pd.xml(body));
           console.log('Soap response: ', pd.json(response));
-          console.log('Soap response eid: ', eid);
         }
+
+        const operations: string = XMLService.extractValueFromElement(body, 'operations');
+        const responseTime: string = XMLService.extractValueFromElement(body, 'responseTime');
+        console.log(`Soap requestId: ${eid}, operations: ${operations}, responseTime: ${responseTime}ms`);
       });
     }
   }

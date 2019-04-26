@@ -1,0 +1,52 @@
+{
+  "ListReturnValue.Type": "AdGroupCriterionReturnValue",
+  "value": [
+    {
+      "AdGroupCriterion.Type": "AdGroupCriterion"
+    },
+    {
+      "attributes": {
+        "xsi:type": "NegativeAdGroupCriterion"
+      },
+      "adGroupId": "72029524744",
+      "criterion": {
+        "attributes": {
+          "xsi:type": "Keyword"
+        },
+        "id": "299105118235",
+        "type": "KEYWORD",
+        "Criterion.Type": "Keyword",
+        "text": "nisi",
+        "matchType": "EXACT"
+      },
+      "AdGroupCriterion.Type": "NegativeAdGroupCriterion"
+    }
+  ],
+  "partialFailureErrors": [
+    {
+      "attributes": {
+        "xsi:type": "CriterionError"
+      },
+      "fieldPath": "operations[0].operand.criterion.text",
+      "fieldPathElements": [
+        {
+          "field": "operations",
+          "index": 0
+        },
+        {
+          "field": "operand"
+        },
+        {
+          "field": "criterion"
+        },
+        {
+          "field": "text"
+        }
+      ],
+      "trigger": "inv@lid cruise",
+      "errorString": "CriterionError.KEYWORD_HAS_INVALID_CHARS",
+      "ApiError.Type": "CriterionError",
+      "reason": "KEYWORD_HAS_INVALID_CHARS"
+    }
+  ]
+}
