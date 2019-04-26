@@ -3,7 +3,6 @@ import { pd } from 'pretty-data';
 import { AdwordsOperartionService, SoapService } from '../../core';
 import { ISelector } from './Selector';
 import { IManagedCustomerPage } from './ManagedCustomerPage';
-import { Predicate } from '../../../types/adwords';
 
 interface IManagedCustomerServiceOpts {
   soapService: SoapService;
@@ -18,6 +17,7 @@ interface IManagedCustomerServiceOpts {
  */
 class ManagedCustomerService extends AdwordsOperartionService {
   public static readonly namespace = 'https://adwords.google.com/api/adwords/mcm';
+
   private static readonly selectorFields: string[] = [
     'AccountLabels',
     'CanManageClients',

@@ -121,7 +121,8 @@ class AdGroupCriterionService extends AdwordsOperartionService {
   }
 
   /**
-   * add ad group criterion such as Keyword, Gender
+   * add ad group criterion such as Keyword, Gender. Support partial failure
+   * https://developers.google.com/adwords/api/docs/guides/partial-failure
    *
    * @author dulin
    * @param {(Array<IBiddableAdGroupCriterion | INegativeAdGroupCriterion>)} adGroupCriterions

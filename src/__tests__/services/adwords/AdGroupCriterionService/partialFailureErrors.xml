@@ -1,0 +1,53 @@
+<!-- Soap response body: -->
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Header>
+    <ResponseHeader xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <requestId>0005876bfb4209130a013b996b0abcd8</requestId>
+      <serviceName>AdGroupCriterionService</serviceName>
+      <methodName>mutate</methodName>
+      <operations>2</operations>
+      <responseTime>337</responseTime>
+    </ResponseHeader>
+  </soap:Header>
+  <soap:Body>
+    <mutateResponse xmlns="https://adwords.google.com/api/adwords/cm/v201809">
+      <rval>
+        <ListReturnValue.Type>AdGroupCriterionReturnValue</ListReturnValue.Type>
+        <value>
+          <AdGroupCriterion.Type>AdGroupCriterion</AdGroupCriterion.Type>
+        </value>
+        <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="NegativeAdGroupCriterion">
+          <adGroupId>72029524744</adGroupId>
+          <criterion xsi:type="Keyword">
+            <id>299105118235</id>
+            <type>KEYWORD</type>
+            <Criterion.Type>Keyword</Criterion.Type>
+            <text>nisi</text>
+            <matchType>EXACT</matchType>
+          </criterion>
+          <AdGroupCriterion.Type>NegativeAdGroupCriterion</AdGroupCriterion.Type>
+        </value>
+        <partialFailureErrors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CriterionError">
+          <fieldPath>operations[0].operand.criterion.text</fieldPath>
+          <fieldPathElements>
+            <field>operations</field>
+            <index>0</index>
+          </fieldPathElements>
+          <fieldPathElements>
+            <field>operand</field>
+          </fieldPathElements>
+          <fieldPathElements>
+            <field>criterion</field>
+          </fieldPathElements>
+          <fieldPathElements>
+            <field>text</field>
+          </fieldPathElements>
+          <trigger>inv@lid cruise</trigger>
+          <errorString>CriterionError.KEYWORD_HAS_INVALID_CHARS</errorString>
+          <ApiError.Type>CriterionError</ApiError.Type>
+          <reason>KEYWORD_HAS_INVALID_CHARS</reason>
+        </partialFailureErrors>
+      </rval>
+    </mutateResponse>
+  </soap:Body>
+</soap:Envelope>

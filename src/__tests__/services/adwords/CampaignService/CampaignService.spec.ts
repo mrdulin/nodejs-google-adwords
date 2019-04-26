@@ -6,11 +6,11 @@ describe('CampaignService test suites', () => {
   const campaignService = adwordsService.getService('CampaignService', {
     verbose: false,
   });
-  it('#getAll', async () => {
+  it.skip('#getAll', async () => {
     const actualValue = await campaignService.getAll();
   });
 
-  it.skip('#getByPage', async () => {
+  it('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
       numberResults: 1,
