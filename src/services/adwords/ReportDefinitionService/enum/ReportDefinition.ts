@@ -49,4 +49,17 @@ export namespace ReportDefinition {
     MARKETPLACE_PERFORMANCE_REPORT = 'MARKETPLACE_PERFORMANCE_REPORT',
     UNKNOW = 'UNKNOW'
   }
+
+  export enum DateRangeType {
+    TODAY = 'TODAY',
+    YESTERDAY = 'YESTERDAY',
+    LAST_7_DAYS = 'LAST_7_DAYS',
+    LAST_30_DAYS = 'LAST_30_DAYS',
+    ALL_TIME = 'ALL_TIME'
+  }
+
+  export enum DownloadFormatType {
+    CSV = 'CSV',
+    XML = 'XML'
+  }
 }
