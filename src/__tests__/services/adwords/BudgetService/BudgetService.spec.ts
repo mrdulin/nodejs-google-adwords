@@ -2,7 +2,7 @@ import faker from 'faker';
 
 import { adwordsService } from '../../initialize';
 import { IPaging } from '../../../../types/adwords';
-import { BudgetService, IBudget, Budget } from '../../../../services/adwords';
+import { BudgetService, Budget } from '../../../../services/adwords/BudgetService';
 
 describe('BudgetService test suites', () => {
   const budgetService = adwordsService.getService('BudgetService', { verbose: false });
