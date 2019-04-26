@@ -1,13 +1,23 @@
 {
-  "name": "nodejs-ggaw",
+  "name": "nodejs-google-adwords",
   "version": "1.0.0",
-  "description": "google adwords and nodejs in action",
+  "description": "Google Ads API Client Library for Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "clean": "rm -rf ./dist",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "lint": "tslint --config ./tslint.json --project ./tsconfig.json",
+    "prettify": "prettier --config ./.prettierrc --write \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
+    "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Google Ads",
+    "Google Adwords",
+    "Node.js"
+  ],
+  "author": "mrdulin",
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -18,13 +28,15 @@
     "@types/faker": "^4.1.5",
     "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.123",
-    "@types/node": "^11.11.0",
+    "@types/node": "^11.13.7",
     "@types/request": "^2.48.1",
     "@types/request-promise": "^4.1.42",
     "@types/xml2js": "^0.4.4",
     "dotenv": "^6.2.0",
     "faker": "^4.1.0",
+    "husky": "^2.1.0",
     "jest": "^24.7.1",
+    "prettier": "^1.17.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.0.3",
     "tslint": "^5.13.1",
@@ -38,5 +50,10 @@
     "request-promise": "^4.2.4",
     "soap": "^0.27.0",
     "xml2js": "^0.4.19"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run lint && npm run prettify"
+    }
   }
 }

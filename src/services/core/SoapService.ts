@@ -1,4 +1,4 @@
-import * as soap from 'soap';
+import soap from 'soap';
 import _ from 'lodash';
 import { pd } from 'pretty-data';
 
