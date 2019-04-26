@@ -141,7 +141,7 @@ class SoapService extends AdwordsOperartionService {
           const rval = this.parseGetResponse<Rval>(response);
           resolve(rval);
         },
-        requestOptions
+        requestOptions,
       );
     });
   }
@@ -196,7 +196,7 @@ class SoapService extends AdwordsOperartionService {
     const getInput: IGetInput = _.get(
       this.description,
       [this.serviceName, `${this.serviceName}InterfacePort`, 'get', 'input'],
-      {}
+      {},
     );
     let parameter = {};
     if (getInput.selector) {
@@ -211,7 +211,7 @@ class SoapService extends AdwordsOperartionService {
     const mutateLabelInput: { 'operation[]': Operation } = _.get(
       this.description,
       [this.serviceName, `${this.serviceName}InterfacePort`, 'mutateLabel', 'input'],
-      {}
+      {},
     );
     const operationsDefinition = _.get(mutateLabelInput, ['operations[]'], {});
     const operandDefinition = operationsDefinition.operand;
@@ -266,9 +266,9 @@ class SoapService extends AdwordsOperartionService {
   private formHttpRequestOptions(): CoreOptions {
     const options: CoreOptions = {
       headers: {
-        Connection: 'keep-alive'
+        Connection: 'keep-alive',
       },
-      gzip: this.gzip
+      gzip: this.gzip,
     };
     if (this.gzip && options.headers) {
       options.headers['User-Agent'] = `${this.header.userAgent} (gzip)`;

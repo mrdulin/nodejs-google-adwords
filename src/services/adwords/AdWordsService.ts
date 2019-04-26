@@ -9,7 +9,7 @@ import {
   ISoapServiceOpts,
   ISoapHeader,
   HttpService,
-  IHttpServiceOpts
+  IHttpServiceOpts,
 } from '../core';
 import { registryService, IServiceMap } from './registry';
 import { ReportService } from './ReportService';
@@ -49,13 +49,13 @@ class AdWordsService {
       developerToken: options.developerToken,
       userAgent: options.userAgent,
       validateOnly: options.validateOnly || false,
-      partialFailure: options.partialFailure || false
+      partialFailure: options.partialFailure || false,
     };
 
     this.authService = AuthService.getInstance({
       clientId: options.clientId,
       clientSecret: options.clientSecret,
-      credentials: options.credentials
+      credentials: options.credentials,
     });
   }
 
@@ -92,7 +92,7 @@ class AdWordsService {
       verbose,
       url,
       serviceName,
-      xmlns
+      xmlns,
     };
     if (options) {
       soapServiceOptions = _.merge(soapServiceOptions, options);
@@ -104,10 +104,10 @@ class AdWordsService {
     const httpServiceOpts: IHttpServiceOpts = {
       headers: {
         clientCustomerId: this.soapHeader.clientCustomerId,
-        developerToken: this.soapHeader.developerToken
+        developerToken: this.soapHeader.developerToken,
       },
       authService: this.authService,
-      verbose
+      verbose,
     };
     const httpService = new HttpService(httpServiceOpts);
     const reportService = new ReportService({ httpService });

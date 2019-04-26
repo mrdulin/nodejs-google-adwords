@@ -3,7 +3,7 @@ import faker from 'faker';
 import { adwordsService } from '../../initialize';
 import {
   IBiddableAdGroupCriterion,
-  INegativeAdGroupCriterion
+  INegativeAdGroupCriterion,
 } from '../../../../services/adwords/AdGroupCriterionService/AdGroupCriterion';
 import { KeywordMatchType } from '../../../../services/adwords/AdGroupCriterionService/enum/KeywordMatchType';
 
@@ -28,12 +28,12 @@ describe('AdGroupCriterionService test suites', () => {
           text: faker.lorem.word(),
           matchType: KeywordMatchType.EXACT,
           attributes: {
-            'xsi:type': 'Keyword'
-          }
+            'xsi:type': 'Keyword',
+          },
         },
         attributes: {
-          'xsi:type': 'BiddableAdGroupCriterion'
-        }
+          'xsi:type': 'BiddableAdGroupCriterion',
+        },
       },
       {
         adGroupId,
@@ -41,13 +41,13 @@ describe('AdGroupCriterionService test suites', () => {
           text: faker.lorem.word(),
           matchType: KeywordMatchType.EXACT,
           attributes: {
-            'xsi:type': 'Keyword'
-          }
+            'xsi:type': 'Keyword',
+          },
         },
         attributes: {
-          'xsi:type': 'NegativeAdGroupCriterion'
-        }
-      }
+          'xsi:type': 'NegativeAdGroupCriterion',
+        },
+      },
     ];
 
     const actualValue = await adGroupCriterionService.add(adGroupCrierions);

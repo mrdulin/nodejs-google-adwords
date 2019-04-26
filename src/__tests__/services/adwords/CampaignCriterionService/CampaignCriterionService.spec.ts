@@ -21,10 +21,10 @@ describe('CampaignCriterionService test suites', () => {
         criterion: {
           id: '9001634',
           attributes: {
-            'xsi:type': 'Location'
-          }
-        }
-      }
+            'xsi:type': 'Location',
+          },
+        },
+      },
     ];
     const actualValue = await campaignCriterionService.add(campaignCriterions);
   });

@@ -4,14 +4,14 @@ enum TimeUnit {
   DAY = 'DAY',
   WEEK = 'WEEK',
   MONTH = 'MONTH',
-  LIFETIME = 'LIFETIME'
+  LIFETIME = 'LIFETIME',
 }
 
 enum Level {
   CREATIVE = 'CREATIVE',
   ADGROUP = 'ADGROUP',
   CAMPAIGN = 'CAMPAIGN',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }
 
 interface IFrequencyCap {

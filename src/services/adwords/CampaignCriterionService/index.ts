@@ -76,7 +76,7 @@ class CampaignCriterionService extends AdwordsOperartionService {
     'VerticalId',
     'VerticalParentId',
     'VideoId',
-    'VideoName'
+    'VideoName',
   ];
 
   private soapService: SoapService;
@@ -92,9 +92,9 @@ class CampaignCriterionService extends AdwordsOperartionService {
         {
           field: 'CampaignId',
           operator: Predicate.Operator.IN,
-          values: campaignIds
-        }
-      ]
+          values: campaignIds,
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -106,14 +106,14 @@ class CampaignCriterionService extends AdwordsOperartionService {
         {
           field: 'CampaignId',
           operator: Predicate.Operator.IN,
-          values: campaignIds
+          values: campaignIds,
         },
         {
           field: 'CriteriaType',
           operator: Predicate.Operator.IN,
-          values: [Criterion.Type.LOCATION]
-        }
-      ]
+          values: [Criterion.Type.LOCATION],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -135,17 +135,17 @@ class CampaignCriterionService extends AdwordsOperartionService {
           operator: Operator.ADD,
           operand: campaignCriterionOperation,
           attributes: {
-            'xsi:type': 'CampaignCriterionOperation'
-          }
+            'xsi:type': 'CampaignCriterionOperation',
+          },
         };
         return operation;
-      }
+      },
     );
     return this.mutate(opertions);
   }
 
   protected async mutate<Operaiton = ICampaignCriterionOperation, Rval = ICampaignCriterionReturnValue>(
-    opertions: Operaiton[]
+    opertions: Operaiton[],
   ): Promise<Rval> {
     return this.soapService.mutateAsync<Operaiton, Rval>(opertions).then((rval: Rval) => {
       console.log('mutate campaign criterion successfully. rval: ', pd.json(rval));
@@ -154,7 +154,7 @@ class CampaignCriterionService extends AdwordsOperartionService {
   }
 
   protected async get<ServiceSelector = ISelector, Rval = ICampaignCriterionPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
       console.log('get campaign criterion successfully. rval: ', pd.json(rval));

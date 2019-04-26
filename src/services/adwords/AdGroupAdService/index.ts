@@ -153,7 +153,7 @@ class AdGroupAdService extends AdwordsOperartionService {
     'Urls',
     'VideoTypes',
     'Width',
-    'YouTubeVideoIdString'
+    'YouTubeVideoIdString',
   ];
 
   private soapService: SoapService;
@@ -164,7 +164,7 @@ class AdGroupAdService extends AdwordsOperartionService {
 
   public async getAll() {
     const serviceSelector: ISelector = {
-      fields: AdGroupAdService.selectorFields
+      fields: AdGroupAdService.selectorFields,
     };
     return this.get(serviceSelector);
   }
@@ -176,9 +176,9 @@ class AdGroupAdService extends AdwordsOperartionService {
         {
           field: 'AdType',
           operator: Predicate.Operator.IN,
-          values: [Ad.Type.MULTI_ASSET_RESPONSIVE_DISPLAY_AD]
-        }
-      ]
+          values: [Ad.Type.MULTI_ASSET_RESPONSIVE_DISPLAY_AD],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -190,9 +190,9 @@ class AdGroupAdService extends AdwordsOperartionService {
         {
           field: 'AdType',
           operator: Predicate.Operator.IN,
-          values: [Ad.Type.EXPANDED_TEXT_AD]
-        }
-      ]
+          values: [Ad.Type.EXPANDED_TEXT_AD],
+        },
+      ],
     };
     if (paging) {
       serviceSelector.paging = paging;
@@ -207,9 +207,9 @@ class AdGroupAdService extends AdwordsOperartionService {
         {
           field: 'AdGroupId',
           operator: Predicate.Operator.IN,
-          values: adGroupIds
-        }
-      ]
+          values: adGroupIds,
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -230,8 +230,8 @@ class AdGroupAdService extends AdwordsOperartionService {
         operator: Operator.ADD,
         operand: adGroupAd,
         attributes: {
-          'xsi:type': 'AdGroupAdOperation'
-        }
+          'xsi:type': 'AdGroupAdOperation',
+        },
       };
       return operation;
     });
@@ -244,8 +244,8 @@ class AdGroupAdService extends AdwordsOperartionService {
         operator: Operator.SET,
         operand: adGroupAd,
         attributes: {
-          'xsi:type': 'AdGroupAdOperation'
-        }
+          'xsi:type': 'AdGroupAdOperation',
+        },
       };
       return operation;
     });
@@ -253,18 +253,18 @@ class AdGroupAdService extends AdwordsOperartionService {
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IAdGroupAdPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
-    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(rval => {
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
       console.log('get Ad Group ads successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
 
   protected async mutate<Operation = IAdGroupAdOperation, Rval = IAdGroupAdReturnValue>(
-    operations: Operation[]
+    operations: Operation[],
   ): Promise<Rval | undefined> {
-    return this.soapService.mutateAsync<Operation, Rval>(operations).then(rval => {
+    return this.soapService.mutateAsync<Operation, Rval>(operations).then((rval) => {
       console.log('mutate ad group ads successfully. rval: ', rval);
       return rval;
     });

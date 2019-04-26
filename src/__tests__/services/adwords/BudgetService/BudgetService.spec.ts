@@ -13,7 +13,7 @@ describe('BudgetService test suites', () => {
   it('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
-      numberResults: 2
+      numberResults: 2,
     };
     const actualValue = await budgetService.getByPage(paging);
   });
@@ -32,11 +32,11 @@ describe('BudgetService test suites', () => {
     const budget: IBudget = {
       name: faker.lorem.word(),
       amount: {
-        microAmount: BudgetService.UNIT
+        microAmount: BudgetService.UNIT,
       },
       deliveryMethod: Budget.BudgetDeliveryMethod.STANDARD,
       isExplicitlyShared: false,
-      status: Budget.BudgetStatus.ENABLED
+      status: Budget.BudgetStatus.ENABLED,
     };
 
     const actualValue = await budgetService.add(budget);
@@ -45,7 +45,7 @@ describe('BudgetService test suites', () => {
   it.skip('#update', async () => {
     const budget: IBudget = {
       budgetId: '1865779148',
-      isExplicitlyShared: true
+      isExplicitlyShared: true,
     };
     const actualValue = await budgetService.update(budget);
   });

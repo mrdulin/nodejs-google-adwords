@@ -21,7 +21,7 @@ describe('AdGroupService test suites', () => {
       campaignId: '1677467977',
       name: faker.lorem.slug(1),
       status: AdGroupStatus.ENABLED,
-      adGroupType: AdGroupType.DISPLAY_STANDARD
+      adGroupType: AdGroupType.DISPLAY_STANDARD,
     };
     const actualValue = await adGroupService.add(adGroup);
   });

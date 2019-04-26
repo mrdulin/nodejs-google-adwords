@@ -25,7 +25,7 @@ class ManagedCustomerService extends AdwordsOperartionService {
     'CustomerId',
     'DateTimeZone',
     'Name',
-    'TestAccount'
+    'TestAccount',
   ];
 
   private soapService: SoapService;
@@ -43,13 +43,13 @@ class ManagedCustomerService extends AdwordsOperartionService {
    */
   public async getAccountHierarchy() {
     const serviceSelector: ISelector = {
-      fields: ManagedCustomerService.selectorFields
+      fields: ManagedCustomerService.selectorFields,
     };
     return this.get(serviceSelector);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IManagedCustomerPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
       console.log('get campaign criterion successfully. rval: ', pd.json(rval));

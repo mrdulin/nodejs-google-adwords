@@ -34,9 +34,9 @@ class CustomerService extends AdwordsOperartionService {
   public async getCustomers() {
     return this.soapService
       .getClient()
-      .then(client => client.getCustomersAsync())
+      .then((client) => client.getCustomersAsync())
       .then(this.parseResponse)
-      .then(rval => {
+      .then((rval) => {
         console.log('get customers successfully. rval: ', pd.json(rval));
         return rval;
       });

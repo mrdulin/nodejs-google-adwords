@@ -61,13 +61,13 @@ class AuthService implements IAuthService {
         client_id: this.clientId,
         client_secret: this.clientSecret,
         refresh_token: this.credentials.refresh_token,
-        grant_type: 'refresh_token'
+        grant_type: 'refresh_token',
       },
-      json: true
+      json: true,
     };
 
     return request(options)
-      .then(response => {
+      .then((response) => {
         console.log('refresh token success. response: ', pd.json(response));
         this.tokenExpiresInMs = moment()
           .add(1, 'hour')
@@ -76,7 +76,7 @@ class AuthService implements IAuthService {
         this.credentials = _.defaults(response, this.credentials);
         return response;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
         return Promise.reject(new Error('refresh token failed.'));
       });

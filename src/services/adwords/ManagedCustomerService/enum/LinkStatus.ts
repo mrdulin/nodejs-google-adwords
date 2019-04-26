@@ -4,5 +4,5 @@ export enum LinkStatus {
   PENDING = 'PENDING',
   REFUSED = 'REFUSED',
   CANCELLED = 'CANCELLED',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }

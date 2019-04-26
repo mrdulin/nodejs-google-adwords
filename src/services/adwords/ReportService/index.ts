@@ -30,7 +30,7 @@ class ReportService {
 
   public async reportDownload(reportDefinition: IReportDefinition, options?: Partial<IReportDownloadOptions>) {
     const reportDef = _.defaults(reportDefinition, {
-      downloadFormat: ReportDefinition.DownloadFormatType.XML
+      downloadFormat: ReportDefinition.DownloadFormatType.XML,
     });
     const xml = this.buildObjectToXML<{ reportDefinition: IReportDefinition }>({ reportDefinition: reportDef });
 
@@ -43,26 +43,26 @@ class ReportService {
         skipColumnHeader: _.get(options, ['skipColumnHeader'], false),
         skipReportSummary: _.get(options, ['skipReportSummary'], true),
         useRawEnumValues: _.get(options, ['useRawEnumValues'], false),
-        includeZeroImpressions: _.get(options, ['includeZeroImpressions'], false)
+        includeZeroImpressions: _.get(options, ['includeZeroImpressions'], false),
       },
       formData: {
-        __rdxml: xml
-      }
+        __rdxml: xml,
+      },
     };
 
     return this.httpService
       .request(requestOptions)
-      .then(rval => {
+      .then((rval) => {
         console.log(`get ${reportDefinition.reportName} successfully. rval: `, pd.xml(rval));
         return rval;
       })
-      .then(rval => {
+      .then((rval) => {
         if (options && options.json) {
           return this.xmlParse(rval);
         }
         return rval;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(`get ${reportDefinition.reportName} failed.`);
         console.error(error);
       });

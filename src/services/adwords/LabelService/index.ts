@@ -41,7 +41,7 @@ class LabelService extends AdwordsOperartionService {
 
   public async getAll() {
     const serviceSelector: ISelector = {
-      fields: LabelService.selectorFields
+      fields: LabelService.selectorFields,
     };
     return this.get(serviceSelector);
   }
@@ -50,20 +50,20 @@ class LabelService extends AdwordsOperartionService {
     // TODO: validate label
     const defaultLabel: ITextLabel = {
       attributes: {
-        'xsi:type': Label.Type.TextLabel
-      }
+        'xsi:type': Label.Type.TextLabel,
+      },
     };
     const operaitons: ILabelOperation[] = [
       {
         operator: Operator.ADD,
-        operand: _.defaultsDeep(label, defaultLabel)
-      }
+        operand: _.defaultsDeep(label, defaultLabel),
+      },
     ];
     return this.mutate(operaitons);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IlabelPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
       console.log('get labels successfully. rval: ', pd.json(rval));
@@ -72,7 +72,7 @@ class LabelService extends AdwordsOperartionService {
   }
 
   protected async mutate<Operation = ILabelOperation, Rval = ILabelReturnValue>(
-    operaitons: Operation[]
+    operaitons: Operation[],
   ): Promise<Rval | undefined> {
     return this.soapService.mutateAsync<Operation, Rval>(operaitons).then((rval: Rval | undefined) => {
       console.log(`mutate label successfully. rval: `, pd.json(rval));

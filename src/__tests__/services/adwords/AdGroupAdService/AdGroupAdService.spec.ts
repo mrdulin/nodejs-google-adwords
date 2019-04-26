@@ -23,7 +23,7 @@ describe('AdGroupAdService test suites', () => {
   it.skip('#getAllExpandedTextAd - by paging', async () => {
     const paging: IPaging = {
       startIndex: 0,
-      numberResults: 3
+      numberResults: 3,
     };
     const actualValue = await adGroupAdService.getAllExpandedTextAd(paging);
   });
@@ -41,8 +41,8 @@ describe('AdGroupAdService test suites', () => {
         headlinePart2: faker.lorem.words(3),
         description: faker.lorem.words(3),
         attributes: {
-          'xsi:type': 'ExpandedTextAd'
-        }
+          'xsi:type': 'ExpandedTextAd',
+        },
       },
       {
         finalUrls: [faker.internet.url()],
@@ -50,16 +50,16 @@ describe('AdGroupAdService test suites', () => {
         headlinePart2: faker.lorem.words(3),
         description: faker.lorem.words(3),
         attributes: {
-          'xsi:type': 'ExpandedTextAd'
-        }
-      }
+          'xsi:type': 'ExpandedTextAd',
+        },
+      },
     ];
 
     const adGroupId = '72029524744';
     const adGroupAds: IAdGroupAd[] = expandedTextAds.map((expandedTextAd: IExpandedTextAd) => {
       const adGroupAd: IAdGroupAd = {
         adGroupId,
-        ad: expandedTextAd
+        ad: expandedTextAd,
       };
       return adGroupAd;
     });
@@ -70,18 +70,18 @@ describe('AdGroupAdService test suites', () => {
   it.skip('#update', async () => {
     const ads: IAd[] = [
       {
-        id: '331943088184'
+        id: '331943088184',
       },
       {
-        id: '331195148581'
-      }
+        id: '331195148581',
+      },
     ];
     const adGroupId = '72029524744';
     const adGroupAds: IAdGroupAd[] = ads.map((ad: IAd) => {
       const adGroupAd: IAdGroupAd = {
         adGroupId,
         ad,
-        status: AdGroupAd.Status.ENABLED
+        status: AdGroupAd.Status.ENABLED,
       };
       return adGroupAd;
     });

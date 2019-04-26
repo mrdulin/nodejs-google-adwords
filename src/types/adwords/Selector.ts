@@ -24,13 +24,13 @@ namespace Predicate {
     CONTAINS_ANY = 'CONTAINS_ANY',
     CONTAINS_ALL = 'CONTAINS_ALL',
     CONTAINS_NONE = 'CONTAINS_NONE',
-    UNKNOWN = 'UNKNOWN'
+    UNKNOWN = 'UNKNOWN',
   }
 }
 
 enum SortOrder {
   ASCENDING = 'ASCENDING',
-  DESCENDING = 'DESCENDING'
+  DESCENDING = 'DESCENDING',
 }
 
 interface IPaging {

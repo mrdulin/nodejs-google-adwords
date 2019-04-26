@@ -44,7 +44,7 @@ class AdGroupService extends AdwordsOperartionService {
     'TargetCpaBidSource',
     'TargetRoasOverride',
     'TrackingUrlTemplate',
-    'UrlCustomParameters'
+    'UrlCustomParameters',
   ];
 
   private soapService: SoapService;
@@ -55,7 +55,7 @@ class AdGroupService extends AdwordsOperartionService {
 
   public async getAll() {
     const serviceSelector: ISelector = {
-      fields: AdGroupService.selectorFields
+      fields: AdGroupService.selectorFields,
     };
     return this.get(serviceSelector);
   }
@@ -67,9 +67,9 @@ class AdGroupService extends AdwordsOperartionService {
         {
           field: 'CampaignId',
           operator: Predicate.Operator.IN,
-          values: campaignIds
-        }
-      ]
+          values: campaignIds,
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -78,14 +78,14 @@ class AdGroupService extends AdwordsOperartionService {
     const operations: IAdGroupOperation[] = [
       {
         operator: Operator.ADD,
-        operand: adGroup
-      }
+        operand: adGroup,
+      },
     ];
     return this.mutate(operations);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IAdGroupPage>(serviceSelector: ServiceSelector) {
-    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(rval => {
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
       console.log('get Ad Group successfully. rval: ', pd.json(rval));
       return rval;
     });
