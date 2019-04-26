@@ -6,9 +6,9 @@ This is a Node.js library for Google Adwords SOAP + WSDL API (v201809)
 
 ## OAuth
 
-https://accounts.google.com/o/oauth2/auth?client_id=<Client ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
+open oauth link in browser: https://accounts.google.com/o/oauth2/auth?client_id=<Client ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
 
-4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU
+get authorization code: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
 
 ```bash
 curl \
@@ -18,6 +18,8 @@ curl \
   -d redirect_uri=urn:ietf:wg:oauth:2.0:oob \
   -d grant_type=authorization_code https://accounts.google.com/o/oauth2/token
 ```
+
+get credentials
 
 ```bash
 {
