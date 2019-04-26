@@ -3,5 +3,5 @@ export enum ServingStatus {
   NONE = 'NONE',
   ENDED = 'ENDED',
   PENDING = 'PENDING',
-  SUSPENDED = 'SUSPENDED'
+  SUSPENDED = 'SUSPENDED',
 }

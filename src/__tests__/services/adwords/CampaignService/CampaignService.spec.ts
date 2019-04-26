@@ -4,7 +4,7 @@ import { ICampaignLabel } from '../../../../services/adwords/CampaignService/Cam
 
 describe('CampaignService test suites', () => {
   const campaignService = adwordsService.getService('CampaignService', {
-    verbose: false
+    verbose: false,
   });
   it('#getAll', async () => {
     const actualValue = await campaignService.getAll();
@@ -13,7 +13,7 @@ describe('CampaignService test suites', () => {
   it.skip('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
-      numberResults: 1
+      numberResults: 1,
     };
     const actualValue = await campaignService.getByPage(paging);
   });
@@ -39,7 +39,7 @@ describe('CampaignService test suites', () => {
     // properties order is important
     const campaignLabel: ICampaignLabel = {
       labelId: '3763644304',
-      campaignId: '1677467977'
+      campaignId: '1677467977',
     };
     const actualValue = await campaignService.addLabel(campaignLabel);
   });

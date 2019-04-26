@@ -37,7 +37,7 @@ class BudgetService extends AdwordsOperartionService {
     'BudgetReferenceCount',
     'BudgetStatus',
     'DeliveryMethod',
-    'IsBudgetExplicitlyShared'
+    'IsBudgetExplicitlyShared',
   ];
 
   private soapService: SoapService;
@@ -48,7 +48,7 @@ class BudgetService extends AdwordsOperartionService {
 
   public async getAll() {
     const serviceSelector: ISelector = {
-      fields: BudgetService.selectorFields
+      fields: BudgetService.selectorFields,
     };
     return this.get(serviceSelector);
   }
@@ -56,11 +56,11 @@ class BudgetService extends AdwordsOperartionService {
   public async getByPage(paging: IPaging) {
     const defaultPaging: IPaging = {
       startIndex: 0,
-      numberResults: 5
+      numberResults: 5,
     };
     const serviceSelector: ISelector = {
       fields: BudgetService.selectorFields,
-      paging: _.defaults(paging, defaultPaging)
+      paging: _.defaults(paging, defaultPaging),
     };
     return this.get(serviceSelector);
   }
@@ -72,9 +72,9 @@ class BudgetService extends AdwordsOperartionService {
         {
           field: 'BudgetId',
           operator: Predicate.Operator.EQUALS,
-          values: [id]
-        }
-      ]
+          values: [id],
+        },
+      ],
     };
 
     return this.get(serviceSelector);
@@ -87,9 +87,9 @@ class BudgetService extends AdwordsOperartionService {
         {
           field: 'BudgetId',
           operator: Predicate.Operator.IN,
-          values: ids
-        }
-      ]
+          values: ids,
+        },
+      ],
     };
 
     return this.get(serviceSelector);
@@ -99,7 +99,7 @@ class BudgetService extends AdwordsOperartionService {
     // TODO: validate budget
     const operation: IBudgetOperation = {
       operator: Operator.ADD,
-      operand: budget
+      operand: budget,
     };
     return this.mutate([operation]);
   }
@@ -107,13 +107,13 @@ class BudgetService extends AdwordsOperartionService {
   public async update(budget: IBudget) {
     const operation: IBudgetOperation = {
       operator: Operator.SET,
-      operand: budget
+      operand: budget,
     };
     return this.mutate([operation]);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IBudgetPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((response: Rval | undefined) => {
       console.log('get budgets successfully. response: ', pd.json(response));
@@ -122,7 +122,7 @@ class BudgetService extends AdwordsOperartionService {
   }
 
   protected async mutate<Operation = IBudgetOperation, Response = IBudgetReturnValue>(
-    operations: Operation[]
+    operations: Operation[],
   ): Promise<Response> {
     try {
       const response = await this.soapService.mutateAsync<Operation, Response>(operations);

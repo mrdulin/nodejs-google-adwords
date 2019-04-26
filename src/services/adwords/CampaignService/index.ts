@@ -86,7 +86,7 @@ class CampaignService extends AdwordsOperartionService {
     'UrlCustomParameters',
     'VanityPharmaDisplayUrlMode',
     'VanityPharmaText',
-    'ViewableCpmEnabled'
+    'ViewableCpmEnabled',
   ];
 
   private soapService: SoapService;
@@ -109,9 +109,9 @@ class CampaignService extends AdwordsOperartionService {
         {
           field: 'Status',
           operator: Predicate.Operator.IN,
-          values: [CampaignStatus.ENABLED, CampaignStatus.PAUSED, CampaignStatus.REMOVED]
-        }
-      ]
+          values: [CampaignStatus.ENABLED, CampaignStatus.PAUSED, CampaignStatus.REMOVED],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -119,11 +119,11 @@ class CampaignService extends AdwordsOperartionService {
   public async getByPage(paging: IPaging) {
     const defaultPaging: IPaging = {
       startIndex: 0,
-      numberResults: 5
+      numberResults: 5,
     };
     const serviceSelector: ISelector = {
       fields: CampaignService.selectorFields,
-      paging: _.defaults(paging, defaultPaging)
+      paging: _.defaults(paging, defaultPaging),
     };
     return this.get(serviceSelector);
   }
@@ -135,9 +135,9 @@ class CampaignService extends AdwordsOperartionService {
         {
           field: 'Id',
           operator: Predicate.Operator.EQUALS,
-          values: [id]
-        }
-      ]
+          values: [id],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -156,9 +156,9 @@ class CampaignService extends AdwordsOperartionService {
         {
           field: 'ServingStatus',
           operator: Predicate.Operator.IN,
-          values: [ServingStatus.SERVING]
-        }
-      ]
+          values: [ServingStatus.SERVING],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -177,9 +177,9 @@ class CampaignService extends AdwordsOperartionService {
         {
           field: 'Status',
           operator: Predicate.Operator.NOT_IN,
-          values: [CampaignStatus.REMOVED]
-        }
-      ]
+          values: [CampaignStatus.REMOVED],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -189,8 +189,8 @@ class CampaignService extends AdwordsOperartionService {
     const operation: ICampaignOperation[] = [
       {
         operator: Operator.SET,
-        operand: campaign
-      }
+        operand: campaign,
+      },
     ];
     return this.mutate(operation);
   }
@@ -198,13 +198,13 @@ class CampaignService extends AdwordsOperartionService {
   public async remove(campaignId: string) {
     const campaign: ICampaign = {
       id: campaignId,
-      status: CampaignStatus.REMOVED
+      status: CampaignStatus.REMOVED,
     };
     const operations: ICampaignOperation[] = [
       {
         operator: Operator.SET,
-        operand: campaign
-      }
+        operand: campaign,
+      },
     ];
     return this.mutate(operations);
   }
@@ -214,14 +214,14 @@ class CampaignService extends AdwordsOperartionService {
     const operations: ICampaignLabelOperation[] = [
       {
         operator: Operator.ADD,
-        operand: campaignLabel
-      }
+        operand: campaignLabel,
+      },
     ];
     return this.mutateLabelAsync(operations);
   }
 
   protected async mutateLabelAsync<Operation = ICampaignLabelOperation, Rval = ICampaignLabelReturnValue>(
-    operations: Operation[]
+    operations: Operation[],
   ) {
     return this.soapService.mutateLabelAsync<Operation, Rval>(operations).then((rval: Rval | undefined) => {
       console.log('mutate label for campaign successfully. rval: ', rval);
@@ -230,7 +230,7 @@ class CampaignService extends AdwordsOperartionService {
   }
 
   protected async mutate<Operation = ICampaignOperation, Rval = ICampaignReturnValue>(
-    operations: Operation[]
+    operations: Operation[],
   ): Promise<Rval> {
     try {
       const rval = await this.soapService.mutateAsync<Operation, Rval>(operations);
@@ -242,9 +242,9 @@ class CampaignService extends AdwordsOperartionService {
   }
 
   protected async get<ServiceSelector = ISelector, Rval = ICampaignPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
-    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then(rval => {
+    return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
       console.log('get campaigns successfully. rval: ', pd.json(rval));
       return rval;
     });

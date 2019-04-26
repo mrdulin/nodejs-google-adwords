@@ -18,7 +18,7 @@ class HttpService {
   private headers: IHttpHeaders;
   private authService: IAuthService;
   private readonly defaultOptions: Pick<OptionsWithUri, 'json' | 'timeout' | 'headers'> = {
-    timeout: 10 * 1000
+    timeout: 10 * 1000,
   };
   private verbose: boolean = false;
   constructor(opts: IHttpServiceOpts) {

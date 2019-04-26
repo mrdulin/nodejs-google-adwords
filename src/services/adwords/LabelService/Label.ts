@@ -4,11 +4,11 @@ namespace Label {
   export enum status {
     ENABLED = 'ENABLED',
     REMOVED = 'REMOVED',
-    UNKNOWN = 'UNKNOWN'
+    UNKNOWN = 'UNKNOWN',
   }
 
   export enum Type {
-    TextLabel = 'TextLabel'
+    TextLabel = 'TextLabel',
   }
 }
 

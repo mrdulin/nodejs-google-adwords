@@ -1,7 +1,7 @@
 enum Operator {
   ADD = 'ADD',
   REMOVE = 'REMOVE',
-  SET = 'SET'
+  SET = 'SET',
 }
 
 interface IOperation {

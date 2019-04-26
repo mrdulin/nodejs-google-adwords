@@ -11,13 +11,13 @@ enum BiddingStrategyType {
   MAXIMIZE_CONVERSION_VALUE = 'MAXIMIZE_CONVERSION_VALUE',
   TARGET_OUTRANK_SHARE = 'TARGET_OUTRANK_SHARE',
   NONE = 'NONE',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }
 
 enum BiddingStrategySource {
   CAMPAIGN = 'CAMPAIGN',
   ADGROUP = 'ADGROUP',
-  CRITERION = 'CRITERION'
+  CRITERION = 'CRITERION',
 }
 
 interface IBiddingStrategyConfiguration {

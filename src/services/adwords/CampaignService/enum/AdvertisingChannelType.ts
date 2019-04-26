@@ -3,5 +3,5 @@ export enum AdvertisingChannelType {
   SEARCH = 'SEARCH',
   DISPLAY = 'DISPLAY',
   SHOPPING = 'SHOPPING',
-  MULTI_CHANNEL = 'MULTI_CHANNEL'
+  MULTI_CHANNEL = 'MULTI_CHANNEL',
 }

@@ -4,7 +4,7 @@ namespace Label {
   export enum status {
     ENABLED = 'ENABLED',
     REMOVED = 'REMOVED',
-    UNKNOWN = 'UNKNOWN'
+    UNKNOWN = 'UNKNOWN',
   }
 }
 

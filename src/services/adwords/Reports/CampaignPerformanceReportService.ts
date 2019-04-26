@@ -15,7 +15,7 @@ class CampaignPerformanceReportService {
     'CampaignName',
     'CampaignStatus',
     'StartDate',
-    'EndDate'
+    'EndDate',
   ];
   private static readonly segments: string[] = ['Device'];
   private static readonly metrics: string[] = [
@@ -24,12 +24,12 @@ class CampaignPerformanceReportService {
     'Ctr',
     'Impressions',
     'ConversionRate',
-    'AverageCpc'
+    'AverageCpc',
   ];
   private static readonly selectorFields = [
     ...CampaignPerformanceReportService.attibutes,
     ...CampaignPerformanceReportService.segments,
-    ...CampaignPerformanceReportService.metrics
+    ...CampaignPerformanceReportService.metrics,
   ];
 
   private reportService: ReportService;
@@ -40,11 +40,11 @@ class CampaignPerformanceReportService {
   public async get() {
     const reportDefinition: IReportDefinition = {
       selector: {
-        fields: CampaignPerformanceReportService.selectorFields
+        fields: CampaignPerformanceReportService.selectorFields,
       },
       reportName: CampaignPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
-      dateRangeType: ReportDefinition.DateRangeType.ALL_TIME
+      dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
     };
 
     return this.reportService.reportDownload(reportDefinition, { json: true });

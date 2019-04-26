@@ -4,23 +4,23 @@ import { ISelector } from '../../../../types/adwords';
 
 describe('ReportDefinitionService test suites', () => {
   const reportDefinitionService = adwordsService.getService('ReportDefinitionService', {
-    verbose: false
+    verbose: false,
   });
 
   it('#getReportFields', async () => {
     const selector: ISelector = {
       fields: [],
-      predicates: []
+      predicates: [],
     };
 
     const reportDefinition = {
       selector,
       reportName: 'Campaign Performance Report',
       reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
-      dateRangeType: ''
+      dateRangeType: '',
     };
     const actualValue = await reportDefinitionService.getReportFields(
-      ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT
+      ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
     );
   });
 });

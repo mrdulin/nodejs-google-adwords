@@ -8,5 +8,5 @@ export enum CriterionTypeGroup {
   PARENT = 'PARENT',
   INCOME_RANGE = 'INCOME_RANGE',
   NONE = 'NONE',
-  UNKNOWN = 'UNKNOWN'
+  UNKNOWN = 'UNKNOWN',
 }

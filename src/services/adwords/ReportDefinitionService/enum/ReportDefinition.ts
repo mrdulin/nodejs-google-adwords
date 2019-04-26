@@ -47,7 +47,7 @@ export namespace ReportDefinition {
     CAMPAIGN_GROUP_PERFORMANCE_REPORT = 'CAMPAIGN_GROUP_PERFORMANCE_REPORT',
     LANDING_PAGE_REPORT = 'LANDING_PAGE_REPORT',
     MARKETPLACE_PERFORMANCE_REPORT = 'MARKETPLACE_PERFORMANCE_REPORT',
-    UNKNOW = 'UNKNOW'
+    UNKNOW = 'UNKNOW',
   }
 
   export enum DateRangeType {
@@ -55,11 +55,11 @@ export namespace ReportDefinition {
     YESTERDAY = 'YESTERDAY',
     LAST_7_DAYS = 'LAST_7_DAYS',
     LAST_30_DAYS = 'LAST_30_DAYS',
-    ALL_TIME = 'ALL_TIME'
+    ALL_TIME = 'ALL_TIME',
   }
 
   export enum DownloadFormatType {
     CSV = 'CSV',
-    XML = 'XML'
+    XML = 'XML',
   }
 }

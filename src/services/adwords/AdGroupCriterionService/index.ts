@@ -78,7 +78,7 @@ class AdGroupCriterionService extends AdwordsOperartionService {
     'VerticalId',
     'VerticalParentId',
     'VideoId',
-    'VideoName'
+    'VideoName',
   ];
 
   private soapService: SoapService;
@@ -94,9 +94,9 @@ class AdGroupCriterionService extends AdwordsOperartionService {
         {
           field: 'AdGroupId',
           operator: Predicate.Operator.IN,
-          values: adGroupIds
-        }
-      ]
+          values: adGroupIds,
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -108,14 +108,14 @@ class AdGroupCriterionService extends AdwordsOperartionService {
         {
           field: 'AdGroupId',
           operator: Predicate.Operator.IN,
-          values: adGroupIds
+          values: adGroupIds,
         },
         {
           field: 'CriteriaType',
           operator: Predicate.Operator.EQUALS,
-          values: [Criterion.Type.KEYWORD]
-        }
-      ]
+          values: [Criterion.Type.KEYWORD],
+        },
+      ],
     };
     return this.get(serviceSelector);
   }
@@ -135,17 +135,17 @@ class AdGroupCriterionService extends AdwordsOperartionService {
           operator: Operator.ADD,
           operand: adGroupCriterion,
           attributes: {
-            'xsi:type': 'AdGroupCriterionOperation'
-          }
+            'xsi:type': 'AdGroupCriterionOperation',
+          },
         };
         return adGroupCriterionOperation;
-      }
+      },
     );
     return this.mutate(operaions);
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IAdGroupCriterionPage>(
-    serviceSelector: ServiceSelector
+    serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
       console.log('get ad group criterion successfully. rval: ', pd.json(rval));
@@ -154,7 +154,7 @@ class AdGroupCriterionService extends AdwordsOperartionService {
   }
 
   protected async mutate<Operation = IAdGroupCriterionOperation, Rval = IAdGroupCriterionReturnValue>(
-    operaions: Operation[]
+    operaions: Operation[],
   ): Promise<Rval | undefined> {
     return this.soapService.mutateAsync<Operation, Rval>(operaions).then((rval: Rval) => {
       console.log('mutate ad group criterion successfully. rval: ', pd.json(rval));

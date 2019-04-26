@@ -8,8 +8,8 @@ const adwordsService = new AdWordsService({
   clientId: credentials.ADWORDS_CLIENT_ID,
   clientSecret: credentials.ADWORDS_SECRET,
   credentials: {
-    refresh_token: credentials.ADWORDS_REFRESH_TOKEN
-  }
+    refresh_token: credentials.ADWORDS_REFRESH_TOKEN,
+  },
   // validateOnly: true,
   // partialFailure: true
 });

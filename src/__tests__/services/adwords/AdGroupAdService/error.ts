@@ -11,7 +11,7 @@ const error = {
         trigger: '<null>',
         errorString: 'EntityNotFound.INVALID_ID',
         'ApiError.Type': 'EntityNotFound',
-        reason: 'INVALID_ID'
+        reason: 'INVALID_ID',
       },
       {
         attributes: { 'xsi:type': 'EntityNotFound' },
@@ -20,8 +20,8 @@ const error = {
         trigger: '<null>',
         errorString: 'EntityNotFound.INVALID_ID',
         'ApiError.Type': 'EntityNotFound',
-        reason: 'INVALID_ID'
-      }
-    ]
-  }
+        reason: 'INVALID_ID',
+      },
+    ],
+  },
 };
