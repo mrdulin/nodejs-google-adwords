@@ -27,7 +27,35 @@
       "name": "",
       "fileSize": "76831",
       "Media.Type": "Image"
+    },
+    {
+      "attributes": {
+        "xsi:type": "Image"
+      },
+      "mediaId": "12677923329",
+      "type": "IMAGE",
+      "referenceId": "499359219338706944",
+      "dimensions": [
+        {
+          "key": "FULL",
+          "value": {
+            "width": 600,
+            "height": 314
+          }
+        }
+      ],
+      "urls": [
+        {
+          "key": "FULL",
+          "value": "https://tpc.googlesyndication.com/simgad/18383414897978115978"
+        }
+      ],
+      "mimeType": "IMAGE_JPEG",
+      "sourceUrl": "",
+      "name": "",
+      "fileSize": "25972",
+      "Media.Type": "Image"
     }
   ],
-  "totalNumEntries": 1
+  "totalNumEntries": 2
 }

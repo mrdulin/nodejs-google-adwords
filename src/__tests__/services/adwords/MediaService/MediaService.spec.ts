@@ -12,7 +12,7 @@ describe('MediaService test suites', () => {
   });
 
   it.skip('#upload', async () => {
-    const file: Buffer = fs.readFileSync(path.resolve(__dirname, './medias/mirage-fatal-error.png'));
+    const file: Buffer = fs.readFileSync(path.resolve(__dirname, './medias/tes_dogbone.jpg'));
     const image: IImage = {
       // order is important
       type: Media.MediaType.IMAGE,

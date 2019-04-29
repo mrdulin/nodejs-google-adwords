@@ -3,8 +3,9 @@ import faker from 'faker';
 import { adwordsService } from '../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { IAdGroupAd } from '../../../../services/adwords/AdGroupAdService/AdGroupAd';
-import { IExpandedTextAd, IAd } from '../../../../services/adwords/AdGroupAdService/Ad';
+import { IExpandedTextAd, IResponsiveDisplayAd } from '../../../../services/adwords/AdGroupAdService/Ad';
 import { AdGroupAd } from '../../../../services/adwords/AdGroupAdService/enum/AdGroupAd';
+import { DisplayAdFormatSetting } from '../../../../services/adwords/AdGroupAdService/enum/DisplayAdFormatSetting';
 
 describe('AdGroupAdService test suites', () => {
   const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: true });
@@ -68,7 +69,7 @@ describe('AdGroupAdService test suites', () => {
   });
 
   it.skip('#update', async () => {
-    const ads: IAd[] = [
+    const ads: Array<Partial<IExpandedTextAd>> = [
       {
         id: '331943088184',
       },
@@ -77,7 +78,7 @@ describe('AdGroupAdService test suites', () => {
       },
     ];
     const adGroupId = '72029524744';
-    const adGroupAds: IAdGroupAd[] = ads.map((ad: IAd) => {
+    const adGroupAds: IAdGroupAd[] = ads.map((ad: Partial<IExpandedTextAd>) => {
       const adGroupAd: IAdGroupAd = {
         adGroupId,
         ad,
@@ -87,5 +88,35 @@ describe('AdGroupAdService test suites', () => {
     });
 
     const actualValue = await adGroupAdService.update(adGroupAds);
+  });
+
+  it('should add responsive display ad with image correctly', async () => {
+    const responsiveDisplayAds: Array<Partial<IResponsiveDisplayAd>> = [
+      {
+        finalUrls: [faker.internet.url()], //order is important
+        marketingImage: {
+          mediaId: '12677923329',
+        },
+        shortHeadline: faker.lorem.word(),
+        longHeadline: faker.lorem.words(3),
+        description: faker.lorem.words(5),
+        businessName: faker.lorem.word(),
+        attributes: {
+          'xsi:type': 'ResponsiveDisplayAd',
+        },
+      },
+    ];
+
+    const adGroupId = '72029524744';
+    const adGroupAds: IAdGroupAd[] = responsiveDisplayAds.map((ad: Partial<IResponsiveDisplayAd>) => {
+      const adGroupAd: IAdGroupAd = {
+        adGroupId,
+        ad,
+      };
+
+      return adGroupAd;
+    });
+
+    const actualValue = await adGroupAdService.add(adGroupAds);
   });
 });

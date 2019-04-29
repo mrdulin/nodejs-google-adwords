@@ -294,11 +294,6 @@ class SoapService extends AdwordsOperartionService {
           console.log('Soap request exchange id: ', eid);
         }
       });
-      this.client.on('message', (xml: string, eid: string) => {
-        if (this.verbose) {
-          console.log('Soap body contents: ', pd.xml(xml));
-        }
-      });
       this.client.on('soapError', (error: any, eid: string) => {
         if (this.verbose) {
           console.error(error);

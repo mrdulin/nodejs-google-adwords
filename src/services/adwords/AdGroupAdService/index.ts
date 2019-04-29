@@ -265,7 +265,7 @@ class AdGroupAdService extends AdwordsOperartionService {
     operations: Operation[],
   ): Promise<Rval | undefined> {
     return this.soapService.mutateAsync<Operation, Rval>(operations).then((rval) => {
-      console.log('mutate ad group ads successfully. rval: ', rval);
+      console.log('mutate ad group ads successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
