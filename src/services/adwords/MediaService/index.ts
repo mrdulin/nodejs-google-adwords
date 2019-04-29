@@ -43,10 +43,13 @@ class MediaService extends AdwordsOperartionService {
 
   public async upload<Media = Array<IAudio | IImage | IVideo | IMediaBundle>>(medias: Media[]) {
     const client = await this.soapService.getClient();
-    return client.uploadAsync({ media: medias[0] }).then((rval: Array<IAudio | IImage | IVideo | IMediaBundle>) => {
-      console.log('upload media successfully. rval: ', rval);
-      return rval;
-    });
+    return client
+      .uploadAsync({ media: medias[0] })
+      .then(this.soapService.parseMutateResponse)
+      .then((rval: Array<IAudio | IImage | IVideo | IMediaBundle>) => {
+        console.log('upload media successfully. rval: ', rval);
+        return rval;
+      });
   }
 
   protected async get<ServiceSelector = ISelector, Rval = IMediaPage>(

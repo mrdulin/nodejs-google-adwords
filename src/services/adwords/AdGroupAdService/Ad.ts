@@ -3,8 +3,12 @@ import { IUrlData } from './UrlData';
 import { Ad } from './enum/Ad';
 import { SystemManagedEntitySource } from './enum/SystemManagedEntitySource';
 import { Omit } from '../../../types/core';
+import { IAttributes } from '../../../types/adwords/Attributes';
+import { IImage } from './Media';
+import { IDynamicSettings } from './DynamicSettings';
+import { DisplayAdFormatSetting } from './enum/DisplayAdFormatSetting';
 
-interface IAdRaw {
+interface IAdRaw<Type> {
   id: string;
   url: string;
   displayUrl: string;
@@ -20,12 +24,10 @@ interface IAdRaw {
   devicePreference: string;
   readonly systemManagedEntitySource: SystemManagedEntitySource;
   'Ad.Type': string;
-  attributes: {
-    'xsi:type': string;
-  };
+  attributes: IAttributes<Type>;
 }
 
-interface IAd extends Partial<IAdRaw> {}
+interface IAd<Type = ''> extends Partial<IAdRaw<Type>> {}
 
 /**
  * Caution: Expanded text ads do not use url, displayUrl, finalAppUrls, or devicePreference;
@@ -35,7 +37,8 @@ interface IAd extends Partial<IAdRaw> {}
  * @interface IExpandedTextAd
  * @extends {(Partial<Omit<IAd, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>>)}
  */
-interface IExpandedTextAd extends Partial<Omit<IAdRaw, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>> {
+interface IExpandedTextAd
+  extends Partial<Omit<IAdRaw<'ExpandedTextAd'>, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>> {
   headlinePart1: string;
   headlinePart2: string;
   headlinePart3?: string;
@@ -45,4 +48,21 @@ interface IExpandedTextAd extends Partial<Omit<IAdRaw, 'url' | 'displayUrl' | 'f
   path2?: string;
 }
 
-export { IExpandedTextAd, IAd };
+interface IResponsiveDisplayAd
+  extends Partial<Omit<IAdRaw<'ResponsiveDisplayAd'>, 'url' | 'displayUrl' | 'finalAppUrls' | 'devicePreference'>> {
+  marketingImage: Partial<IImage>;
+  logoImage: IImage;
+  squareMarketingImage: IImage;
+  shortHeadline: string;
+  longHeadline: string;
+  description: string;
+  businessName: string;
+  mainColor: string;
+  accentColor: string;
+  allowFlexibleColor: string;
+  callToActionText: string;
+  dynamicDisplayAdSettings: IDynamicSettings;
+  formatSetting: DisplayAdFormatSetting;
+}
+
+export { IExpandedTextAd, IResponsiveDisplayAd, IAd };

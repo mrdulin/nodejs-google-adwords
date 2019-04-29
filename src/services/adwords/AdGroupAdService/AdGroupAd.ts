@@ -1,12 +1,12 @@
-import { IExpandedTextAd, IAd } from './Ad';
 import { AdGroupAd } from './enum/AdGroupAd';
 import { ITextLabel } from './Label';
+import { IExpandedTextAd, IResponsiveDisplayAd } from './Ad';
 
 interface IAdGroupAdRaw {
   adGroupId: string;
-  // TODO:
-  ad: IAd;
   status: AdGroupAd.Status;
+  // TODO:
+  ad: Partial<IExpandedTextAd | IResponsiveDisplayAd>;
   //TODO
   readonly policySummary: any;
   labels: ITextLabel[];
