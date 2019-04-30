@@ -10,7 +10,8 @@
     "build": "tsc",
     "lint": "tslint --config ./tslint.json --project ./tsconfig.json",
     "prettify": "prettier --config ./.prettierrc --write \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
-    "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\""
+    "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
+    "prepublish": "npm run lint && npm run build"
   },
   "keywords": [
     "Google Ads",
@@ -52,6 +53,12 @@
     "soap": "^0.27.0",
     "xml2js": "^0.4.19"
   },
+  "engines": {
+    "node": ">=8.11.4"
+  },
+  "files": [
+    "dist"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm run prettify"
