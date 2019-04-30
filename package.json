@@ -59,7 +59,7 @@
     "node": ">=8.11.4"
   },
   "files": [
-    "dist"
+    "*"
   ],
   "husky": {
     "hooks": {
