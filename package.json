@@ -11,7 +11,9 @@
     "lint": "tslint --config ./tslint.json --project ./tsconfig.json",
     "prettify": "prettier --config ./.prettierrc --write \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
     "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
-    "prepublish": "npm run lint && npm run build"
+    "cp": "cp package.json dist",
+    "prepare": "npm run lint && npm run build && npm run cp",
+    "prepublishOnly": "cd dist"
   },
   "keywords": [
     "Google Ads",
