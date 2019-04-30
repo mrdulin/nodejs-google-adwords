@@ -6,9 +6,13 @@ This is a Node.js library for Google Adwords SOAP + WSDL API (v201809)
 
 ## OAuth
 
-open oauth link in browser: https://accounts.google.com/o/oauth2/auth?client_id=<Client ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
+open oauth link in browser:
+
+https://accounts.google.com/o/oauth2/auth?client_id=<Client ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
 
 get authorization code: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
+
+Using authorization code exchange credentials:
 
 ```bash
 curl \
@@ -19,7 +23,7 @@ curl \
   -d grant_type=authorization_code https://accounts.google.com/o/oauth2/token
 ```
 
-get credentials
+credentials response:
 
 ```bash
 {
@@ -29,6 +33,17 @@ get credentials
   "scope": "https://www.googleapis.com/auth/adwords",
   "token_type": "Bearer"
 }
+```
+
+## Environment variables
+
+```txt
+ADWORDS_CLIENT_ID=<GCP OAuth 2.0 client ID>
+ADWORDS_SECRET=<GCP OAuth 2.0 client secret>
+ADWORDS_DEVELOPER_TOKEN=<Google Adwords Developer Token>
+ADWORDS_CLIENT_CUSTOMER_ID=153-935-9847
+ADWORDS_USER_AGENT=Google Ads API Client Library for Node.js
+ADWORDS_REFRESH_TOKEN=<OAuth Refresh Token>
 ```
 
 ## TODO

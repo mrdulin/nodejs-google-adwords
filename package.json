@@ -2,7 +2,7 @@
   "name": "nodejs-google-adwords",
   "version": "1.0.0",
   "description": "Google Ads API Client Library for Node.js",
-  "main": "index.js",
+  "main": "./src/index.ts",
   "scripts": {
     "test": "jest --detectOpenHandles",
     "clean": "rm -rf ./dist",
