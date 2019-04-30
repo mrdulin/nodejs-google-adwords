@@ -1,6 +1,6 @@
 {
   "name": "nodejs-google-adwords",
-  "version": "1.0.10",
+  "version": "1.0.8",
   "description": "Google Ads API Client Library for Node.js",
   "main": "./index.js",
   "scripts": {
@@ -11,9 +11,7 @@
     "lint": "tslint --config ./tslint.json --project ./tsconfig.json",
     "prettify": "prettier --config ./.prettierrc --write \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
     "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
-    "cp": "cp package.json dist",
-    "prepare": "npm run lint && npm run build && npm run cp",
-    "prepublishOnly": "cd dist"
+    "prepare": "npm run lint && npm run build"
   },
   "keywords": [
     "Google Ads",
@@ -58,6 +56,9 @@
   "engines": {
     "node": ">=8.11.4"
   },
+  "files": [
+    "dist"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm run prettify"
