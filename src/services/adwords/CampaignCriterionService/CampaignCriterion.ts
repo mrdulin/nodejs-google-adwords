@@ -4,7 +4,7 @@ import { CampaignCriterion } from './enum/CampaignCriterion';
 interface ICampaignCriterionRaw {
   campaignId: string;
   readonly isNegative: boolean;
-  //TODO
+  // TODO
   criterion: ILocation;
   bidModifier: number;
   campaignCriterionStatus: CampaignCriterion.CampaignCriterionStatus;

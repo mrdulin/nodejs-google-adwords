@@ -7,7 +7,7 @@ interface IAdGroupAdRaw {
   status: AdGroupAd.Status;
   // TODO:
   ad: Partial<IExpandedTextAd | IResponsiveDisplayAd>;
-  //TODO
+  // TODO
   readonly policySummary: any;
   labels: ITextLabel[];
   readonly baseCampaignId: string;
