@@ -1,6 +1,6 @@
 {
   "name": "nodejs-google-adwords",
-  "version": "1.0.9",
+  "version": "1.0.8",
   "description": "Google Ads API Client Library for Node.js",
   "main": "./index.js",
   "scripts": {
@@ -58,9 +58,6 @@
   "engines": {
     "node": ">=8.11.4"
   },
-  "files": [
-    "*"
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm run prettify"
