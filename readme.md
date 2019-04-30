@@ -6,11 +6,11 @@ This is a Node.js library for Google Adwords SOAP + WSDL API (v201809)
 
 ## OAuth
 
-open oauth link in browser:
+Replace your GCP OAuth 2.0 client ID and open this link in browser:
 
-https://accounts.google.com/o/oauth2/auth?client_id=<Client ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
+https://accounts.google.com/o/oauth2/auth?client_id={Your Client ID}&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
 
-get authorization code: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
+Get authorization code: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
 
 Using authorization code exchange credentials:
 
@@ -23,7 +23,7 @@ curl \
   -d grant_type=authorization_code https://accounts.google.com/o/oauth2/token
 ```
 
-credentials response:
+Credentials response:
 
 ```bash
 {
@@ -45,6 +45,8 @@ ADWORDS_CLIENT_CUSTOMER_ID=153-935-9847
 ADWORDS_USER_AGENT=Google Ads API Client Library for Node.js
 ADWORDS_REFRESH_TOKEN=<OAuth Refresh Token>
 ```
+
+Put above environment variables into `.env` file for local development.
 
 ## TODO
 
