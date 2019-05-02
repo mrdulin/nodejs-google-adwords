@@ -164,4 +164,12 @@ class AdGroupCriterionService extends AdwordsOperartionService {
   }
 }
 
-export { AdGroupCriterionService };
+export {
+  AdGroupCriterionService,
+  IAdGroupCriterionPage,
+  Criterion,
+  IAdGroupCriterionOperation,
+  IAdGroupCriterionReturnValue,
+  IBiddableAdGroupCriterion,
+  INegativeAdGroupCriterion,
+};

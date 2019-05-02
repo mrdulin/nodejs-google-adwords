@@ -6,7 +6,7 @@ import { ICampaignCriterionPage } from './CampaignCriterionPage';
 import { ICampaignCriterionOperation } from './CampaignCriterionOperation';
 import { ICampaignCriterionReturnValue } from './CampaignCriterionReturnValue';
 import { Criterion } from './enum/Criterion';
-import { INegativeCampaignCriterion, ICampaignCriterion } from './CampaignCriterion';
+import { ICampaignCriterion } from './CampaignCriterion';
 
 interface ICampaignCriterionServiceOpts {
   soapService: SoapService;
@@ -163,4 +163,11 @@ class CampaignCriterionService extends AdwordsOperartionService {
   }
 }
 
-export { CampaignCriterionService };
+export {
+  CampaignCriterionService,
+  ICampaignCriterion,
+  ICampaignCriterionPage,
+  ICampaignCriterionOperation,
+  ICampaignCriterionReturnValue,
+  Criterion,
+};

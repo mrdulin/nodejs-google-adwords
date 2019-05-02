@@ -272,4 +272,28 @@ class AdGroupAdService extends AdwordsOperartionService {
 }
 
 export { AdGroupAdService };
-// export * from './main';
+export * from './Ad';
+export * from './AdGroupAd';
+export * from './AdGroupAdOperation';
+export * from './AdGroupAdPage';
+export * from './AdGroupAdPolicySummary';
+export * from './AdGroupAdReturnValue';
+export * from './CustomParameter';
+export * from './CustomParameters';
+export * from './Dimensions';
+export * from './DynamicSettings';
+export * from './ExemptionRequest';
+export * from './Label';
+export * from './LabelAttribute';
+export * from './Media';
+export * from './Media_Size_DimensionsMapEntry';
+export * from './Media_Size_StringMapEntry';
+// export * from './PolicyTopicEntry';
+export * from './PolicyViolationKey';
+export * from './UrlData';
+export * from './UrlList';
+export * from './enum/Ad';
+export * from './enum/AdGroupAd';
+export * from './enum/DisplayAdFormatSetting';
+export * from './enum/Media';
+export * from './enum/SystemManagedEntitySource';
