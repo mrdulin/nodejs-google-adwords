@@ -9,7 +9,7 @@ import { CoreOptions } from './HttpService';
 import { XMLService } from './XMLService';
 
 interface ISoapHeader {
-  clientCustomerId: string;
+  clientCustomerId?: string;
   developerToken: string;
   userAgent: string;
   validateOnly: boolean;

@@ -4,7 +4,7 @@ import { CoreOptions } from 'request';
 import { IAuthService } from './AuthService';
 
 interface IHttpHeaders {
-  clientCustomerId: string;
+  clientCustomerId?: string;
   developerToken: string;
   Authorization?: string;
 }
