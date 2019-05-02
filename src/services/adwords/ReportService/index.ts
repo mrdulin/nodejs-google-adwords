@@ -98,4 +98,4 @@ class ReportService {
   }
 }
 
-export { ReportService };
+export { ReportService, IReportServiceOpts, IReportDownloadOptions, IReport };
