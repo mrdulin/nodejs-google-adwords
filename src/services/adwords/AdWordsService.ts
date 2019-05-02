@@ -15,7 +15,7 @@ import { registryService, IServiceMap } from './registry';
 import { ReportService } from './ReportService';
 
 interface IAdWordsServiceOpts {
-  clientCustomerId: string;
+  clientCustomerId?: string;
   developerToken: string;
   clientId: string;
   clientSecret: string;
@@ -31,7 +31,7 @@ interface IServiceOpts {
   partialFailure: boolean;
   version: string;
   gzip: boolean;
-  clientCustomerId: string;
+  clientCustomerId?: string;
 }
 
 class AdWordsService {
