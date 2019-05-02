@@ -1,3 +1,5 @@
+import { pd } from 'pretty-data';
+
 import { adwordsService } from '../../initialize';
 
 describe('CampaignPerformanceReportService test suites', () => {
@@ -6,5 +8,6 @@ describe('CampaignPerformanceReportService test suites', () => {
   });
   it('#reportDownload', async () => {
     const actualvalue = await campaignPerformanceReportService.get();
+    // console.log(pd.json(actualvalue));
   });
 });

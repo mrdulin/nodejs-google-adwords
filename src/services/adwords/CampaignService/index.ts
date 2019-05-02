@@ -252,3 +252,12 @@ class CampaignService extends AdwordsOperartionService {
 }
 
 export { CampaignService, ICampaignServiceOpts };
+export * from './Budget';
+export * from './Campaign';
+export * from './CampaignPage';
+export * from './CampaignOperation';
+export * from './CampaignReturnValue';
+export * from './enum/CampaignStatus';
+export * from './enum/AdvertisingChannelType';
+export * from './enum/BidSource';
+export * from './enum/ServingStatus';

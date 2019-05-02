@@ -44,4 +44,4 @@ class ReportDefinitionService {
   }
 }
 
-export { ReportDefinitionService };
+export { ReportDefinitionService, IReportDefinitionField, ReportDefinition };

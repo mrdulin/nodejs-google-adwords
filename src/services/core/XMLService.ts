@@ -6,14 +6,15 @@ class XMLService {
    *
    * @author dulin
    * @static
+   * @template Rval
    * @param {convertableToString} xml
    * @param {OptionsV2} [options={ trim: true }]
-   * @returns
+   * @returns {Promise<Rval>}
    * @memberof XMLService
    */
-  public static parseStringPromise(xml: convertableToString, options: OptionsV2 = { trim: true }) {
+  public static parseStringPromise<Rval>(xml: convertableToString, options: OptionsV2 = { trim: true }): Promise<Rval> {
     return new Promise((resolve, reject) => {
-      parseString(xml, options, (err, result) => {
+      parseString(xml, options, (err: Error, result: Rval) => {
         if (err) {
           return reject(err);
         }

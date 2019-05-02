@@ -60,6 +60,14 @@ class AdGroupService extends AdwordsOperartionService {
     return this.get(serviceSelector);
   }
 
+  /**
+   * get ad groups by campaign ids
+   *
+   * @author dulin
+   * @param {string[]} campaignIds
+   * @returns
+   * @memberof AdGroupService
+   */
   public async getAllByCampaignIds(campaignIds: string[]) {
     const serviceSelector: ISelector = {
       fields: AdGroupService.selectorFields,
@@ -99,4 +107,4 @@ class AdGroupService extends AdwordsOperartionService {
   }
 }
 
-export { AdGroupService, IAdGroupServiceOpts };
+export { AdGroupService, IAdGroupServiceOpts, IAdGroupPage, IAdGroupOperation, IAdGroupReturnValue, IAdGroup };

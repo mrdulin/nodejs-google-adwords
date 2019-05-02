@@ -7,7 +7,6 @@ import { IBudget } from './Budget';
 import { IBudgetOperation } from './BudgetOperation';
 import { IBudgetPage } from './BudgetPage';
 import { IBudgetReturnValue } from './BudgetReturnValue';
-import { Budget } from './enum/Budget';
 
 interface IBudgetServiceOpts {
   soapService: SoapService;
@@ -134,4 +133,15 @@ class BudgetService extends AdwordsOperartionService {
   }
 }
 
-export { BudgetService, IBudgetOperation, IBudget, Budget, IBudgetPage };
+export { BudgetService };
+export * from './ApiError';
+export * from './Budget';
+export * from './BudgetOperation';
+export * from './BudgetPage';
+export * from './BudgetReturnValue';
+export * from './FieldPathElement';
+export * from './Money';
+export * from './abstract/ComparableValue';
+export * from './abstract/ListReturnValue';
+export * from './abstract/Page';
+export * from './enum/Budget';
