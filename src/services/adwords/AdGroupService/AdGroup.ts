@@ -1,7 +1,6 @@
 import { AdGroupStatus } from './enum/AdGroupStatus';
 import { ITargetingSetting, IExplorerAutoOptimizerSetting } from './Setting';
 import { ITextLabel } from '../CampaignService/Label';
-import { IBiddingStrategyConfiguration } from './BiddingStrategyConfiguration';
 import { CriterionTypeGroup } from './enum/CriterionTypeGroup';
 import { ICustomParameters } from './CustomParameters';
 import { AdGroupType } from './enum/AdGroupType';
@@ -15,7 +14,6 @@ interface IAdGroupRaw {
   status: AdGroupStatus;
   settings: Array<ITargetingSetting | IExplorerAutoOptimizerSetting>;
   labels: ITextLabel[];
-
   /**
    * Note: Starting with v201705, bidding strategies can only be set on campaigns.
    * In earlier versions, bidding strategies can be set on campaigns, ad groups and ad group criteria.
@@ -25,7 +23,6 @@ interface IAdGroupRaw {
    */
   // biddingStrategyConfiguration: IBiddingStrategyConfiguration;
   contentBidCriterionTypeGroup: CriterionTypeGroup;
-
   readonly baseCampaignId: string;
   readonly baseAdGroupId: string;
   trackingUrlTemplate: string;
@@ -33,7 +30,6 @@ interface IAdGroupRaw {
   urlCustomParameters: ICustomParameters;
   adGroupType: AdGroupType;
   adGroupAdRotationMode: IAdGroupAdRotationMode;
-
   // TODO
   // forwardCompatibilityMap
 }

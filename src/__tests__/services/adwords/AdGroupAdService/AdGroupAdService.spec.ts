@@ -93,7 +93,7 @@ describe('AdGroupAdService test suites', () => {
   it('should add responsive display ad with image correctly', async () => {
     const responsiveDisplayAds: Array<Partial<IResponsiveDisplayAd>> = [
       {
-        finalUrls: [faker.internet.url()], //order is important
+        finalUrls: [faker.internet.url()], // order is important
         marketingImage: {
           mediaId: '12677923329',
         },
