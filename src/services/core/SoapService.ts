@@ -80,10 +80,13 @@ class SoapService extends AdwordsOperartionService {
    * @returns {Promise<Response>}
    * @memberof SoapService
    */
-  public async mutateAsync<Operation, Rval>(operations: Operation[]): Promise<Rval> {
+  public async mutateAsync<Operation, Rval>(operations: Operation[], operationType?: string): Promise<Rval> {
+    if (!operations.length) {
+      throw new Error('operation array is empty');
+    }
     try {
       const client = await this.beforeSendRequest();
-      const request = this.formMutateRequest({ operations, mutateMethod: 'mutate' });
+      const request = this.formMutateRequest({ operations, operationType, mutateMethod: 'mutate' });
       const response = await client.mutateAsync(request);
       return this.parseMutateResponse<Rval>(response);
     } catch (error) {
@@ -114,10 +117,10 @@ class SoapService extends AdwordsOperartionService {
    * @returns {Promise<Rval>}
    * @memberof SoapService
    */
-  public async mutateLabelAsync<Operation, Rval>(operations: Operation[]): Promise<Rval> {
+  public async mutateLabelAsync<Operation, Rval>(operations: Operation[], operationType: string): Promise<Rval> {
     try {
       const client = await this.beforeSendRequest();
-      const request = this.formMutateRequest({ operations, mutateMethod: 'mutateLabel' });
+      const request = this.formMutateRequest({ operations, operationType, mutateMethod: 'mutateLabel' });
       const response = await client.mutateLabelAsync(request);
       return this.parseMutateResponse<Rval>(response);
     } catch (error) {
@@ -220,7 +223,7 @@ class SoapService extends AdwordsOperartionService {
     return parameter;
   }
 
-  private formMutateRequest(options: any) {
+  private formMutateRequest(options: { operationType?: string; [key: string]: any }) {
     const request: { operations: Array<IOperation<any>> } = { operations: [] };
     const mutateMethod = this.description[this.serviceName][`${this.serviceName}InterfacePort`][options.mutateMethod];
     const operations = options.operations;
@@ -231,6 +234,16 @@ class SoapService extends AdwordsOperartionService {
         request.operations.push(operation);
       });
     }
+
+    if (options.operationType) {
+      request.operations = _.map(request.operations, (operation: IOperation<any>) => {
+        operation.attributes = {
+          'xsi:type': options.operationType,
+        };
+        return operation;
+      });
+    }
+
     return request;
   }
 

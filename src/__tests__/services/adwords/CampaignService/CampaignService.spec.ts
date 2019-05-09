@@ -56,9 +56,6 @@ describe('CampaignService test suites', () => {
     const settings: IGeoTargetTypeSetting = {
       positiveGeoTargetType: GeoTargetTypeSetting.PositiveGeoTargetType.DONT_CARE,
       negativeGeoTargetType: GeoTargetTypeSetting.NegativeGeoTargetType.DONT_CARE,
-      attributes: {
-        'xsi:type': 'GeoTargetTypeSetting',
-      },
     };
     const campaign: ICampaign = {
       name: faker.company.bs(),
