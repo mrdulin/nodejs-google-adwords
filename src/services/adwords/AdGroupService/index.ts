@@ -6,6 +6,9 @@ import { IAdGroupOperation } from './AdGroupOperation';
 import { IAdGroupReturnValue } from './AdGroupReturnValue';
 import { Predicate, Operator } from '../../../types/adwords';
 import { IAdGroup } from './AdGroup';
+import { ITargetingSetting, IExplorerAutoOptimizerSetting } from './Setting';
+import { settings } from 'cluster';
+import { ITargetingSettingDetail } from './TargetingSettingDetail';
 
 interface IAdGroupServiceOpts {
   soapService: SoapService;
@@ -19,6 +22,17 @@ interface IAdGroupServiceOpts {
  * @extends {AdwordsOperartionService}
  */
 class AdGroupService extends AdwordsOperartionService {
+  public static isTargetingSetting(
+    setting: ITargetingSetting | IExplorerAutoOptimizerSetting,
+  ): setting is ITargetingSetting {
+    return 'details' in setting;
+  }
+
+  public static isExplorerAutoOptimizerSetting(
+    setting: ITargetingSetting | IExplorerAutoOptimizerSetting,
+  ): setting is IExplorerAutoOptimizerSetting {
+    return 'optIn' in setting;
+  }
   /**
    * https://developers.google.com/adwords/api/docs/appendix/selectorfields?hl=zh-cn#v201809-AdGroupService
    *
@@ -94,10 +108,7 @@ class AdGroupService extends AdwordsOperartionService {
     const operations: IAdGroupOperation[] = [
       {
         operator: Operator.ADD,
-        operand: adGroup,
-        attributes: {
-          'xsi:type': 'AdGroupOperation',
-        },
+        operand: this.setType(adGroup),
       },
     ];
     return this.mutate(operations);
@@ -111,10 +122,24 @@ class AdGroupService extends AdwordsOperartionService {
   }
 
   protected async mutate<Operation = IAdGroupOperation, Rval = IAdGroupReturnValue>(operations: Operation[]) {
-    return this.soapService.mutateAsync<Operation, Rval>(operations).then((rval: Rval) => {
+    return this.soapService.mutateAsync<Operation, Rval>(operations, 'AdGroupOperation').then((rval: Rval) => {
       console.log('mutate Ad group successfully. rval: ', pd.json(rval));
       return rval;
     });
+  }
+
+  private setType(operand: IAdGroup) {
+    if (operand.settings && operand.settings.length) {
+      operand.settings.forEach((setting: ITargetingSetting | IExplorerAutoOptimizerSetting) => {
+        if (AdGroupService.isTargetingSetting(setting)) {
+          setting.attributes = { 'xsi:type': 'TargetingSetting' };
+        } else if (AdGroupService.isExplorerAutoOptimizerSetting(setting)) {
+          setting.attributes = { 'xsi:type': 'ExplorerAutoOptimizerSetting' };
+        }
+      });
+    }
+    console.log('settings: ', JSON.stringify(operand.settings));
+    return operand;
   }
 }
 
