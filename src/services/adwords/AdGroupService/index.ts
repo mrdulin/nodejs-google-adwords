@@ -138,7 +138,6 @@ class AdGroupService extends AdwordsOperartionService {
         }
       });
     }
-    console.log('settings: ', JSON.stringify(operand.settings));
     return operand;
   }
 }

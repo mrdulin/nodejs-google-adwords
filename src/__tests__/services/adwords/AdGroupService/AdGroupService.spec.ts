@@ -5,6 +5,7 @@ import { IAdGroup } from '../../../../services/adwords/AdGroupService/AdGroup';
 import { AdGroupStatus } from '../../../../services/adwords/AdGroupService/enum/AdGroupStatus';
 import { AdGroupType } from '../../../../services/adwords/AdGroupService/enum/AdGroupType';
 import { CriterionTypeGroup } from '../../../../services/adwords/AdGroupService/enum/CriterionTypeGroup';
+import { AdRotationMode } from '../../../../services/adwords/AdGroupService/enum/AdRotationMode';
 
 describe('AdGroupService test suites', () => {
   const adGroupService = adwordsService.getService('AdGroupService', { verbose: false });
@@ -69,6 +70,9 @@ describe('AdGroupService test suites', () => {
           ],
         },
       ],
+      adGroupAdRotationMode: {
+        adRotationMode: AdRotationMode.OPTIMIZE,
+      },
     };
     const actualValue = await adGroupService.add(adGroup);
   });
