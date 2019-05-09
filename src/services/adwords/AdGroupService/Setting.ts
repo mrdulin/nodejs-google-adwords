@@ -1,14 +1,15 @@
 import { ITargetingSettingDetail } from './TargetingSettingDetail';
+import { IAttributes } from '../../../types/adwords';
 
-interface ISetting {
+interface ISetting<Type> extends IAttributes<Type> {
   'Setting.Type'?: string;
 }
 
-interface IExplorerAutoOptimizerSetting extends ISetting {
+interface IExplorerAutoOptimizerSetting extends ISetting<'ExplorerAutoOptimizerSetting'> {
   optIn: boolean;
 }
 
-interface ITargetingSetting extends ISetting {
+interface ITargetingSetting extends ISetting<'TargetingSetting'> {
   details: ITargetingSettingDetail[];
 }
 

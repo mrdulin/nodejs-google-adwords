@@ -12,7 +12,7 @@ describe('AdGroupService test suites', () => {
     const actualValue = await adGroupService.getAll();
   });
 
-  it('#getAllByCampaignIds', async () => {
+  it.skip('#getAllByCampaignIds', async () => {
     const campaignIds = ['1677467977'];
     const actualValue = await adGroupService.getAllByCampaignIds(campaignIds);
   });
@@ -29,7 +29,7 @@ describe('AdGroupService test suites', () => {
 
   it.skip('#add, with settings', async () => {
     const adGroup: IAdGroup = {
-      campaignId: '1677467977',
+      campaignId: '1878428073',
       name: faker.lorem.slug(1),
       status: AdGroupStatus.ENABLED,
       adGroupType: AdGroupType.DISPLAY_STANDARD,
@@ -37,8 +37,34 @@ describe('AdGroupService test suites', () => {
         {
           details: [
             {
-              targetAll: true,
+              // order is matter
               criterionTypeGroup: CriterionTypeGroup.USER_INTEREST_AND_LIST,
+              targetAll: true,
+            },
+          ],
+        },
+      ],
+    };
+    try {
+      const actualValue = await adGroupService.add(adGroup);
+    } catch (error) {
+      expect(error.message).toContain('AD_GROUP_TYPE_NOT_VALID_FOR_ADVERTISING_CHANNEL_TYPE');
+    }
+  });
+
+  it('#add - with correct adGroupType', async () => {
+    const adGroup: IAdGroup = {
+      campaignId: '1878428073',
+      name: faker.lorem.slug(1),
+      status: AdGroupStatus.ENABLED,
+      adGroupType: AdGroupType.SEARCH_STANDARD,
+      settings: [
+        {
+          details: [
+            {
+              // order is matter
+              criterionTypeGroup: CriterionTypeGroup.USER_INTEREST_AND_LIST,
+              targetAll: true,
             },
           ],
         },
