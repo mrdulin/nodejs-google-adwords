@@ -189,10 +189,7 @@ class CampaignService extends AdwordsOperartionService {
     const operations: ICampaignOperation[] = [
       {
         operator: Operator.ADD,
-        operand: campaign,
-        attributes: {
-          'xsi:type': 'CampaignOperation',
-        },
+        operand: this.setType(campaign),
       },
     ];
     return this.mutate(operations);
@@ -237,17 +234,19 @@ class CampaignService extends AdwordsOperartionService {
   protected async mutateLabelAsync<Operation = ICampaignLabelOperation, Rval = ICampaignLabelReturnValue>(
     operations: Operation[],
   ) {
-    return this.soapService.mutateLabelAsync<Operation, Rval>(operations).then((rval: Rval | undefined) => {
-      console.log('mutate label for campaign successfully. rval: ', rval);
-      return rval;
-    });
+    return this.soapService
+      .mutateLabelAsync<Operation, Rval>(operations, 'CampaignLabelOperation')
+      .then((rval: Rval | undefined) => {
+        console.log('mutate label for campaign successfully. rval: ', rval);
+        return rval;
+      });
   }
 
   protected async mutate<Operation = ICampaignOperation, Rval = ICampaignReturnValue>(
     operations: Operation[],
   ): Promise<Rval> {
     try {
-      const rval = await this.soapService.mutateAsync<Operation, Rval>(operations);
+      const rval = await this.soapService.mutateAsync<Operation, Rval>(operations, 'CampaignOperation');
       console.log('mutate campaign successfully. rval: ', pd.json(rval));
       return rval;
     } catch (error) {
@@ -262,6 +261,15 @@ class CampaignService extends AdwordsOperartionService {
       console.log('get campaigns successfully. rval: ', pd.json(rval));
       return rval;
     });
+  }
+
+  private setType(operand: ICampaign) {
+    if (operand.settings) {
+      operand.settings.attributes = {
+        'xsi:type': 'GeoTargetTypeSetting',
+      };
+    }
+    return operand;
   }
 }
 

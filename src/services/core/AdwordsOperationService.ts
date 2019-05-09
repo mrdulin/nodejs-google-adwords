@@ -13,11 +13,14 @@ abstract class AdwordsOperartionService {
     throw new Error('The method mutate does not overrided.');
   }
 
-  protected mutateAsync<Operation, Rval>(operations: Operation[]): Promise<Rval | undefined> {
+  protected mutateAsync<Operation, Rval>(operations: Operation[], operationType?: string): Promise<Rval | undefined> {
     throw new Error('The method mutateAsync does not overrided.');
   }
 
-  protected mutateLabelAsync<Operation, Rval>(operations: Operation[]): Promise<Rval | undefined> {
+  protected mutateLabelAsync<Operation, Rval>(
+    operations: Operation[],
+    operationType?: string,
+  ): Promise<Rval | undefined> {
     throw new Error('The method mutateLabelAsync does not overrided.');
   }
 

@@ -27,7 +27,7 @@ interface ICampaignRaw {
   adServingOptimizationStatus: AdServingOptimizationStatus;
   frequencyCap: IFrequencyCap;
   // TODO: add more settings
-  settings: IGeoTargetTypeSetting | any;
+  settings: IGeoTargetTypeSetting;
   advertisingChannelType: AdvertisingChannelType;
   advertisingChannelSubType: AdvertisingChannelSubType;
   networkSetting: INetworkSetting;

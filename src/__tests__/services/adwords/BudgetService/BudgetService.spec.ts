@@ -10,7 +10,7 @@ describe('BudgetService test suites', () => {
     const actualValue = await budgetService.getAll();
   });
 
-  it('#getByPage', async () => {
+  it.skip('#getByPage', async () => {
     const paging: IPaging = {
       startIndex: 0,
       numberResults: 2,
@@ -33,6 +33,20 @@ describe('BudgetService test suites', () => {
       name: faker.lorem.word(),
       amount: {
         microAmount: BudgetService.UNIT,
+      },
+      deliveryMethod: Budget.BudgetDeliveryMethod.STANDARD,
+      isExplicitlyShared: false,
+      status: Budget.BudgetStatus.ENABLED,
+    };
+
+    const actualValue = await budgetService.add(budget);
+  });
+
+  it.skip('#add - microAmount = 10000', async () => {
+    const budget: IBudget = {
+      name: faker.lorem.word(),
+      amount: {
+        microAmount: 10000,
       },
       deliveryMethod: Budget.BudgetDeliveryMethod.STANDARD,
       isExplicitlyShared: false,
