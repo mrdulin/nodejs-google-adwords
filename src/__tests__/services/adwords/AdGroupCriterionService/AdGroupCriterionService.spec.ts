@@ -85,7 +85,6 @@ describe('AdGroupCriterionService test suites', () => {
         },
       },
     ];
-
     const actualValue = await adGroupCriterionService.add(adGroupCrierions);
   });
 });
