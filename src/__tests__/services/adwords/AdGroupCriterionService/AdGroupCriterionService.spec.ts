@@ -26,7 +26,7 @@ describe('AdGroupCriterionService test suites', () => {
     const actualValue = await adGroupCriterionService.getKeywordCriterionByAdGroupIds(adGroupIds);
   });
 
-  it('#add', async () => {
+  it('#add - should create criterions correctly', async () => {
     const adGroupId = '69748751893';
     const adGroupCrierions: Array<IBiddableAdGroupCriterion | INegativeAdGroupCriterion> = [
       {
@@ -50,6 +50,7 @@ describe('AdGroupCriterionService test suites', () => {
         adGroupId,
         userStatus: UserStatus.ENABLED,
         criterion: {
+          id: 503999,
           ageRangeType: AgeRange.AgeRangeType.AGE_RANGE_UNDETERMINED,
         },
         criterionUse: CriterionUse.BIDDABLE,
@@ -58,6 +59,7 @@ describe('AdGroupCriterionService test suites', () => {
         adGroupId,
         userStatus: UserStatus.ENABLED,
         criterion: {
+          id: 20,
           genderType: Gender.GenderType.GENDER_UNDETERMINED,
         },
         criterionUse: CriterionUse.BIDDABLE,
