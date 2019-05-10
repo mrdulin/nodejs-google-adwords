@@ -30,7 +30,6 @@ class AdGroupCriterionService extends AdwordsOperartionService {
         operand.criterion.attributes = { 'xsi:type': 'AgeRange' };
       }
     }
-    console.log('operand: ', JSON.stringify(operand, null, 2));
     return operand;
   }
   public static isBiddableAdGroupCriterion(

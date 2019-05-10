@@ -5,7 +5,7 @@ import { AgeRange } from './enum/AgeRange';
 import { Gender } from './enum/Gender';
 
 interface ICriterionRaw<Type> extends IAttributes<Type> {
-  id: string;
+  id: string | number;
   readonly type: Criterion.Type;
   'Criterion.Type': string;
 }
