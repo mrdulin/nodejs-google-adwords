@@ -17,11 +17,12 @@ interface IOAuthRefreshedCredential extends Required<Omit<IOAuthCredential, 'ref
 interface IAuthServiceOpts {
   clientId: string;
   clientSecret: string;
-  credentials: IOAuthCredential;
 }
 
 interface IAuthService {
   refreshCredentials(): Promise<IOAuthCredential>;
+  setCredentials(credentials: IOAuthCredential): void;
+  getCredentials(): IOAuthCredential;
 }
 
 interface IAuthServiceClass {
@@ -42,14 +43,24 @@ class AuthService implements IAuthService {
   private readonly authURL: string = 'https://www.googleapis.com/oauth2/v4/token';
   private clientId: string;
   private clientSecret: string;
-  private credentials: IOAuthCredential;
+  private credentials: IOAuthCredential = {
+    refresh_token: '',
+  };
   private tokenExpiresInMs: number = 0;
 
   constructor(options: IAuthServiceOpts) {
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
-    this.credentials = options.credentials;
   }
+
+  public setCredentials(credentials: IOAuthCredential) {
+    this.credentials = credentials;
+  }
+
+  public getCredentials(): IOAuthCredential {
+    return this.credentials;
+  }
+
   public async refreshCredentials(): Promise<IOAuthCredential> {
     if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
       return Promise.resolve(this.credentials);

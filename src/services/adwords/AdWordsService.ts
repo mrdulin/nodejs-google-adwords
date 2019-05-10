@@ -55,8 +55,8 @@ class AdWordsService {
     this.authService = AuthService.getInstance({
       clientId: options.clientId,
       clientSecret: options.clientSecret,
-      credentials: options.credentials,
     });
+    this.authService.setCredentials(options.credentials);
   }
 
   public setVerbose(verbose: boolean) {
