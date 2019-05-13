@@ -40,7 +40,7 @@ describe('CampaignService test suites', () => {
   it.skip('#getAllEnabled', async () => {
     const actualValue = await campaignService.getAllEnabled();
   });
-  it.skip('#getAllButRemoved', async () => {
+  it('#getAllButRemoved', async () => {
     const actualValue = await campaignService.getAllButRemoved();
   });
 
@@ -49,7 +49,7 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.remove(campaignId);
   });
 
-  it('#add', async () => {
+  it.skip('#add', async () => {
     const budget: IBudget = {
       budgetId: '1865779148',
     };
@@ -96,5 +96,53 @@ describe('CampaignService test suites', () => {
       campaignId: '1677467977',
     };
     const actualValue = await campaignService.addLabel(campaignLabel);
+  });
+
+  // TODO:
+  it.skip('#add - with CpcBid', async () => {
+    const budget: IBudget = {
+      budgetId: '1865779148',
+    };
+    const settings: IGeoTargetTypeSetting = {
+      positiveGeoTargetType: GeoTargetTypeSetting.PositiveGeoTargetType.DONT_CARE,
+      negativeGeoTargetType: GeoTargetTypeSetting.NegativeGeoTargetType.DONT_CARE,
+    };
+    const campaign: ICampaign = {
+      name: faker.company.bs(),
+      status: CampaignStatus.ENABLED,
+      startDate: moment()
+        .add(1, 'd')
+        .format(CampaignService.dateFormat),
+      endDate: moment()
+        .add(2, 'd')
+        .format(CampaignService.dateFormat),
+      budget,
+      biddingStrategyConfiguration: {
+        biddingStrategyType: BiddingStrategyType.MANUAL_CPC,
+        bids: [
+          {
+            bid: {
+              microAmount: 100 * 1000,
+            },
+            'Bids.Type': 'CpcBid',
+          },
+        ],
+      },
+      frequencyCap: {
+        impressions: 10,
+        timeUnit: TimeUnit.DAY,
+        level: Level.CAMPAIGN,
+      },
+      settings,
+      advertisingChannelType: AdvertisingChannelType.SEARCH,
+      networkSetting: {
+        targetContentNetwork: true,
+        targetGoogleSearch: true,
+        targetPartnerSearchNetwork: false,
+        targetSearchNetwork: true,
+      },
+    };
+
+    const actualValue = await campaignService.add(campaign);
   });
 });

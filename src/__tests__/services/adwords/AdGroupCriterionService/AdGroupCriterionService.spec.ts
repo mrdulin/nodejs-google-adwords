@@ -27,7 +27,7 @@ describe('AdGroupCriterionService test suites', () => {
   });
 
   it('#add - should create criterions correctly', async () => {
-    const adGroupId = '69748751893';
+    const adGroupId = '70137654917';
     const adGroupCrierions: Array<IBiddableAdGroupCriterion | INegativeAdGroupCriterion> = [
       {
         adGroupId,

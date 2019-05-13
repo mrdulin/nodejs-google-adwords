@@ -49,7 +49,7 @@ describe('AdGroupAdService test suites', () => {
       },
     ];
 
-    const adGroupId = '69748751893';
+    const adGroupId = '70137654917';
     const adGroupAds: IAdGroupAd[] = expandedTextAds.map((expandedTextAd: IExpandedTextAd) => {
       const adGroupAd: IAdGroupAd = {
         adGroupId,

@@ -14,6 +14,8 @@ import { ServingStatus } from './enum/ServingStatus';
 import { ICampaignLabelOperation } from './CampaignLabelOperation';
 import { ICampaignLabelReturnValue } from './CampaignLabelReturnValue';
 import { ICampaignLabel } from './CampaignLabel';
+import { ICpcBid, ICpaBid } from '../AdGroupCriterionService/Bids';
+import { ICpmBid } from './Bids';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
@@ -268,6 +270,21 @@ class CampaignService extends AdwordsOperartionService {
       operand.settings.attributes = {
         'xsi:type': 'GeoTargetTypeSetting',
       };
+    }
+    if (
+      operand.biddingStrategyConfiguration &&
+      operand.biddingStrategyConfiguration.bids &&
+      operand.biddingStrategyConfiguration.bids.length
+    ) {
+      let { bids } = operand.biddingStrategyConfiguration;
+      bids = bids.map((bid: any) => {
+        bid.attributes = {
+          'xsi:type': bid['Bids.Type'],
+        };
+        delete bid['Bids.Type'];
+        return bid;
+      });
+      operand.biddingStrategyConfiguration.bids = bids;
     }
     return operand;
   }
