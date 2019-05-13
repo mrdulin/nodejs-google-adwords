@@ -138,6 +138,21 @@ class AdGroupService extends AdwordsOperartionService {
         }
       });
     }
+    if (
+      operand.biddingStrategyConfiguration &&
+      operand.biddingStrategyConfiguration.bids &&
+      operand.biddingStrategyConfiguration.bids.length
+    ) {
+      let { bids } = operand.biddingStrategyConfiguration;
+      bids = bids.map((bid: any) => {
+        bid.attributes = {
+          'xsi:type': bid['Bids.Type'],
+        };
+        delete bid['Bids.Type'];
+        return bid;
+      });
+      operand.biddingStrategyConfiguration.bids = bids;
+    }
     return operand;
   }
 }
