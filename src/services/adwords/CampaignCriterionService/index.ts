@@ -171,3 +171,4 @@ export {
   ICampaignCriterionReturnValue,
   Criterion,
 };
+export * from './Address';
