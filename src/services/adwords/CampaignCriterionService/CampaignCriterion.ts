@@ -1,11 +1,11 @@
-import { ILocation } from './Criterion';
+import { ILocation, IProximity } from './Criterion';
 import { CampaignCriterion } from './enum/CampaignCriterion';
 
 interface ICampaignCriterionRaw {
   campaignId: string;
   readonly isNegative: boolean;
   // TODO
-  criterion: ILocation;
+  criterion: ILocation | IProximity;
   bidModifier: number;
   campaignCriterionStatus: CampaignCriterion.CampaignCriterionStatus;
   readonly baseCampaignId: string;
