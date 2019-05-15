@@ -1,6 +1,6 @@
 import { StringOrNull } from '../../../types/core';
 
-interface IAddress {
+interface IAddressRaw {
   streetAddress: StringOrNull;
   streetAddress2: StringOrNull;
   cityName: StringOrNull;
@@ -9,5 +9,7 @@ interface IAddress {
   postalCode: StringOrNull;
   countryCode: StringOrNull;
 }
+
+interface IAddress extends Partial<IAddressRaw> {}
 
 export { IAddress };
