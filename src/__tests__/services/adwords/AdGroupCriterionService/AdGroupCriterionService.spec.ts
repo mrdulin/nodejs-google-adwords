@@ -26,7 +26,7 @@ describe('AdGroupCriterionService test suites', () => {
     const actualValue = await adGroupCriterionService.getKeywordCriterionByAdGroupIds(adGroupIds);
   });
 
-  it('#add - should create criterions correctly', async () => {
+  it.skip('#add - should create criterions correctly', async () => {
     const adGroupId = '70137654917';
     const adGroupCrierions: Array<IBiddableAdGroupCriterion | INegativeAdGroupCriterion> = [
       {
@@ -87,6 +87,62 @@ describe('AdGroupCriterionService test suites', () => {
         },
       },
     ];
+    const actualValue = await adGroupCriterionService.add(adGroupCrierions);
+  });
+
+  it('CONCURRENT_MODIFICATION', async () => {
+    const adGroupId = '70137654917';
+    const adGroupCrierions = [
+      {
+        adGroupId,
+        criterion: {
+          id: 503999,
+          ageRangeType: AgeRange.AgeRangeType.AGE_RANGE_UNDETERMINED,
+        },
+        criterionUse: CriterionUse.BIDDABLE,
+      },
+      {
+        adGroupId,
+        criterion: {
+          id: 20,
+          genderType: Gender.GenderType.GENDER_UNDETERMINED,
+        },
+        criterionUse: CriterionUse.BIDDABLE,
+      },
+      {
+        adGroupId,
+        criterion: {
+          text: 'create-campaign',
+          matchType: KeywordMatchType.EXACT,
+        },
+        criterionUse: CriterionUse.BIDDABLE,
+      },
+      {
+        adGroupId,
+        criterion: {
+          text: 'jectcedar.pwc.com/create-campaign',
+          matchType: KeywordMatchType.EXACT,
+        },
+        criterionUse: CriterionUse.BIDDABLE,
+      },
+      {
+        adGroupId,
+        criterion: {
+          text: 'campaign',
+          matchType: KeywordMatchType.EXACT,
+        },
+        criterionUse: CriterionUse.NEGATIVE,
+      },
+      {
+        adGroupId,
+        criterion: {
+          text: '33campaign',
+          matchType: KeywordMatchType.EXACT,
+        },
+        criterionUse: CriterionUse.NEGATIVE,
+      },
+    ];
+
     const actualValue = await adGroupCriterionService.add(adGroupCrierions);
   });
 });

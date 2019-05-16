@@ -186,3 +186,8 @@ export {
   Criterion,
 };
 export * from './Address';
+export * from './enum/CampaignCriterion';
+export * from './enum/Criterion';
+export * from './enum/LocationTargetingStatus';
+export * from './enum/Proximity';
+export * from './GeoPoint';
