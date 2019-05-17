@@ -19,7 +19,7 @@
     "Node.js"
   ],
   "author": "mrdulin",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:mrdulin/nodejs-google-adwords.git"
