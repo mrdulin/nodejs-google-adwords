@@ -61,7 +61,7 @@ describe('CampaignCriterionService test suites', () => {
   // If there is radius: location=location_address+location_additional_address+location_city+location_self_state+location_self_zip+location_radius
   // If there is no radius and with location_state: location=location_state
   // If there is no radius and no location_state: location=location_zip
-  it('#add - with complex logic', async () => {
+  it.skip('#add - with complex logic', async () => {
     const campaignId = '1895039275';
     const address: IAddress = {
       // order is matter
@@ -77,6 +77,52 @@ describe('CampaignCriterionService test suites', () => {
       address,
       'Criterion.Type': 'Proximity',
     };
+    const campaignCriterions: ICampaignCriterion[] = [
+      {
+        campaignId,
+        criterion: proximity,
+      },
+    ];
+    const actualValue = await campaignCriterionService.add(campaignCriterions);
+    console.log('actualValue: ', pd.json(actualValue));
+  });
+
+  it.skip('#add - only with zip code(postal code)', async () => {
+    const campaignId = '1895039275';
+    const address: IAddress = {
+      postalCode: '20000',
+      countryCode: 'US',
+    };
+    const proximity: IProximity = {
+      radiusDistanceUnits: Proximity.DistanceUnits.MILES,
+      radiusInUnits: 1,
+      address,
+      'Criterion.Type': 'Proximity',
+    };
+
+    const campaignCriterions: ICampaignCriterion[] = [
+      {
+        campaignId,
+        criterion: proximity,
+      },
+    ];
+    const actualValue = await campaignCriterionService.add(campaignCriterions);
+    console.log('actualValue: ', pd.json(actualValue));
+  });
+
+  it('#add - only with province code', async () => {
+    const campaignId = '1895039275';
+    const address: IAddress = {
+      provinceCode: 'AR',
+      countryCode: 'US',
+    };
+    const proximity: IProximity = {
+      radiusDistanceUnits: Proximity.DistanceUnits.MILES,
+      radiusInUnits: 1,
+      address,
+      'Criterion.Type': 'Proximity',
+    };
+
     const campaignCriterions: ICampaignCriterion[] = [
       {
         campaignId,
