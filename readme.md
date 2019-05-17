@@ -9,9 +9,11 @@ Google Ads API Client Library for Node.js. This library is developed for Google 
 
 Replace your GCP OAuth 2.0 client ID and open this link in browser:
 
+```bash
 https://accounts.google.com/o/oauth2/auth?client_id={Your Client ID}&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
+```
 
-Get authorization code: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
+Get authorization code, for example: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
 
 Using authorization code exchange credentials:
 
