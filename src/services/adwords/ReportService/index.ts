@@ -94,7 +94,7 @@ class ReportService {
   }
 
   private async xmlParse<Rval = { report: IReport }>(xml: string): Promise<Rval> {
-    return XMLService.parseStringPromise(xml);
+    return XMLService.parseStringPromise<Rval>(xml);
   }
 }
 

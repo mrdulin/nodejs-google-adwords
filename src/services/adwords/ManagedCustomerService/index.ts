@@ -52,7 +52,7 @@ class ManagedCustomerService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
-      console.log('get managed costomers successfully. rval: ', pd.json(rval));
+      // console.log('get managed costomers successfully. rval: ', pd.json(rval));
       return rval;
     });
   }

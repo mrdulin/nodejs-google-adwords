@@ -10,7 +10,7 @@ import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
  */
 class CampaignPerformanceReportService {
   public static readonly reportName: string = 'Campaign Performance Report';
-  private static readonly attibutes: string[] = [
+  private static readonly attributes: string[] = [
     'CampaignId',
     'CampaignName',
     'CampaignStatus',
@@ -27,7 +27,7 @@ class CampaignPerformanceReportService {
     'AverageCpc',
   ];
   private static readonly selectorFields = [
-    ...CampaignPerformanceReportService.attibutes,
+    ...CampaignPerformanceReportService.attributes,
     ...CampaignPerformanceReportService.segments,
     ...CampaignPerformanceReportService.metrics,
   ];
