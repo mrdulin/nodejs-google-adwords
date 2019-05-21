@@ -88,8 +88,8 @@ class AuthService implements IAuthService {
         return response;
       })
       .catch((error) => {
-        console.error(error);
-        return Promise.reject(new Error('refresh token failed.'));
+        console.error(new Error('refresh token failed.'));
+        return Promise.reject(error);
       });
   }
 }
