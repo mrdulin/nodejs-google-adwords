@@ -42,7 +42,7 @@ class GeoPerformanceReportService {
       reportType: ReportDefinition.ReportType.GEO_PERFORMANCE_REPORT,
       dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
     };
-    return this.reportService.reportDownload(reportDefinition, { json: true });
+    return this.reportService.reportDownload(reportDefinition);
   }
 }
 
