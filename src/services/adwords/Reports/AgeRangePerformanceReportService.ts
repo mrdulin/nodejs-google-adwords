@@ -36,7 +36,7 @@ class AgeRangePerformanceReportService {
       reportType: ReportDefinition.ReportType.AGE_RANGE_PERFORMANCE_REPORT,
       dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
     };
-    return this.reportService.reportDownload(reportDefinition, { json: true });
+    return this.reportService.reportDownload(reportDefinition);
   }
 }
 

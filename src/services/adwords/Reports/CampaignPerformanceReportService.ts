@@ -1,6 +1,7 @@
 import { ReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
+import _ from 'lodash';
 
 /**
  * https://developers.google.com/adwords/api/docs/appendix/reports/campaign-performance-report
@@ -37,17 +38,17 @@ class CampaignPerformanceReportService {
     this.reportService = opts.reportService;
   }
 
-  public async get() {
-    const reportDefinition: IReportDefinition = {
+  public async get(reportDefinition: IReportDefinition) {
+    const reportDef: IReportDefinition = _.defaultsDeep(reportDefinition, {
       selector: {
         fields: CampaignPerformanceReportService.selectorFields,
       },
       reportName: CampaignPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
       dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
-    };
+    });
 
-    return this.reportService.reportDownload(reportDefinition, { json: true });
+    return this.reportService.reportDownload(reportDef);
   }
 }
 
