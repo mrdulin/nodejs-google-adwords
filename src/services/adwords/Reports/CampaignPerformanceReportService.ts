@@ -23,6 +23,7 @@ class CampaignPerformanceReportService {
     'Clicks',
     'Conversions',
     'Ctr',
+    'Cost',
     'Impressions',
     'ConversionRate',
     'AverageCpc',

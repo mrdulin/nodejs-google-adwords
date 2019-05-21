@@ -52,7 +52,7 @@ class ReportService {
       headers: {
         'Content-Type': 'multipart/form-data',
         skipReportHeader: _.get(options, ['skipReportHeader'], false),
-        skipColumnHeader: _.get(options, ['skipColumnHeader'], false),
+        skipColumnHeader: _.get(options, ['skipColumnHeader'], true),
         skipReportSummary: _.get(options, ['skipReportSummary'], true),
         useRawEnumValues: _.get(options, ['useRawEnumValues'], false),
         includeZeroImpressions: _.get(options, ['includeZeroImpressions'], false),
