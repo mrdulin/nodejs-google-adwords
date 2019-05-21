@@ -38,6 +38,8 @@ Credentials response:
 }
 ```
 
+You can revoke your access token from: https://myaccount.google.com/u/0/permissions
+
 ## Environment variables
 
 ```txt

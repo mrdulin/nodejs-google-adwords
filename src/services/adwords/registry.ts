@@ -10,7 +10,12 @@ import { LocationCriterionService } from './LocationCriterionService';
 import { ManagedCustomerService } from './ManagedCustomerService';
 import { CustomerService } from './CustomerService';
 import { ReportDefinitionService } from './ReportDefinitionService';
-import { CampaignPerformanceReportService } from './Reports/CampaignPerformanceReportService';
+import {
+  CampaignPerformanceReportService,
+  GeoPerformanceReportService,
+  GenderPerformanceReportService,
+  AgeRangePerformanceReportService,
+} from './Reports';
 import { BatchJobService } from './BatchJobService';
 import { MediaService } from './MediaService';
 
@@ -26,9 +31,12 @@ interface IServiceMap {
   ManagedCustomerService: ManagedCustomerService;
   CustomerService: CustomerService;
   ReportDefinitionService: ReportDefinitionService;
-  CampaignPerformanceReportService: CampaignPerformanceReportService;
   BatchJobService: BatchJobService;
   MediaService: MediaService;
+  CampaignPerformanceReportService: CampaignPerformanceReportService;
+  GeoPerformanceReportService: GeoPerformanceReportService;
+  GenderPerformanceReportService: GenderPerformanceReportService;
+  AgeRangePerformanceReportService: AgeRangePerformanceReportService;
 }
 
 const registryService = RegistryService.init()
@@ -43,8 +51,11 @@ const registryService = RegistryService.init()
   .register(ManagedCustomerService.name, ManagedCustomerService)
   .register(CustomerService.name, CustomerService)
   .register(ReportDefinitionService.name, ReportDefinitionService)
-  .register(CampaignPerformanceReportService.name, CampaignPerformanceReportService)
   .register(BatchJobService.name, BatchJobService)
-  .register(MediaService.name, MediaService);
+  .register(MediaService.name, MediaService)
+  .register(CampaignPerformanceReportService.name, CampaignPerformanceReportService)
+  .register(GeoPerformanceReportService.name, GeoPerformanceReportService)
+  .register(GenderPerformanceReportService.name, GenderPerformanceReportService)
+  .register(AgeRangePerformanceReportService.name, AgeRangePerformanceReportService);
 
 export { registryService, IServiceMap };
