@@ -80,12 +80,7 @@ class ReportService {
           }
           return Promise.resolve(rval);
         },
-      )
-      .catch((error) => {
-        console.error(`get ${reportDefinition.reportName} failed.`);
-        console.error(error);
-        return '';
-      });
+      );
   }
 
   private buildObjectToXML<T>(obj: T): string {
