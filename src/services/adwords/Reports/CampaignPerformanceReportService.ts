@@ -15,7 +15,6 @@ class CampaignPerformanceReportService {
     'CampaignId',
     'CampaignName',
     'CampaignStatus',
-    'Criteria',
     'StartDate',
     'EndDate',
   ];
