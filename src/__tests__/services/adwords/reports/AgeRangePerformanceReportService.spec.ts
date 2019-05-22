@@ -1,3 +1,4 @@
+import { pd } from 'pretty-data';
 import { adwordsService } from '../../initialize';
 
 describe('AgeRangePerformanceReportService test suites', () => {
@@ -6,6 +7,6 @@ describe('AgeRangePerformanceReportService test suites', () => {
   });
   it('#reportDownload', async () => {
     const actualvalue = await ageRangePerformanceReportService.get();
-    // console.log(pd.json(actualvalue));
+    console.log(pd.xml(actualvalue));
   });
 });
