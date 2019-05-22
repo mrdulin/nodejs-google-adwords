@@ -18,7 +18,7 @@ class CampaignPerformanceReportService {
     'StartDate',
     'EndDate',
   ];
-  private static readonly segments: string[] = ['Device'];
+  private static readonly segments: string[] = [];
   private static readonly metrics: string[] = [
     'Clicks',
     'Conversions',
