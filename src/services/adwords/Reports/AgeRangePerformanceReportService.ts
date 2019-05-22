@@ -4,7 +4,7 @@ import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 
 class AgeRangePerformanceReportService {
   public static readonly reportName: string = 'Age Range Performance Report';
-  private static readonly attributes: string[] = ['CampaignId', 'CampaignName', 'CampaignStatus'];
+  private static readonly attributes: string[] = ['CampaignId', 'CampaignName', 'CampaignStatus', 'Criteria'];
 
   private static readonly segments: string[] = [];
   private static readonly metrics: string[] = [
