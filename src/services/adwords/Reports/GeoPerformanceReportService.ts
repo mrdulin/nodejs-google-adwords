@@ -22,6 +22,7 @@ class GeoPerformanceReportService {
     'Ctr',
     'Impressions',
     'AverageCpc',
+    'ImpressionReach',
   ];
   private static readonly selectorFields = [
     ...GeoPerformanceReportService.attributes,
