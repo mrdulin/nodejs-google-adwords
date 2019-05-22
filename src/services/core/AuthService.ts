@@ -79,7 +79,7 @@ class AuthService implements IAuthService {
 
     return request(options)
       .then((response) => {
-        console.log('refresh token success. response: ', pd.json(response));
+        // console.log('refresh token success. response: ', pd.json(response));
         this.tokenExpiresInMs = moment()
           .add(1, 'hour')
           .toDate()
