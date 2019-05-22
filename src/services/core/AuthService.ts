@@ -62,9 +62,9 @@ class AuthService implements IAuthService {
   }
 
   public async refreshCredentials(): Promise<IOAuthCredential> {
-    if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
-      return Promise.resolve(this.credentials);
-    }
+    // if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
+    //   return Promise.resolve(this.credentials);
+    // }
     const options: OptionsWithUri = {
       uri: this.authURL,
       method: 'POST',
