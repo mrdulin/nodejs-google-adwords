@@ -5,7 +5,7 @@ describe('CampaignPerformanceReportService test suites', () => {
     verbose: true,
   });
   it('#reportDownload', async () => {
-    const actualvalue = await genderPerformanceReportService.get();
+    const actualvalue = await genderPerformanceReportService.get({});
     // console.log(pd.json(actualvalue));
   });
 });

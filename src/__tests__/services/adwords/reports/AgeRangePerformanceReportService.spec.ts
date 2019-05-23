@@ -6,7 +6,7 @@ describe('AgeRangePerformanceReportService test suites', () => {
     verbose: true,
   });
   it('#reportDownload', async () => {
-    const actualvalue = await ageRangePerformanceReportService.get();
+    const actualvalue = await ageRangePerformanceReportService.get({});
     console.log(pd.xml(actualvalue));
   });
 });
