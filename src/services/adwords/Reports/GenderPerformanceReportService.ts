@@ -1,6 +1,7 @@
 import { ReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
+import _ from 'lodash';
 
 class GenderPerformanceReportService {
   public static readonly reportName: string = 'Gender Performance Report';
@@ -27,16 +28,18 @@ class GenderPerformanceReportService {
     this.reportService = opts.reportService;
   }
 
-  public async get() {
-    const reportDefinition: IReportDefinition = {
-      selector: {
+  public async get(reportDefinition: Partial<IReportDefinition>) {
+    const reportDef: IReportDefinition = {
+      // order is matter
+      selector: _.defaultsDeep(reportDefinition.selector, {
         fields: GenderPerformanceReportService.selectorFields,
-      },
+      }),
       reportName: GenderPerformanceReportService.reportName,
-      reportType: ReportDefinition.ReportType.GENDER_PERFORMANCE_REPORT,
-      dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
+      reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
+      dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
     };
-    return this.reportService.reportDownload(reportDefinition);
+
+    return this.reportService.reportDownload(reportDef);
   }
 }
 

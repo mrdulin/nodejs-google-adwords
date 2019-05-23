@@ -1,6 +1,7 @@
 import { ReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
+import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 /**
@@ -39,15 +40,20 @@ class CampaignPerformanceReportService {
     this.reportService = opts.reportService;
   }
 
-  public async get(reportDefinition: IReportDefinition) {
-    const reportDef: IReportDefinition = _.defaultsDeep(reportDefinition, {
-      selector: {
+  public setVerbose(verbose: boolean) {
+    this.reportService.setVerbose(verbose);
+  }
+
+  public async get(reportDefinition: Partial<IReportDefinition>) {
+    const reportDef: IReportDefinition = {
+      // order is matter
+      selector: _.defaultsDeep(reportDefinition.selector, {
         fields: CampaignPerformanceReportService.selectorFields,
-      },
+      }),
       reportName: CampaignPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
-      dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
-    });
+      dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
+    };
 
     return this.reportService.reportDownload(reportDef);
   }

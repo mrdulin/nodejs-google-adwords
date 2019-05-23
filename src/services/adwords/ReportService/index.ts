@@ -32,9 +32,13 @@ interface IReport {
 class ReportService {
   public static readonly URL: string = 'https://adwords.google.com/api/adwords/reportdownload/v201809';
 
+  private verbose: boolean = false;
   private httpService: HttpService;
   constructor(options: IReportServiceOpts) {
     this.httpService = options.httpService;
+  }
+  public setVerbose(verbose: boolean) {
+    this.verbose = verbose;
   }
 
   public async reportDownload(
@@ -45,6 +49,9 @@ class ReportService {
       downloadFormat: ReportDefinition.DownloadFormatType.XML,
     });
     const xml = this.buildObjectToXML<{ reportDefinition: IReportDefinition }>({ reportDefinition: reportDef });
+    if (this.verbose) {
+      console.log('__rdxml: ', pd.xml(xml));
+    }
     const formData: IReportDownloadFormData = { __rdxml: xml };
     const requestOptions: OptionsWithUri = {
       uri: ReportService.URL,
@@ -80,7 +87,14 @@ class ReportService {
           }
           return Promise.resolve(rval);
         },
-      );
+      )
+      .catch((error) => {
+        console.log(
+          `\nreportDefinition: ${pd.json(reportDefinition)}`,
+          `\n${options ? 'options: ' + pd.json(options) : ''}`,
+        );
+        return Promise.reject(error);
+      });
   }
 
   private buildObjectToXML<T>(obj: T): string {
