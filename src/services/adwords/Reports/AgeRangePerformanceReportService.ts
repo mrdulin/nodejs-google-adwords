@@ -35,7 +35,7 @@ class AgeRangePerformanceReportService {
         fields: AgeRangePerformanceReportService.selectorFields,
       }),
       reportName: AgeRangePerformanceReportService.reportName,
-      reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
+      reportType: ReportDefinition.ReportType.AGE_RANGE_PERFORMANCE_REPORT,
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
     };
 
