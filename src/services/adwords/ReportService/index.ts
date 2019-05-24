@@ -89,10 +89,10 @@ class ReportService {
         },
       )
       .catch((error) => {
-        console.log(
-          `\nreportDefinition: ${pd.json(reportDefinition)}`,
-          `\n${options ? 'options: ' + pd.json(options) : ''}`,
-        );
+        console.log(`reportDefinition: ${JSON.stringify(reportDefinition)}`);
+        if (options) {
+          console.log(`options: ${JSON.stringify(options)}`);
+        }
         return Promise.reject(error);
       });
   }
