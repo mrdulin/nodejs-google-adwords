@@ -35,7 +35,7 @@ class GenderPerformanceReportService {
         fields: GenderPerformanceReportService.selectorFields,
       }),
       reportName: GenderPerformanceReportService.reportName,
-      reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
+      reportType: ReportDefinition.ReportType.GENDER_PERFORMANCE_REPORT,
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
     };
 
