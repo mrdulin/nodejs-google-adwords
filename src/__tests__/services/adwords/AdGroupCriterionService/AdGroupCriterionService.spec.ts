@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import {
   IBiddableAdGroupCriterion,
   INegativeAdGroupCriterion,

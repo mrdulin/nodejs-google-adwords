@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { BudgetService, Budget, IBudget } from '../../../../services/adwords/BudgetService';
 

@@ -1,7 +1,7 @@
 import faker from 'faker';
 import moment from 'moment';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { ICampaignLabel } from '../../../../services/adwords/CampaignService/CampaignLabel';
 import {

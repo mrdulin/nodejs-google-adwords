@@ -1,7 +1,7 @@
 import { pd } from 'pretty-data';
 import _ from 'lodash';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { ILocationCriterion } from '../../../../services/adwords/LocationCriterionService';
 import { ILocation } from '../../../../services/adwords/LocationCriterionService/Location';
 describe('LocationCriterionService test suites', () => {
