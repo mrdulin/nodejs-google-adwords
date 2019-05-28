@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IAdGroup } from '../../../../services/adwords/AdGroupService/AdGroup';
 import { AdGroupStatus } from '../../../../services/adwords/AdGroupService/enum/AdGroupStatus';
 import { AdGroupType } from '../../../../services/adwords/AdGroupService/enum/AdGroupType';
@@ -10,7 +10,7 @@ import { BiddingStrategyType } from '../../../../services/adwords/AdGroupService
 
 describe('AdGroupService test suites', () => {
   const adGroupService = adwordsService.getService('AdGroupService', { verbose: false });
-  it.skip('#getAll', async () => {
+  it('#getAll', async () => {
     const actualValue = await adGroupService.getAll();
   });
 
@@ -113,7 +113,7 @@ describe('AdGroupService test suites', () => {
     const actualValue = await adGroupService.add(adGroup);
   });
 
-  it('#add - with CpcBid search type campaign', async () => {
+  it.skip('#add - with CpcBid search type campaign', async () => {
     const adGroup: IAdGroup = {
       campaignId: '1895039275',
       name: faker.lorem.slug(1),

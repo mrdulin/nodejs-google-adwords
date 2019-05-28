@@ -1,4 +1,4 @@
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { ReportDefinition } from '../../../../services/adwords/ReportDefinitionService/enum/ReportDefinition';
 import { ISelector } from '../../../../types/adwords';
 

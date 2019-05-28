@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { IAdGroupAd } from '../../../../services/adwords/AdGroupAdService/AdGroupAd';
 import { IExpandedTextAd, IResponsiveDisplayAd } from '../../../../services/adwords/AdGroupAdService/Ad';

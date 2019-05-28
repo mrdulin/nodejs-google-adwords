@@ -1,6 +1,6 @@
 import { pd } from 'pretty-data';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { ICampaignCriterion } from '../../../../services/adwords/CampaignCriterionService/CampaignCriterion';
 import { IAddress } from '../../../../services/adwords/CampaignCriterionService';
 import { IProximity } from '../../../../services/adwords/CampaignCriterionService/Criterion';

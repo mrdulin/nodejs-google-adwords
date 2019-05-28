@@ -1,5 +1,5 @@
 import { pd } from 'pretty-data';
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 
 describe('AgeRangePerformanceReportService test suites', () => {
   const ageRangePerformanceReportService = adwordsService.getService('AgeRangePerformanceReportService', {

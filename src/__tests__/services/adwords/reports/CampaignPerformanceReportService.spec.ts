@@ -1,5 +1,5 @@
 import { pd } from 'pretty-data';
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IReportDefinition } from '../../../../services/adwords/ReportDefinitionService/ReportDefinition';
 import { ReportDefinition } from '../../../../services/adwords/ReportDefinitionService';
 import { ISelector, Predicate } from '../../../../types/adwords';

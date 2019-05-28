@@ -1,4 +1,4 @@
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 
 describe('CampaignPerformanceReportService test suites', () => {
   const genderPerformanceReportService = adwordsService.getService('GenderPerformanceReportService', {
