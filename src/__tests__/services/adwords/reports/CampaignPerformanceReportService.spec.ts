@@ -9,12 +9,12 @@ describe('CampaignPerformanceReportService test suites', () => {
   const campaignPerformanceReportService = adwordsService.getService('CampaignPerformanceReportService', {
     verbose: true,
   });
-  it.skip('#reportDownload - all time', async () => {
+  it('#reportDownload - all time', async () => {
     const actualvalue = await campaignPerformanceReportService.get({});
     console.log(pd.xml(actualvalue));
   });
 
-  it('#reportDownload - with predicates', async () => {
+  it.skip('#reportDownload - with predicates', async () => {
     const selector: ISelector = {
       fields: [
         'CampaignId',
