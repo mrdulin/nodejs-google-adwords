@@ -66,7 +66,6 @@ class LabelService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
-      console.log('get labels successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -75,7 +74,6 @@ class LabelService extends AdwordsOperartionService {
     operaitons: Operation[],
   ): Promise<Rval | undefined> {
     return this.soapService.mutateAsync<Operation, Rval>(operaitons).then((rval: Rval | undefined) => {
-      console.log(`mutate label successfully. rval: `, pd.json(rval));
       return rval;
     });
   }

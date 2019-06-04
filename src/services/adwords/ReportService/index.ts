@@ -71,7 +71,6 @@ class ReportService {
       .request(requestOptions)
       .then(
         (rval: string): string => {
-          // console.log(`get ${reportDefinition.reportName} successfully. rval: `, pd.xml(rval));
           return rval;
         },
       )

@@ -131,7 +131,6 @@ class BudgetService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((response: Rval | undefined) => {
-      console.log('get budgets successfully. response: ', pd.json(response));
       return response;
     });
   }
@@ -141,7 +140,6 @@ class BudgetService extends AdwordsOperartionService {
   ): Promise<Response> {
     try {
       const response = await this.soapService.mutateAsync<Operation, Response>(operations);
-      console.log('mutate budget successfully. response: ', pd.json(response));
       return response;
     } catch (error) {
       throw error;

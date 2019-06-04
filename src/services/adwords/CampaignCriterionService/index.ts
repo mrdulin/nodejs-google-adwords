@@ -162,7 +162,6 @@ class CampaignCriterionService extends AdwordsOperartionService {
     opertions: Operaiton[],
   ): Promise<Rval> {
     return this.soapService.mutateAsync<Operaiton, Rval>(opertions, 'CampaignCriterionOperation').then((rval: Rval) => {
-      // console.log('mutate campaign criterion successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -171,7 +170,6 @@ class CampaignCriterionService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
-      // console.log('get campaign criterion successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
