@@ -116,7 +116,6 @@ class AdGroupService extends AdwordsOperartionService {
 
   protected async get<ServiceSelector = ISelector, Rval = IAdGroupPage>(serviceSelector: ServiceSelector) {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      
       return rval;
     });
   }
