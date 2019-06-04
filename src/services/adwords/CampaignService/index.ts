@@ -239,7 +239,6 @@ class CampaignService extends AdwordsOperartionService {
     return this.soapService
       .mutateLabelAsync<Operation, Rval>(operations, 'CampaignLabelOperation')
       .then((rval: Rval | undefined) => {
-        console.log('mutate label for campaign successfully. rval: ', rval);
         return rval;
       });
   }
@@ -249,7 +248,6 @@ class CampaignService extends AdwordsOperartionService {
   ): Promise<Rval> {
     try {
       const rval = await this.soapService.mutateAsync<Operation, Rval>(operations, 'CampaignOperation');
-      console.log('mutate campaign successfully. rval: ', pd.json(rval));
       return rval;
     } catch (error) {
       throw error;
@@ -260,7 +258,6 @@ class CampaignService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      console.log('get campaigns successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
