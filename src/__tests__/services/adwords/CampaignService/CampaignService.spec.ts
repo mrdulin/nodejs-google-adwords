@@ -1,5 +1,6 @@
 import faker from 'faker';
 import moment from 'moment';
+import { pd } from 'pretty-data';
 
 import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
@@ -39,8 +40,9 @@ describe('CampaignService test suites', () => {
 
   it.skip('#getAllEnabled', async () => {
     const actualValue = await campaignService.getAllEnabled();
+    console.log(`actualValue: ${pd.json(actualValue)}`);
   });
-  it('#getAllButRemoved', async () => {
+  it.skip('#getAllButRemoved', async () => {
     const actualValue = await campaignService.getAllButRemoved();
   });
 
@@ -144,5 +146,25 @@ describe('CampaignService test suites', () => {
     };
 
     const actualValue = await campaignService.add(campaign);
+  });
+
+  it.skip('should pause campaign correctly', async () => {
+    const campaign: ICampaign = {
+      id: '1677467977',
+      status: CampaignStatus.PAUSED,
+    };
+    const actualValue = await campaignService.update(campaign);
+    console.log(`actualValue: ${pd.json(actualValue)}`);
+    expect(actualValue.value[0].status).toBe(CampaignStatus.PAUSED);
+  });
+
+  it('should enable campaign correctly', async () => {
+    const campaign: ICampaign = {
+      id: '1677467977',
+      status: CampaignStatus.ENABLED,
+    };
+    const actualValue = await campaignService.update(campaign);
+    console.log(`actualValue: ${pd.json(actualValue)}`);
+    expect(actualValue.value[0].status).toBe(CampaignStatus.ENABLED);
   });
 });
