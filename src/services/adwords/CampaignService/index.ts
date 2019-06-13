@@ -154,7 +154,7 @@ class CampaignService extends AdwordsOperartionService {
    */
   public async getAllEnabled() {
     const serviceSelector: ISelector = {
-      fields: CampaignService.selectorFields,
+      fields: ['Id', 'BudgetId', 'Name'],
       predicates: [
         {
           field: 'ServingStatus',
@@ -175,7 +175,7 @@ class CampaignService extends AdwordsOperartionService {
    */
   public async getAllButRemoved() {
     const serviceSelector: ISelector = {
-      fields: CampaignService.selectorFields,
+      fields: ['Id', 'BudgetId', 'Name'],
       predicates: [
         {
           field: 'Status',

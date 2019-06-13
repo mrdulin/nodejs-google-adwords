@@ -8,9 +8,10 @@ import { Proximity } from '../../../../services/adwords/CampaignCriterionService
 
 describe('CampaignCriterionService test suites', () => {
   const campaignCriterionService = adwordsService.getService('CampaignCriterionService', { verbose: false });
-  it.skip('#getAllByCampaignIds', async () => {
+  it('#getAllByCampaignIds', async () => {
     const campaignIds = ['1677467977'];
     const actualValue = await campaignCriterionService.getAllByCampaignIds(campaignIds);
+    console.log('actualValue: ', pd.json(actualValue));
   });
 
   it.skip('#getAllLocationCriterionByCampaignIds', async () => {
@@ -110,7 +111,7 @@ describe('CampaignCriterionService test suites', () => {
     console.log('actualValue: ', pd.json(actualValue));
   });
 
-  it('#add - only with province code', async () => {
+  it.skip('#add - only with province code', async () => {
     const campaignId = '1895039275';
     const address: IAddress = {
       provinceCode: 'AR',
