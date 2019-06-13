@@ -31,9 +31,7 @@ class GenderPerformanceReportService {
   public async get(reportDefinition: Partial<IReportDefinition>) {
     const reportDef: IReportDefinition = {
       // order is matter
-      selector: _.defaultsDeep(reportDefinition.selector, {
-        fields: GenderPerformanceReportService.selectorFields,
-      }),
+      selector: _.get(reportDefinition, 'selector', { fields: GenderPerformanceReportService.selectorFields }),
       reportName: GenderPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.GENDER_PERFORMANCE_REPORT,
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,

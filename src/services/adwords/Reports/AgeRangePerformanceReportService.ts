@@ -31,9 +31,7 @@ class AgeRangePerformanceReportService {
   public async get(reportDefinition: Partial<IReportDefinition>) {
     const reportDef: IReportDefinition = {
       // order is matter
-      selector: _.defaultsDeep(reportDefinition.selector, {
-        fields: AgeRangePerformanceReportService.selectorFields,
-      }),
+      selector: _.get(reportDefinition, 'selector', { fields: AgeRangePerformanceReportService.selectorFields }),
       reportName: AgeRangePerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.AGE_RANGE_PERFORMANCE_REPORT,
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
