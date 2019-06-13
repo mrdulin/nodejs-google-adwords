@@ -158,7 +158,7 @@ describe('CampaignService test suites', () => {
     expect(actualValue.value[0].status).toBe(CampaignStatus.PAUSED);
   });
 
-  it('should enable campaign correctly', async () => {
+  it.skip('should enable campaign correctly', async () => {
     const campaign: ICampaign = {
       id: '1677467977',
       status: CampaignStatus.ENABLED,
@@ -166,5 +166,21 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.update(campaign);
     console.log(`actualValue: ${pd.json(actualValue)}`);
     expect(actualValue.value[0].status).toBe(CampaignStatus.ENABLED);
+  });
+
+  it.skip('should not update budget for campaign', async () => {
+    const budgetId = '1731003510';
+    const campaign: ICampaign = {
+      id: '1677467977',
+      budget: {
+        budgetId,
+        amount: {
+          microAmount: 1.2 * 1000 * 1000,
+        },
+      },
+      endDate: moment('20201230').format(CampaignService.dateFormat),
+    };
+    const actualValue = await campaignService.update(campaign);
+    console.log(`actualValue: ${pd.json(actualValue)}`);
   });
 });

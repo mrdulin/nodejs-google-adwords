@@ -1,4 +1,5 @@
 import faker from 'faker';
+import { pd } from 'pretty-data';
 
 import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
@@ -8,6 +9,7 @@ describe('BudgetService test suites', () => {
   const budgetService = adwordsService.getService('BudgetService', { verbose: false });
   it.skip('#getAll', async () => {
     const actualValue = await budgetService.getAll();
+    console.log('actualValue', pd.json(actualValue));
   });
 
   it.skip('#getByPage', async () => {
@@ -62,6 +64,17 @@ describe('BudgetService test suites', () => {
       isExplicitlyShared: true,
     };
     const actualValue = await budgetService.update(budget);
+  });
+
+  it('should update budget amount correctly', async () => {
+    const budget: IBudget = {
+      budgetId: '1731003510',
+      amount: {
+        microAmount: 1.1 * 1000 * 1000,
+      },
+    };
+    const actualValue = await budgetService.update(budget);
+    console.log('actualValue: ', pd.json(actualValue));
   });
 
   it.skip('#remove', async () => {
