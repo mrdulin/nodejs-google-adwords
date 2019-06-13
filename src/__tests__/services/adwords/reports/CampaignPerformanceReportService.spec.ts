@@ -3,14 +3,30 @@ import { adwordsService } from '../../../initialize';
 import { IReportDefinition } from '../../../../services/adwords/ReportDefinitionService/ReportDefinition';
 import { ReportDefinition } from '../../../../services/adwords/ReportDefinitionService';
 import { ISelector, Predicate } from '../../../../types/adwords';
-import { CampaignPerformanceReportService } from '../../../../services/adwords/Reports';
+import { CampaignStatus } from '../../../../services/adwords/CampaignService';
 
 describe('CampaignPerformanceReportService test suites', () => {
   const campaignPerformanceReportService = adwordsService.getService('CampaignPerformanceReportService', {
     verbose: true,
   });
-  it('#reportDownload - all time', async () => {
+  it.skip('#reportDownload - all time', async () => {
     const actualvalue = await campaignPerformanceReportService.get({});
+    console.log(pd.xml(actualvalue));
+  });
+
+  it('#reportDownload - with fields', async () => {
+    const selector: ISelector = {
+      fields: ['CampaignId', 'CampaignName', 'CampaignStatus', 'BudgetId'],
+      predicates: [
+        {
+          field: 'CampaignStatus',
+          operator: Predicate.Operator.NOT_IN,
+          values: [CampaignStatus.REMOVED],
+        },
+      ],
+    };
+    const reportDefinition: Partial<IReportDefinition> = { selector };
+    const actualvalue = await campaignPerformanceReportService.get(reportDefinition);
     console.log(pd.xml(actualvalue));
   });
 

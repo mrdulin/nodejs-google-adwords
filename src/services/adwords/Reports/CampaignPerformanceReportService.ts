@@ -47,9 +47,7 @@ class CampaignPerformanceReportService {
   public async get(reportDefinition: Partial<IReportDefinition>) {
     const reportDef: IReportDefinition = {
       // order is matter
-      selector: _.defaultsDeep(reportDefinition.selector, {
-        fields: CampaignPerformanceReportService.selectorFields,
-      }),
+      selector: _.get(reportDefinition, 'selector', { fields: CampaignPerformanceReportService.selectorFields }),
       reportName: CampaignPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,

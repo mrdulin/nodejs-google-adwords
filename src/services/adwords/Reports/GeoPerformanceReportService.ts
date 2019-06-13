@@ -38,9 +38,7 @@ class GeoPerformanceReportService {
   public async get(reportDefinition: Partial<IReportDefinition>) {
     const reportDef: IReportDefinition = {
       // order is matter
-      selector: _.defaultsDeep(reportDefinition.selector, {
-        fields: GeoPerformanceReportService.selectorFields,
-      }),
+      selector: _.get(reportDefinition, 'selector', { fields: GeoPerformanceReportService.selectorFields }),
       reportName: GeoPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.GEO_PERFORMANCE_REPORT,
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
