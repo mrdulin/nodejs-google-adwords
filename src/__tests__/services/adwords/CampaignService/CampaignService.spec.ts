@@ -42,8 +42,9 @@ describe('CampaignService test suites', () => {
     const actualValue = await campaignService.getAllEnabled();
     console.log(`actualValue: ${pd.json(actualValue)}`);
   });
-  it.skip('#getAllButRemoved', async () => {
+  it('#getAllButRemoved', async () => {
     const actualValue = await campaignService.getAllButRemoved();
+    console.log(`actualValue: ${pd.json(actualValue)}`);
   });
 
   it.skip('#remove', async () => {
