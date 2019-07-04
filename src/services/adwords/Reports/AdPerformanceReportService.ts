@@ -37,7 +37,7 @@ class AdPerformanceReportService {
       selector: _.get(reportDefinition, 'selector', { fields: AdPerformanceReportService.selectorFields }),
       reportName: AdPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.AD_PERFORMANCE_REPORT,
-      dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
+      dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
     return this.reportService.reportDownload(reportDef);
