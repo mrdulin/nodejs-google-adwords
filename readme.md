@@ -122,8 +122,6 @@ Same usage for other Google Adwords resources
 - [ ] <https://developers.google.com/adwords/api/docs/guides/batch-jobs>
 - [ ] <http://adwordsapi.blogspot.in/2011/03/concurrency-management-in-adwords-api.html>
 - [ ] Add model layer and object schema validation
-- [ ] Improve error handling
-- [ ] Improve `TypeScript` types
 
 ## References
 
