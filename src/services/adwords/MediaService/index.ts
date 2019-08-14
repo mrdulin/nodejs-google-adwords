@@ -47,7 +47,6 @@ class MediaService extends AdwordsOperartionService {
       .uploadAsync({ media: medias[0] })
       .then(this.soapService.parseMutateResponse)
       .then((rval: Array<IAudio | IImage | IVideo | IMediaBundle>) => {
-        console.log('upload media successfully. rval: ', rval);
         return rval;
       });
   }
@@ -56,7 +55,6 @@ class MediaService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      console.log('get campaigns successfully. rval: ', pd.json(rval));
       return rval;
     });
   }

@@ -5,6 +5,7 @@ import { CriterionTypeGroup } from './enum/CriterionTypeGroup';
 import { ICustomParameters } from './CustomParameters';
 import { AdGroupType } from './enum/AdGroupType';
 import { IAdGroupAdRotationMode } from './AdGroupAdRotationMode';
+import { IBiddingStrategyConfiguration } from './BiddingStrategyConfiguration';
 
 interface IAdGroupRaw {
   id: string;
@@ -21,7 +22,7 @@ interface IAdGroupRaw {
    * @type {IBiddingStrategyConfiguration}
    * @memberof IAdGroupRaw
    */
-  // biddingStrategyConfiguration: IBiddingStrategyConfiguration;
+  biddingStrategyConfiguration: IBiddingStrategyConfiguration;
   contentBidCriterionTypeGroup: CriterionTypeGroup;
   readonly baseCampaignId: string;
   readonly baseAdGroupId: string;

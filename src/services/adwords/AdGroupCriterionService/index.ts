@@ -183,7 +183,6 @@ class AdGroupCriterionService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
-      console.log('get ad group criterion successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -194,7 +193,6 @@ class AdGroupCriterionService extends AdwordsOperartionService {
     return this.soapService
       .mutateAsync<Operation, Rval>(operaions, /** operationType = */ 'AdGroupCriterionOperation')
       .then((rval: Rval) => {
-        console.log('mutate ad group criterion successfully. rval: ', pd.json(rval));
         return rval;
       });
   }

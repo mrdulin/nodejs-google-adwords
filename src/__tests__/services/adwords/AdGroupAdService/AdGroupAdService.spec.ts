@@ -1,10 +1,17 @@
 import faker from 'faker';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { IAdGroupAd } from '../../../../services/adwords/AdGroupAdService/AdGroupAd';
 import { IExpandedTextAd, IResponsiveDisplayAd } from '../../../../services/adwords/AdGroupAdService/Ad';
 import { AdGroupAd } from '../../../../services/adwords/AdGroupAdService/enum/AdGroupAd';
+
+function soapErrorFormat(error: Error) {
+  return error.message
+    .replace(/ *\{[^)]*\} */g, '')
+    .replace(/:$/, '')
+    .replace('soap:Client: ', '');
+}
 
 describe('AdGroupAdService test suites', () => {
   const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: false });
@@ -33,7 +40,7 @@ describe('AdGroupAdService test suites', () => {
     const actualValue = await adGroupAdService.getByAdGroupIds(adGroupIds);
   });
 
-  it('#add', async () => {
+  it.skip('#add', async () => {
     const expandedTextAds: IExpandedTextAd[] = [
       {
         finalUrls: [faker.internet.url()],
@@ -49,7 +56,7 @@ describe('AdGroupAdService test suites', () => {
       },
     ];
 
-    const adGroupId = '69748751893';
+    const adGroupId = '70137654917';
     const adGroupAds: IAdGroupAd[] = expandedTextAds.map((expandedTextAd: IExpandedTextAd) => {
       const adGroupAd: IAdGroupAd = {
         adGroupId,
@@ -111,5 +118,27 @@ describe('AdGroupAdService test suites', () => {
     });
 
     const actualValue = await adGroupAdService.add(adGroupAds);
+  });
+
+  it('should trigger PolicyFindingError when there are invalid character in headline', async () => {
+    const invalidCharacter = '!';
+    const expandedTextAds: IExpandedTextAd[] = [
+      {
+        finalUrls: [faker.internet.url()],
+        headlinePart1: faker.lorem.words(3) + invalidCharacter,
+        headlinePart2: faker.lorem.words(3),
+        description: faker.lorem.words(3),
+      },
+    ];
+
+    const adGroupId = '70137654917';
+    const adGroupAds: IAdGroupAd[] = expandedTextAds.map((expandedTextAd: IExpandedTextAd) => {
+      const adGroupAd: IAdGroupAd = {
+        adGroupId,
+        ad: expandedTextAd,
+      };
+      return adGroupAd;
+    });
+    await expect(adGroupAdService.add(adGroupAds)).rejects.toThrow(/PolicyFindingError/);
   });
 });

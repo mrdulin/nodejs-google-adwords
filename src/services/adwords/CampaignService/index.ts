@@ -14,6 +14,8 @@ import { ServingStatus } from './enum/ServingStatus';
 import { ICampaignLabelOperation } from './CampaignLabelOperation';
 import { ICampaignLabelReturnValue } from './CampaignLabelReturnValue';
 import { ICampaignLabel } from './CampaignLabel';
+import { ICpcBid, ICpaBid } from '../AdGroupCriterionService/Bids';
+import { ICpmBid } from './Bids';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
@@ -152,7 +154,7 @@ class CampaignService extends AdwordsOperartionService {
    */
   public async getAllEnabled() {
     const serviceSelector: ISelector = {
-      fields: CampaignService.selectorFields,
+      fields: ['Id', 'BudgetId', 'Name'],
       predicates: [
         {
           field: 'ServingStatus',
@@ -173,7 +175,7 @@ class CampaignService extends AdwordsOperartionService {
    */
   public async getAllButRemoved() {
     const serviceSelector: ISelector = {
-      fields: CampaignService.selectorFields,
+      fields: ['Id', 'BudgetId', 'Name'],
       predicates: [
         {
           field: 'Status',
@@ -237,7 +239,6 @@ class CampaignService extends AdwordsOperartionService {
     return this.soapService
       .mutateLabelAsync<Operation, Rval>(operations, 'CampaignLabelOperation')
       .then((rval: Rval | undefined) => {
-        console.log('mutate label for campaign successfully. rval: ', rval);
         return rval;
       });
   }
@@ -247,7 +248,6 @@ class CampaignService extends AdwordsOperartionService {
   ): Promise<Rval> {
     try {
       const rval = await this.soapService.mutateAsync<Operation, Rval>(operations, 'CampaignOperation');
-      console.log('mutate campaign successfully. rval: ', pd.json(rval));
       return rval;
     } catch (error) {
       throw error;
@@ -258,7 +258,6 @@ class CampaignService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      console.log('get campaigns successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -268,6 +267,21 @@ class CampaignService extends AdwordsOperartionService {
       operand.settings.attributes = {
         'xsi:type': 'GeoTargetTypeSetting',
       };
+    }
+    if (
+      operand.biddingStrategyConfiguration &&
+      operand.biddingStrategyConfiguration.bids &&
+      operand.biddingStrategyConfiguration.bids.length
+    ) {
+      let { bids } = operand.biddingStrategyConfiguration;
+      bids = bids.map((bid: any) => {
+        bid.attributes = {
+          'xsi:type': bid['Bids.Type'],
+        };
+        delete bid['Bids.Type'];
+        return bid;
+      });
+      operand.biddingStrategyConfiguration.bids = bids;
     }
     return operand;
   }

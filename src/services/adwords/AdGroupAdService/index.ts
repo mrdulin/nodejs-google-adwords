@@ -268,7 +268,6 @@ class AdGroupAdService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      console.log('get Ad Group ads successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -279,7 +278,6 @@ class AdGroupAdService extends AdwordsOperartionService {
     return this.soapService
       .mutateAsync<Operation, Rval>(operations, /** operationType = */ 'AdGroupAdOperation')
       .then((rval) => {
-        console.log('mutate ad group ads successfully. rval: ', pd.json(rval));
         return rval;
       });
   }

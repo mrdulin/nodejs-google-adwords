@@ -1,18 +1,35 @@
 import { pd } from 'pretty-data';
 
 import { AdwordsOperartionService, SoapService } from '../../core';
-import { ISelector, Predicate, Operator } from '../../../types/adwords';
+import { ISelector, Predicate, Operator, IAttributes } from '../../../types/adwords';
 import { ICampaignCriterionPage } from './CampaignCriterionPage';
 import { ICampaignCriterionOperation } from './CampaignCriterionOperation';
 import { ICampaignCriterionReturnValue } from './CampaignCriterionReturnValue';
 import { Criterion } from './enum/Criterion';
 import { ICampaignCriterion } from './CampaignCriterion';
+import { ILocation, IProximity } from './Criterion';
 
 interface ICampaignCriterionServiceOpts {
   soapService: SoapService;
 }
 
 class CampaignCriterionService extends AdwordsOperartionService {
+  public static setType(campaignCriterion: ICampaignCriterion) {
+    if (campaignCriterion.criterion) {
+      if (CampaignCriterionService.isLocation(campaignCriterion.criterion)) {
+        campaignCriterion.criterion.attributes = { 'xsi:type': 'Location' };
+      } else if (CampaignCriterionService.isProximity(campaignCriterion.criterion)) {
+        campaignCriterion.criterion.attributes = { 'xsi:type': 'Proximity' };
+      }
+    }
+    return campaignCriterion;
+  }
+  public static isProximity(criterion: ILocation | IProximity): criterion is IProximity {
+    return criterion['Criterion.Type'] === 'Proximity';
+  }
+  public static isLocation(criterion: ILocation | IProximity): criterion is ILocation {
+    return criterion['Criterion.Type'] === 'Location';
+  }
   private static readonly selectorFields: string[] = [
     'Address',
     'AgeRangeType',
@@ -130,13 +147,10 @@ class CampaignCriterionService extends AdwordsOperartionService {
    */
   public async add(campaignCriterionOperations: ICampaignCriterion[]) {
     const opertions: ICampaignCriterionOperation[] = campaignCriterionOperations.map(
-      (campaignCriterionOperation: ICampaignCriterion) => {
+      (campaignCriterion: ICampaignCriterion) => {
         const operation: ICampaignCriterionOperation = {
           operator: Operator.ADD,
-          operand: campaignCriterionOperation,
-          attributes: {
-            'xsi:type': 'CampaignCriterionOperation',
-          },
+          operand: CampaignCriterionService.setType(campaignCriterion),
         };
         return operation;
       },
@@ -147,8 +161,7 @@ class CampaignCriterionService extends AdwordsOperartionService {
   protected async mutate<Operaiton = ICampaignCriterionOperation, Rval = ICampaignCriterionReturnValue>(
     opertions: Operaiton[],
   ): Promise<Rval> {
-    return this.soapService.mutateAsync<Operaiton, Rval>(opertions).then((rval: Rval) => {
-      console.log('mutate campaign criterion successfully. rval: ', pd.json(rval));
+    return this.soapService.mutateAsync<Operaiton, Rval>(opertions, 'CampaignCriterionOperation').then((rval: Rval) => {
       return rval;
     });
   }
@@ -157,7 +170,6 @@ class CampaignCriterionService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
-      console.log('get campaign criterion successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -171,3 +183,9 @@ export {
   ICampaignCriterionReturnValue,
   Criterion,
 };
+export * from './Address';
+export * from './enum/CampaignCriterion';
+export * from './enum/Criterion';
+export * from './enum/LocationTargetingStatus';
+export * from './enum/Proximity';
+export * from './GeoPoint';

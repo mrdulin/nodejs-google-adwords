@@ -1,3 +1,10 @@
+/**
+ * TODO: improve the static types
+ *
+ * @author dulin
+ * @class RegistryService
+ * @template T
+ */
 class RegistryService<T> {
   public static instance;
   public static init() {
@@ -8,7 +15,7 @@ class RegistryService<T> {
     return this.instance;
   }
   private registry: T;
-  constructor(registry: T) {
+  private constructor(registry: T) {
     this.registry = registry;
   }
 

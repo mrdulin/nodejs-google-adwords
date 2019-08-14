@@ -1,4 +1,7 @@
-# google adwords nodejs
+# nodejs google adwords
+
+[![NPM Downloads][downloads-image]][downloads-url]
+![LICENSE][license-image]
 
 Google Ads API Client Library for Node.js. This library is developed for Google Adwords SOAP + WSDL API (v201809).
 
@@ -6,9 +9,11 @@ Google Ads API Client Library for Node.js. This library is developed for Google 
 
 Replace your GCP OAuth 2.0 client ID and open this link in browser:
 
+```bash
 https://accounts.google.com/o/oauth2/auth?client_id={Your Client ID}&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
+```
 
-Get authorization code: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
+Get authorization code, for example: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
 
 Using authorization code exchange credentials:
 
@@ -32,6 +37,8 @@ Credentials response:
   "token_type": "Bearer"
 }
 ```
+
+You can revoke your access token from: https://myaccount.google.com/u/0/permissions
 
 ## Environment variables
 
@@ -115,8 +122,6 @@ Same usage for other Google Adwords resources
 - [ ] <https://developers.google.com/adwords/api/docs/guides/batch-jobs>
 - [ ] <http://adwordsapi.blogspot.in/2011/03/concurrency-management-in-adwords-api.html>
 - [ ] Add model layer and object schema validation
-- [ ] Improve error handling
-- [ ] Improve `TypeScript` types
 
 ## References
 
@@ -129,3 +134,7 @@ Same usage for other Google Adwords resources
 - <https://developers.google.com/adwords/api/docs/guides/authentication#optimizing_oauth2_requests>
 - <https://developers.google.com/adwords/api/docs/appendix/geotargeting#dma>
 - <https://developers.google.com/adwords/api/docs/guides/reporting>
+
+[downloads-image]: https://img.shields.io/npm/dt/nodejs-google-adwords.svg
+[downloads-url]: https://npmjs.org/package/nodejs-google-adwords
+[license-image]: https://img.shields.io/npm/l/nodejs-google-adwords.svg

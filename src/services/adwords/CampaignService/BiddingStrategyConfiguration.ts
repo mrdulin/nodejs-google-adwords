@@ -22,7 +22,7 @@ enum BiddingStrategySource {
 
 interface IBiddingStrategyConfiguration {
   biddingStrategyId?: string;
-  readonly biddingStrategyName: string;
+  readonly biddingStrategyName?: string;
   biddingStrategyType: BiddingStrategyType;
   readonly biddingStrategySource?: BiddingStrategySource;
   // TODO:

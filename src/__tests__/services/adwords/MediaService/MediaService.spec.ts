@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { IImage } from '../../../../services/adwords/MediaService/Media';
 import { Media } from '../../../../services/adwords/MediaService/enum/Media';
 

@@ -1,6 +1,8 @@
 import { ReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
+import { pd } from 'pretty-data';
+import _ from 'lodash';
 
 /**
  * https://developers.google.com/adwords/api/docs/appendix/reports/campaign-performance-report
@@ -10,24 +12,25 @@ import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
  */
 class CampaignPerformanceReportService {
   public static readonly reportName: string = 'Campaign Performance Report';
-  private static readonly attibutes: string[] = [
+  private static readonly attributes: string[] = [
     'CampaignId',
     'CampaignName',
     'CampaignStatus',
     'StartDate',
     'EndDate',
   ];
-  private static readonly segments: string[] = ['Device'];
+  private static readonly segments: string[] = [];
   private static readonly metrics: string[] = [
     'Clicks',
     'Conversions',
     'Ctr',
+    'Cost',
     'Impressions',
     'ConversionRate',
     'AverageCpc',
   ];
   private static readonly selectorFields = [
-    ...CampaignPerformanceReportService.attibutes,
+    ...CampaignPerformanceReportService.attributes,
     ...CampaignPerformanceReportService.segments,
     ...CampaignPerformanceReportService.metrics,
   ];
@@ -37,17 +40,20 @@ class CampaignPerformanceReportService {
     this.reportService = opts.reportService;
   }
 
-  public async get() {
-    const reportDefinition: IReportDefinition = {
-      selector: {
-        fields: CampaignPerformanceReportService.selectorFields,
-      },
+  public setVerbose(verbose: boolean) {
+    this.reportService.setVerbose(verbose);
+  }
+
+  public async get(reportDefinition: Partial<IReportDefinition>) {
+    const reportDef: IReportDefinition = {
+      // order is matter
+      selector: _.get(reportDefinition, 'selector', { fields: CampaignPerformanceReportService.selectorFields }),
       reportName: CampaignPerformanceReportService.reportName,
       reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
-      dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
+      dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
     };
 
-    return this.reportService.reportDownload(reportDefinition, { json: true });
+    return this.reportService.reportDownload(reportDef);
   }
 }
 

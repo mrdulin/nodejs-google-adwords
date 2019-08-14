@@ -1,0 +1,30 @@
+{
+  "ListReturnValue.Type": "CampaignCriterionReturnValue",
+  "value": [
+    {
+      "campaignId": "1895039275",
+      "isNegative": false,
+      "criterion": {
+        "attributes": {
+          "xsi:type": "Proximity"
+        },
+        "id": "741126201027",
+        "type": "PROXIMITY",
+        "Criterion.Type": "Proximity",
+        "geoPoint": {
+          "latitudeInMicroDegrees": 40844781,
+          "longitudeInMicroDegrees": -73864826
+        },
+        "radiusDistanceUnits": "KILOMETERS",
+        "radiusInUnits": "10.0",
+        "address": {
+          "streetAddress": "2560 saint",
+          "cityName": "bronx",
+          "countryCode": "US"
+        }
+      },
+      "campaignCriterionStatus": "ACTIVE",
+      "CampaignCriterion.Type": "CampaignCriterion"
+    }
+  ]
+}

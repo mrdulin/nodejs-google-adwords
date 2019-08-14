@@ -32,7 +32,6 @@ class BatchJobService extends AdwordsOperartionService {
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      console.log('get campaigns successfully. rval: ', pd.json(rval));
       return rval;
     });
   }

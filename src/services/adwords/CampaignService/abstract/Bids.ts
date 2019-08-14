@@ -1,5 +1,5 @@
 interface IBids {
-  'Bids.Type': string;
+  'Bids.Type'?: 'CpcBid' | 'CpaBid' | 'CpmBid';
 }
 
 export { IBids };
