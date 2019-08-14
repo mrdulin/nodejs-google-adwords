@@ -33,10 +33,7 @@ class ReportDefinitionService {
     return this.soapService
       .getClient()
       .then((client: SoapClient) => client.getReportFieldsAsync({ reportType }))
-      .then(this.parseResponse)
-      .then((rval: IReportDefinitionField[]) => {
-        console.log('get report fields successfully. rval: ', pd.json(rval));
-      });
+      .then(this.parseResponse);
   }
 
   private parseResponse(response: IResponse<IReportDefinitionField[]>): IReportDefinitionField[] {

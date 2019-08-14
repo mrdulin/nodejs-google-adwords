@@ -116,14 +116,12 @@ class AdGroupService extends AdwordsOperartionService {
 
   protected async get<ServiceSelector = ISelector, Rval = IAdGroupPage>(serviceSelector: ServiceSelector) {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval) => {
-      console.log('get Ad Group successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
 
   protected async mutate<Operation = IAdGroupOperation, Rval = IAdGroupReturnValue>(operations: Operation[]) {
     return this.soapService.mutateAsync<Operation, Rval>(operations, 'AdGroupOperation').then((rval: Rval) => {
-      console.log('mutate Ad group successfully. rval: ', pd.json(rval));
       return rval;
     });
   }
@@ -137,6 +135,21 @@ class AdGroupService extends AdwordsOperartionService {
           setting.attributes = { 'xsi:type': 'ExplorerAutoOptimizerSetting' };
         }
       });
+    }
+    if (
+      operand.biddingStrategyConfiguration &&
+      operand.biddingStrategyConfiguration.bids &&
+      operand.biddingStrategyConfiguration.bids.length
+    ) {
+      let { bids } = operand.biddingStrategyConfiguration;
+      bids = bids.map((bid: any) => {
+        bid.attributes = {
+          'xsi:type': bid['Bids.Type'],
+        };
+        delete bid['Bids.Type'];
+        return bid;
+      });
+      operand.biddingStrategyConfiguration.bids = bids;
     }
     return operand;
   }

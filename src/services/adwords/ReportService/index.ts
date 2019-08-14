@@ -32,9 +32,13 @@ interface IReport {
 class ReportService {
   public static readonly URL: string = 'https://adwords.google.com/api/adwords/reportdownload/v201809';
 
+  private verbose: boolean = false;
   private httpService: HttpService;
   constructor(options: IReportServiceOpts) {
     this.httpService = options.httpService;
+  }
+  public setVerbose(verbose: boolean) {
+    this.verbose = verbose;
   }
 
   public async reportDownload(
@@ -45,6 +49,9 @@ class ReportService {
       downloadFormat: ReportDefinition.DownloadFormatType.XML,
     });
     const xml = this.buildObjectToXML<{ reportDefinition: IReportDefinition }>({ reportDefinition: reportDef });
+    if (this.verbose) {
+      console.log('__rdxml: ', pd.xml(xml));
+    }
     const formData: IReportDownloadFormData = { __rdxml: xml };
     const requestOptions: OptionsWithUri = {
       uri: ReportService.URL,
@@ -52,7 +59,7 @@ class ReportService {
       headers: {
         'Content-Type': 'multipart/form-data',
         skipReportHeader: _.get(options, ['skipReportHeader'], false),
-        skipColumnHeader: _.get(options, ['skipColumnHeader'], false),
+        skipColumnHeader: _.get(options, ['skipColumnHeader'], true),
         skipReportSummary: _.get(options, ['skipReportSummary'], true),
         useRawEnumValues: _.get(options, ['useRawEnumValues'], false),
         includeZeroImpressions: _.get(options, ['includeZeroImpressions'], false),
@@ -64,7 +71,6 @@ class ReportService {
       .request(requestOptions)
       .then(
         (rval: string): string => {
-          console.log(`get ${reportDefinition.reportName} successfully. rval: `, pd.xml(rval));
           return rval;
         },
       )
@@ -82,9 +88,11 @@ class ReportService {
         },
       )
       .catch((error) => {
-        console.error(`get ${reportDefinition.reportName} failed.`);
-        console.error(error);
-        return '';
+        console.log(`reportDefinition: ${JSON.stringify(reportDefinition)}`);
+        if (options) {
+          console.log(`options: ${JSON.stringify(options)}`);
+        }
+        return Promise.reject(error);
       });
   }
 
@@ -94,7 +102,7 @@ class ReportService {
   }
 
   private async xmlParse<Rval = { report: IReport }>(xml: string): Promise<Rval> {
-    return XMLService.parseStringPromise(xml);
+    return XMLService.parseStringPromise<Rval>(xml);
   }
 }
 

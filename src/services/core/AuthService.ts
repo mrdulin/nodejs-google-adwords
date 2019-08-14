@@ -62,9 +62,9 @@ class AuthService implements IAuthService {
   }
 
   public async refreshCredentials(): Promise<IOAuthCredential> {
-    if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
-      return Promise.resolve(this.credentials);
-    }
+    // if (Date.now() <= this.tokenExpiresInMs && this.credentials.access_token) {
+    //   return Promise.resolve(this.credentials);
+    // }
     const options: OptionsWithUri = {
       uri: this.authURL,
       method: 'POST',
@@ -79,7 +79,6 @@ class AuthService implements IAuthService {
 
     return request(options)
       .then((response) => {
-        console.log('refresh token success. response: ', pd.json(response));
         this.tokenExpiresInMs = moment()
           .add(1, 'hour')
           .toDate()
@@ -88,8 +87,8 @@ class AuthService implements IAuthService {
         return response;
       })
       .catch((error) => {
-        console.error(error);
-        return Promise.reject(new Error('refresh token failed.'));
+        console.error(new Error('refresh token failed.'));
+        return Promise.reject(error);
       });
   }
 }

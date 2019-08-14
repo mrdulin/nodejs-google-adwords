@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 import { ITextLabel } from '../../../../services/adwords/LabelService/Label';
 
 describe('LabelService test suites', () => {

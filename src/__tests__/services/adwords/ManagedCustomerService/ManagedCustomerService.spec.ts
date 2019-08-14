@@ -1,4 +1,4 @@
-import { adwordsService } from '../../initialize';
+import { adwordsService } from '../../../initialize';
 describe('ManagedCustomerService test suites', () => {
   const managedCustomerService = adwordsService.getService('ManagedCustomerService', {
     verbose: false,
