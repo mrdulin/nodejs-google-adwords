@@ -45,7 +45,7 @@
     "typescript": "^3.3.3333"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "pretty-data": "^0.40.0",
     "request": "^2.88.0",
