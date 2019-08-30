@@ -7,13 +7,21 @@ Google Ads API Client Library for Node.js. This library is developed for Google 
 
 ## OAuth
 
-Replace your GCP OAuth 2.0 client ID and open this link in browser:
+Replace your GCP OAuth 2.0 client ID and open this link in browser,
 
 ```bash
 https://accounts.google.com/o/oauth2/auth?client_id={Your Client ID}&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
 ```
 
-Get authorization code, for example: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
+The OAuth2.0 Client type should be `other`, not web application
+
+![](https://raw.githubusercontent.com/mrdulin/pic-bucket-01/master/WX20190830-111739.png)
+
+If you use client id which client type is `web application`, you will get below error:
+
+![](https://raw.githubusercontent.com/mrdulin/pic-bucket-01/master/WX20190830-112511.png)
+
+After finish the oauth workflow, you will get authorization code, for example: `4/0wA_JBMyfVH1ZEqZlAr0sOn_XmdzUrBgCjrpi9fVs9TudrjZUDzuUmU`
 
 Using authorization code exchange credentials:
 
@@ -39,6 +47,12 @@ Credentials response:
 ```
 
 You can revoke your access token from: https://myaccount.google.com/u/0/permissions
+
+Above workflow is only for server-side local development without a front-end(client-side), after you make a front-end application, then you can create a OAuth2.0 Client on GCP with `web application` type and set up your `Authorized JavaScript origins` and `Authorized redirect URIs` like below:
+
+![](https://raw.githubusercontent.com/mrdulin/pic-bucket-01/master/WX20190830-113014.png)
+
+Then, when user perform the oauth workflow, you can confirm the oauth workflow on server-side, and store the `refresh_token`, `access_token` and other informations in your database. When user click `create campaign` button on your front-end application, it will send a HTTP request to your server-side, then, you can get the user's `access_token` from database, can call google adwords api using this `access_token`.
 
 ## Environment variables
 
