@@ -85,8 +85,8 @@ class AdWordsService {
     const url = `${xmlns}/${serviceName}${AdWordsService.suffix}`;
     const verbose = _.get(options, ['verbose'], this.verbose);
 
-    this.soapHeader.clientCustomerId = _.get(options, ['clientCustomerId'], this.soapHeader.clientCustomerId);
-    this.soapHeader.partialFailure = _.get(options, ['partialFailure'], this.soapHeader.partialFailure);
+    this.soapHeader.clientCustomerId = options ? options.clientCustomerId : this.soapHeader.clientCustomerId;
+    this.soapHeader.partialFailure = !!(options ? options.partialFailure : this.soapHeader.partialFailure);
     let soapServiceOptions: ISoapServiceOpts = {
       authService: this.authService,
       header: this.soapHeader,
@@ -108,7 +108,6 @@ class AdWordsService {
         developerToken: this.soapHeader.developerToken,
       },
       authService: this.authService,
-      verbose,
     };
     const httpService = new HttpService(httpServiceOpts);
     const reportService = new ReportService({ httpService });

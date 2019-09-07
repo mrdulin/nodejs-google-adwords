@@ -2,12 +2,12 @@ import xml2js from 'xml2js';
 import _ from 'lodash';
 import { pd } from 'pretty-data';
 
-import { HttpService, OptionsWithUri, XMLService } from '../../core';
+import { OptionsWithUri, XMLService, IHttpService } from '../../core';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 
 interface IReportServiceOpts {
-  httpService: HttpService;
+  httpService: IHttpService;
 }
 
 interface IReportDownloadOptions {
@@ -33,7 +33,7 @@ class ReportService {
   public static readonly URL: string = 'https://adwords.google.com/api/adwords/reportdownload/v201809';
 
   private verbose: boolean = false;
-  private httpService: HttpService;
+  private httpService: IHttpService;
   constructor(options: IReportServiceOpts) {
     this.httpService = options.httpService;
   }
@@ -70,12 +70,7 @@ class ReportService {
     return this.httpService
       .request(requestOptions)
       .then(
-        (rval: string): string => {
-          return rval;
-        },
-      )
-      .then(
-        (rval: string): Promise<IReport | string> => {
+        (rval: any): Promise<IReport | string> => {
           if (options && options.json) {
             return this.xmlParse(rval).then(
               (rvalJson: { report: IReport }): IReport => {

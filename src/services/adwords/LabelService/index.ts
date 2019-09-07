@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { AdwordsOperartionService } from '../../core/AdwordsOperationService';
 import { SoapService } from '../../core';
 import { ISelector } from './Selector';
-import { IlabelPage } from './LabelPage';
+import { ILabelPage } from './LabelPage';
 import { ILabelOperation } from './LabelOperation';
 import { ILabelReturnValue } from './LabelReturnValue';
 import { ITextLabel, Label } from './Label';
@@ -62,7 +62,7 @@ class LabelService extends AdwordsOperartionService {
     return this.mutate(operaitons);
   }
 
-  protected async get<ServiceSelector = ISelector, Rval = IlabelPage>(
+  protected async get<ServiceSelector = ISelector, Rval = ILabelPage>(
     serviceSelector: ServiceSelector,
   ): Promise<Rval | undefined> {
     return this.soapService.get<ServiceSelector, Rval>(serviceSelector).then((rval: Rval | undefined) => {
