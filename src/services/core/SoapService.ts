@@ -261,47 +261,41 @@ class SoapService extends AdwordsOperartionService {
     const orderedObj = {};
     const self = this;
 
-    _.mapKeys(
-      toMatch,
-      (v, k): any => {
-        // Check and remove [] at the end
-        if (typeof k !== 'string') {
-          return;
-        }
-        let canBeMore = false;
+    _.mapKeys(toMatch, (v, k): any => {
+      // Check and remove [] at the end
+      if (typeof k !== 'string') {
+        return;
+      }
+      let canBeMore = false;
 
-        if (k.substr(-2) === '[]') {
-          k = k.substr(0, k.length - 2);
-          canBeMore = true;
-        }
+      if (k.substr(-2) === '[]') {
+        k = k.substr(0, k.length - 2);
+        canBeMore = true;
+      }
 
-        if (src[k] === undefined) {
-          return;
-        }
+      if (src[k] === undefined) {
+        return;
+      }
 
-        if (!canBeMore && typeof src[k] === 'object' && typeof v === 'object') {
-          orderedObj[k] = self.matchJSONKeyOrder(src[k], v);
-        } else if (canBeMore && typeof v === 'object' && _.isArray(src[k])) {
-          orderedObj[k] = [];
-          _.each(src[k], function(item) {
-            orderedObj[k].push(self.matchJSONKeyOrder(item, v));
-          });
-        } else {
-          orderedObj[k] = src[k];
-        }
-      },
-    );
+      if (!canBeMore && typeof src[k] === 'object' && typeof v === 'object') {
+        orderedObj[k] = self.matchJSONKeyOrder(src[k], v);
+      } else if (canBeMore && typeof v === 'object' && _.isArray(src[k])) {
+        orderedObj[k] = [];
+        _.each(src[k], function(item) {
+          orderedObj[k].push(self.matchJSONKeyOrder(item, v));
+        });
+      } else {
+        orderedObj[k] = src[k];
+      }
+    });
 
     // Add keys not present in toMatch object, at the end
     const currentKeys = _.keys(orderedObj);
-    _.mapKeys(
-      src,
-      (v, k): any => {
-        if (currentKeys.indexOf(k) === -1) {
-          orderedObj[k] = src[k];
-        }
-      },
-    );
+    _.mapKeys(src, (v, k): any => {
+      if (currentKeys.indexOf(k) === -1) {
+        orderedObj[k] = src[k];
+      }
+    });
 
     return orderedObj;
   }
