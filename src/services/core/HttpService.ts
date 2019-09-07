@@ -1,7 +1,8 @@
 import request, { OptionsWithUri } from 'request-promise';
+import req from 'request';
 import _ from 'lodash';
 import { CoreOptions } from 'request';
-import { IAuthService } from './AuthService';
+import { IAuthService, IOAuthCredential } from './AuthService';
 
 interface IHttpHeaders {
   clientCustomerId?: string;
@@ -12,32 +13,30 @@ interface IHttpHeaders {
 interface IHttpServiceOpts {
   headers: IHttpHeaders;
   authService: IAuthService;
-  verbose: boolean;
 }
-class HttpService {
+
+interface IHttpService {
+  request(options: OptionsWithUri): Promise<req.Request>;
+}
+
+class HttpService implements IHttpService {
   private headers: IHttpHeaders;
   private authService: IAuthService;
   private readonly defaultOptions: Pick<OptionsWithUri, 'json' | 'timeout' | 'headers'> = {
     timeout: 10 * 1000,
   };
-  private verbose: boolean = false;
   constructor(opts: IHttpServiceOpts) {
     this.headers = opts.headers;
     this.authService = opts.authService;
-    this.verbose = opts.verbose;
   }
 
-  public async request(options: OptionsWithUri) {
-    try {
-      const credentials = await this.authService.refreshCredentials();
-      this.headers.Authorization = `Bearer ${credentials.access_token}`;
-      const defaultOptions = _.merge(this.defaultOptions, { headers: this.headers });
-      const finalOptions: OptionsWithUri = _.defaultsDeep(options, defaultOptions);
-      return await request(finalOptions);
-    } catch (error) {
-      throw error;
-    }
+  public async request(options: OptionsWithUri): Promise<req.Request> {
+    const credentials: IOAuthCredential = await this.authService.refreshCredentials();
+    this.headers.Authorization = `Bearer ${credentials.access_token}`;
+    const defaultOptions = _.merge(this.defaultOptions, { headers: this.headers });
+    const finalOptions: OptionsWithUri = _.defaultsDeep(options, defaultOptions);
+    return request(finalOptions);
   }
 }
 
-export { HttpService, OptionsWithUri, CoreOptions, IHttpServiceOpts };
+export { HttpService, OptionsWithUri, CoreOptions, IHttpServiceOpts, IHttpHeaders, IHttpService };

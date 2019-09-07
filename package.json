@@ -10,13 +10,13 @@
     "build": "tsc",
     "lint": "tslint --config ./tslint.json --project ./tsconfig.json",
     "prettify": "prettier --config ./.prettierrc --write \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
-    "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
-    "prepare": "npm run lint && npm run build"
+    "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\""
   },
   "keywords": [
     "Google Ads",
     "Google Adwords",
-    "Node.js"
+    "Node.js",
+    "Client Library"
   ],
   "author": "mrdulin",
   "license": "MIT",
@@ -25,24 +25,24 @@
     "url": "git@github.com:mrdulin/nodejs-google-adwords.git"
   },
   "devDependencies": {
-    "@types/dotenv": "^6.1.0",
+    "@types/dotenv": "^6.1.1",
     "@types/faker": "^4.1.5",
-    "@types/jest": "^24.0.11",
-    "@types/lodash": "^4.14.123",
+    "@types/jest": "^24.0.18",
+    "@types/lodash": "^4.14.138",
     "@types/node": "^11.13.7",
-    "@types/request": "^2.48.1",
-    "@types/request-promise": "^4.1.42",
-    "@types/xml2js": "^0.4.4",
+    "@types/request": "^2.48.2",
+    "@types/request-promise": "^4.1.44",
+    "@types/xml2js": "^0.4.5",
     "dotenv": "^6.2.0",
     "faker": "^4.1.0",
     "husky": "^2.1.0",
-    "jest": "^24.7.1",
-    "prettier": "^1.17.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.0.3",
-    "tslint": "^5.13.1",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.6.2"
   },
   "dependencies": {
     "lodash": "^4.17.15",
@@ -58,10 +58,5 @@
   },
   "files": [
     "dist"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run build && npm run prettify"
-    }
-  }
+  ]
 }

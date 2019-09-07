@@ -1,5 +1,5 @@
 import { ITextLabel } from '../CampaignService/Label';
 
-export interface IlabelPage {
+export interface ILabelPage {
   entries: ITextLabel[];
 }
