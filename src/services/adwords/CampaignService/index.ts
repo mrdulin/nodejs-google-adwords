@@ -1,4 +1,3 @@
-import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 import { SoapService } from '../../core';
@@ -14,8 +13,6 @@ import { ServingStatus } from './enum/ServingStatus';
 import { ICampaignLabelOperation } from './CampaignLabelOperation';
 import { ICampaignLabelReturnValue } from './CampaignLabelReturnValue';
 import { ICampaignLabel } from './CampaignLabel';
-import { ICpcBid, ICpaBid } from '../AdGroupCriterionService/Bids';
-import { ICpmBid } from './Bids';
 
 interface ICampaignServiceOpts {
   soapService: SoapService;
