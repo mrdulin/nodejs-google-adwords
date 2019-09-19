@@ -1,5 +1,3 @@
-import { IOperation, Operator } from '../../types/adwords/Operator';
-
 abstract class AdwordsOperartionService {
   protected get<ServiceSelector, Rval>(serviceSelector: ServiceSelector): Promise<Rval | undefined> {
     throw new Error('The method get does not overrided.');

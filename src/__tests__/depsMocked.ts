@@ -1,7 +1,7 @@
 import { IHttpServiceOpts, IAuthService, IHttpHeaders, IHttpService } from '../services/core';
 import { IReportServiceOpts } from '../services/adwords/ReportService';
 
-const authServiceMocked: IAuthService = {
+export const authServiceMocked: IAuthService = {
   refreshCredentials: jest.fn(),
   getCredentials: jest.fn(),
   setCredentials: jest.fn(),

@@ -21,7 +21,7 @@ interface ISoapServiceOpts {
   serviceName: string;
   xmlns: string;
   header: ISoapHeader;
-  verbose: boolean;
+  verbose?: boolean;
   gzip?: boolean;
 }
 
@@ -55,7 +55,7 @@ class SoapService extends AdwordsOperartionService {
     this.serviceName = options.serviceName;
     this.xmlns = options.xmlns;
     this.header = options.header;
-    this.verbose = options.verbose;
+    this.verbose = options.verbose || false;
     this.gzip = options.gzip || true;
   }
 
@@ -63,11 +63,27 @@ class SoapService extends AdwordsOperartionService {
     this.verbose = val;
   }
 
+  /**
+   * enable/disable http request gzip
+   *
+   * @author dulin
+   * @param {boolean} val
+   * @memberof SoapService
+   */
+  public setGzip(gzip: boolean) {
+    this.gzip = gzip;
+  }
+
+  public setHeader(header: ISoapHeader) {
+    this.header = header;
+  }
+
   public async getClient(): Promise<soap.Client> {
     if (this.client) {
       return this.client;
     }
-    return await this.beforeSendRequest();
+    this.client = await this.beforeSendRequest();
+    return this.client;
   }
 
   /**
@@ -84,14 +100,10 @@ class SoapService extends AdwordsOperartionService {
     if (!operations.length) {
       throw new Error('operation array is empty');
     }
-    try {
-      const client = await this.beforeSendRequest();
-      const request = this.formMutateRequest({ operations, operationType, mutateMethod: 'mutate' });
-      const response = await client.mutateAsync(request);
-      return this.parseMutateResponse<Rval>(response);
-    } catch (error) {
-      throw error;
-    }
+    const client = await this.beforeSendRequest();
+    const request = this.formMutateRequest({ operations, operationType, mutateMethod: 'mutate' });
+    const response = await client.mutateAsync(request);
+    return this.parseMutateResponse<Rval>(response);
   }
 
   /**
@@ -118,14 +130,10 @@ class SoapService extends AdwordsOperartionService {
    * @memberof SoapService
    */
   public async mutateLabelAsync<Operation, Rval>(operations: Operation[], operationType: string): Promise<Rval> {
-    try {
-      const client = await this.beforeSendRequest();
-      const request = this.formMutateRequest({ operations, operationType, mutateMethod: 'mutateLabel' });
-      const response = await client.mutateLabelAsync(request);
-      return this.parseMutateResponse<Rval>(response);
-    } catch (error) {
-      throw error;
-    }
+    const client = await this.beforeSendRequest();
+    const request = this.formMutateRequest({ operations, operationType, mutateMethod: 'mutateLabel' });
+    const response = await client.mutateLabelAsync(request);
+    return this.parseMutateResponse<Rval>(response);
   }
 
   /**
@@ -140,15 +148,15 @@ class SoapService extends AdwordsOperartionService {
    */
   public async get<ServiceSelector, Rval>(serviceSelector: ServiceSelector): Promise<Rval | undefined> {
     const credentials: IOAuthCredential = await this.authService.refreshCredentials();
-    await this.createSoapClient(this.url, credentials);
+    const client = await this.createSoapClient(this.url, credentials);
 
     return new Promise<Rval>((resolve, reject) => {
-      if (!this.client) {
+      if (!client) {
         return reject(new Error('soap client does not exist'));
       }
       const request = this.formGetRequest<ServiceSelector>(serviceSelector);
       const requestOptions: CoreOptions = this.formHttpRequestOptions();
-      this.client.get(
+      client.get(
         request,
         (error: Error, response: IResponse<Rval>) => {
           if (error) {
@@ -175,26 +183,9 @@ class SoapService extends AdwordsOperartionService {
     return _.get(response, ['rval'], undefined);
   }
 
-  /**
-   * enable/disable http request gzip
-   *
-   * @author dulin
-   * @param {boolean} val
-   * @memberof SoapService
-   */
-  public enableGzip(val: boolean) {
-    this.gzip = val;
-  }
-
   private async beforeSendRequest(): Promise<soap.Client> {
     const credentials: IOAuthCredential = await this.authService.refreshCredentials();
-    await this.createSoapClient(this.url, credentials);
-
-    if (!this.client) {
-      throw new Error('soap client does not exist');
-    }
-
-    return this.client;
+    return this.createSoapClient(this.url, credentials);
   }
 
   /**
@@ -310,16 +301,17 @@ class SoapService extends AdwordsOperartionService {
    * @returns {Promise<void>}
    * @memberof SoapService
    */
-  private async createSoapClient(url: string, credentials: IOAuthCredential): Promise<void> {
+  private async createSoapClient(url: string, credentials: IOAuthCredential): Promise<soap.Client> {
+    if (!credentials.access_token) {
+      throw new Error('access_token required.');
+    }
+
     try {
       this.client = await soap.createClientAsync(url, {});
       this.client.addSoapHeader({ RequestHeader: this.header }, this.serviceName, this.namespace, this.xmlns);
-      if (!credentials.access_token) {
-        throw new Error('access_token required.');
-      }
       this.client.setSecurity(new soap.BearerSecurity(credentials.access_token));
       this.description = this.client.describe();
-      this.listenSoapClientEvents();
+      return this.listenSoapClientEvents(this.client);
     } catch (error) {
       console.error(error);
       throw new Error('create soap client failed.');
@@ -360,33 +352,35 @@ class SoapService extends AdwordsOperartionService {
    * @private
    * @memberof SoapService
    */
-  private listenSoapClientEvents(): void {
-    if (this.client) {
-      this.client.on('request', (xml: string, eid: string) => {
-        if (this.verbose) {
-          console.log('Soap request (Envelope) including headers: ', pd.xml(xml));
-          console.log('Soap request exchange id: ', eid);
-        }
-      });
-      this.client.on('soapError', (error: any, eid: string) => {
-        if (this.verbose) {
-          console.error(error);
-        }
-      });
-      this.client.on('response', (body: any, response: any, eid: string) => {
-        if (this.verbose) {
-          console.log('Soap response body: ', pd.xml(body));
-          console.log('Soap response: ', pd.json(response));
-        }
-
-        const operations: string | undefined = XMLService.extractValueFromElement(body, 'operations');
-        const responseTime: string | undefined = XMLService.extractValueFromElement(body, 'responseTime');
-        let message = `Soap requestId: ${eid}`;
-        message += operations ? `, operations: ${operations}` : '';
-        message += responseTime ? `, responseTime: ${responseTime}ms` : '';
-        console.log(message);
-      });
+  private listenSoapClientEvents(client: soap.Client): soap.Client {
+    if (!client) {
+      throw new Error('soap client is required');
     }
+    client.on('request', (xml: string, eid: string) => {
+      if (this.verbose) {
+        console.log('Soap request (Envelope) including headers: ', pd.xml(xml));
+        console.log('Soap request exchange id: ', eid);
+      }
+    });
+    client.on('soapError', (error: any, eid: string) => {
+      if (this.verbose) {
+        console.error(error);
+      }
+    });
+    client.on('response', (body: any, response: any, eid: string) => {
+      if (this.verbose) {
+        console.log('Soap response body: ', pd.xml(body));
+        console.log('Soap response: ', pd.json(response));
+      }
+
+      const operations: string | undefined = XMLService.extractValueFromElement(body, 'operations');
+      const responseTime: string | undefined = XMLService.extractValueFromElement(body, 'responseTime');
+      let message = `Soap requestId: ${eid}`;
+      message += operations ? `, operations: ${operations}` : '';
+      message += responseTime ? `, responseTime: ${responseTime}ms` : '';
+      console.log(message);
+    });
+    return client;
   }
 }
 
