@@ -1,5 +1,5 @@
 // tslint:disable: no-var-requires
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && process.env.CI !== 'true') {
   const dotenv = require('dotenv');
   const path = require('path');
 
