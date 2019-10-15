@@ -1,11 +1,14 @@
-import dotenv, { DotenvConfigOutput } from 'dotenv';
-import path from 'path';
+// tslint:disable: no-var-requires
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = require('dotenv');
+  const path = require('path');
 
-const dotenvOutput: DotenvConfigOutput = dotenv.config({ path: path.resolve(__dirname, '../.env-dev') });
+  const dotenvOutput = dotenv.config({ path: path.resolve(__dirname, '../.env-dev') });
 
-if (dotenvOutput.error) {
-  throw dotenvOutput.error;
-}
-if (process.env.PRINT_ENV) {
-  console.log('dotenvOutput.parsed: ', dotenvOutput.parsed);
+  if (dotenvOutput.error) {
+    throw dotenvOutput.error;
+  }
+  if (process.env.PRINT_ENV) {
+    console.log('dotenvOutput.parsed: ', dotenvOutput.parsed);
+  }
 }
