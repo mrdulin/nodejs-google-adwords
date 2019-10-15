@@ -5,7 +5,7 @@ import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';
 import { BudgetService, Budget, IBudget } from '../../../../services/adwords/BudgetService';
 
-describe('BudgetService test suites', () => {
+describe.skip('BudgetService test suites', () => {
   const budgetService = adwordsService.getService('BudgetService', { verbose: false });
   it.skip('#getAll', async () => {
     const actualValue = await budgetService.getAll();

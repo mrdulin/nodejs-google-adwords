@@ -4,7 +4,7 @@
   "description": "Google Ads API Client Library for Node.js",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --verbose",
     "clean": "rm -rf ./dist",
     "prebuild": "npm run clean",
     "build": "tsc",

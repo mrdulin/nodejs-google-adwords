@@ -5,7 +5,7 @@ import { adwordsService } from '../../../initialize';
 import { IImage } from '../../../../services/adwords/MediaService/Media';
 import { Media } from '../../../../services/adwords/MediaService/enum/Media';
 
-describe('MediaService test suites', () => {
+describe.skip('MediaService test suites', () => {
   const mediaService = adwordsService.getService('MediaService', { verbose: false });
   it('#getAll', async () => {
     const actualValue = await mediaService.getAll();

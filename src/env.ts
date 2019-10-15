@@ -6,4 +6,6 @@ const dotenvOutput: DotenvConfigOutput = dotenv.config({ path: path.resolve(__di
 if (dotenvOutput.error) {
   throw dotenvOutput.error;
 }
-console.log('dotenvOutput.parsed: ', dotenvOutput.parsed);
+if (process.env.PRINT_ENV) {
+  console.log('dotenvOutput.parsed: ', dotenvOutput.parsed);
+}

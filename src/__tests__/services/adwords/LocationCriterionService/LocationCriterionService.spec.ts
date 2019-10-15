@@ -4,7 +4,8 @@ import _ from 'lodash';
 import { adwordsService } from '../../../initialize';
 import { ILocationCriterion } from '../../../../services/adwords/LocationCriterionService';
 import { ILocation } from '../../../../services/adwords/LocationCriterionService/Location';
-describe('LocationCriterionService test suites', () => {
+
+describe.skip('LocationCriterionService test suites', () => {
   const locationCriterionService = adwordsService.getService('LocationCriterionService', { verbose: false });
   it.skip('#getByIds', async () => {
     const countryTerritory = '2616';

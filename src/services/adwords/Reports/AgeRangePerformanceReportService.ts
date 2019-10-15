@@ -24,7 +24,7 @@ class AgeRangePerformanceReportService {
   ];
 
   private reportService: ReportService;
-  constructor(opts: { reportService: ReportService }) {
+  private constructor(opts: { reportService: ReportService }) {
     this.reportService = opts.reportService;
   }
 

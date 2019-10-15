@@ -1,5 +1,5 @@
 import { adwordsService } from '../../../initialize';
-describe('ManagedCustomerService test suites', () => {
+describe.skip('ManagedCustomerService test suites', () => {
   const managedCustomerService = adwordsService.getService('ManagedCustomerService', {
     verbose: false,
   });

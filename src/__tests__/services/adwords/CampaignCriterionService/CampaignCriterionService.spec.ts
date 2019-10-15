@@ -6,7 +6,7 @@ import { IAddress } from '../../../../services/adwords/CampaignCriterionService'
 import { IProximity } from '../../../../services/adwords/CampaignCriterionService/Criterion';
 import { Proximity } from '../../../../services/adwords/CampaignCriterionService/enum/Proximity';
 
-describe('CampaignCriterionService test suites', () => {
+describe.skip('CampaignCriterionService test suites', () => {
   const campaignCriterionService = adwordsService.getService('CampaignCriterionService', { verbose: false });
   it('#getAllByCampaignIds', async () => {
     const campaignIds = ['1677467977'];

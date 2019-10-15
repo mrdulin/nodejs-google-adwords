@@ -16,6 +16,7 @@ import {
   GenderPerformanceReportService,
   AgeRangePerformanceReportService,
   AdPerformanceReportService,
+  AdGroupPerformanceReportService,
 } from './Reports';
 import { BatchJobService } from './BatchJobService';
 import { MediaService } from './MediaService';
@@ -39,6 +40,7 @@ interface IServiceMap {
   GenderPerformanceReportService: GenderPerformanceReportService;
   AgeRangePerformanceReportService: AgeRangePerformanceReportService;
   AdPerformanceReportService: AdPerformanceReportService;
+  AdGroupPerformanceReportService: AdGroupPerformanceReportService;
 }
 
 const registryService = RegistryService.init()
@@ -59,6 +61,7 @@ const registryService = RegistryService.init()
   .register(GeoPerformanceReportService.name, GeoPerformanceReportService)
   .register(GenderPerformanceReportService.name, GenderPerformanceReportService)
   .register(AgeRangePerformanceReportService.name, AgeRangePerformanceReportService)
-  .register(AdPerformanceReportService.name, AdPerformanceReportService);
+  .register(AdPerformanceReportService.name, AdPerformanceReportService)
+  .register(AdGroupPerformanceReportService.name, AdGroupPerformanceReportService);
 
 export { registryService, IServiceMap };

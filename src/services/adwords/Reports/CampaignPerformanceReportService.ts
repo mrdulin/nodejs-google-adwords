@@ -1,7 +1,6 @@
-import { ReportService } from '../ReportService';
+import { ReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
-import { pd } from 'pretty-data';
 import _ from 'lodash';
 
 /**
@@ -9,8 +8,9 @@ import _ from 'lodash';
  *
  * @author dulin
  * @class CampaignPerformanceReportService
+ * @implements {IClientReportService}
  */
-class CampaignPerformanceReportService {
+class CampaignPerformanceReportService implements IClientReportService {
   public static readonly reportName: string = 'Campaign Performance Report';
   private static readonly attributes: string[] = [
     'CampaignId',
@@ -36,12 +36,8 @@ class CampaignPerformanceReportService {
   ];
 
   private reportService: ReportService;
-  constructor(opts: { reportService: ReportService }) {
+  private constructor(opts: { reportService: ReportService }) {
     this.reportService = opts.reportService;
-  }
-
-  public setVerbose(verbose: boolean) {
-    this.reportService.setVerbose(verbose);
   }
 
   public async get(reportDefinition: Partial<IReportDefinition>) {

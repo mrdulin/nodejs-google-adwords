@@ -29,7 +29,19 @@ interface IReport {
   table: any[];
 }
 
-class ReportService {
+interface IReportService {
+  reportDownload(
+    reportDefinition: IReportDefinition,
+    options?: Partial<IReportDownloadOptions>,
+  ): Promise<IReport | string>;
+  setVerbose(verbose: boolean): void;
+}
+
+interface IClientReportService {
+  get(reportDefinition: Partial<IReportDefinition>): ReturnType<IReportService['reportDownload']>;
+}
+
+class ReportService implements IReportService {
   public static readonly URL: string = 'https://adwords.google.com/api/adwords/reportdownload/v201809';
 
   private verbose: boolean = false;
@@ -101,4 +113,4 @@ class ReportService {
   }
 }
 
-export { ReportService, IReportServiceOpts, IReportDownloadOptions, IReport };
+export { ReportService, IReportServiceOpts, IReportDownloadOptions, IReport, IReportService, IClientReportService };

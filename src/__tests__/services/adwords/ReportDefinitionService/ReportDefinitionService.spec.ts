@@ -2,7 +2,7 @@ import { adwordsService } from '../../../initialize';
 import { ReportDefinition } from '../../../../services/adwords/ReportDefinitionService/enum/ReportDefinition';
 import { ISelector } from '../../../../types/adwords';
 
-describe('ReportDefinitionService test suites', () => {
+describe.skip('ReportDefinitionService test suites', () => {
   const reportDefinitionService = adwordsService.getService('ReportDefinitionService', {
     verbose: false,
   });

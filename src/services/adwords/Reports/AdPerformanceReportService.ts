@@ -1,9 +1,9 @@
-import { ReportService } from '../ReportService';
+import { ReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
 
-class AdPerformanceReportService {
+class AdPerformanceReportService implements IClientReportService {
   public static readonly reportName: string = 'Ad Performance Report';
   private static readonly attributes: string[] = [
     'AdGroupId',
@@ -27,7 +27,7 @@ class AdPerformanceReportService {
   ];
 
   private reportService: ReportService;
-  constructor(opts: { reportService: ReportService }) {
+  private constructor(opts: { reportService: ReportService }) {
     this.reportService = opts.reportService;
   }
 
@@ -39,7 +39,6 @@ class AdPerformanceReportService {
       reportType: ReportDefinition.ReportType.AD_PERFORMANCE_REPORT,
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
-
     return this.reportService.reportDownload(reportDef);
   }
 }

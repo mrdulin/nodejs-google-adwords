@@ -1,9 +1,9 @@
-import { ReportService } from '../ReportService';
+import { ReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
 
-class GenderPerformanceReportService {
+class GenderPerformanceReportService implements IClientReportService {
   public static readonly reportName: string = 'Gender Performance Report';
   private static readonly attributes: string[] = ['CampaignId', 'CampaignName', 'CampaignStatus', 'Criteria'];
 
@@ -24,7 +24,7 @@ class GenderPerformanceReportService {
   ];
 
   private reportService: ReportService;
-  constructor(opts: { reportService: ReportService }) {
+  private constructor(opts: { reportService: ReportService }) {
     this.reportService = opts.reportService;
   }
 

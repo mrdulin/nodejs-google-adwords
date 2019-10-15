@@ -10,9 +10,10 @@ import {
   ISoapHeader,
   HttpService,
   IHttpServiceOpts,
+  IHttpService,
 } from '../core';
 import { registryService, IServiceMap } from './registry';
-import { ReportService } from './ReportService';
+import { ReportService, IReportService } from './ReportService';
 
 interface IAdWordsServiceOpts {
   clientCustomerId?: string;
@@ -32,6 +33,12 @@ interface IServiceOpts {
   version: string;
   gzip: boolean;
   clientCustomerId?: string;
+}
+
+interface IServiceDeps {
+  soapService: typeof SoapService;
+  httpService: IHttpService;
+  reportService: IReportService;
 }
 
 class AdWordsService {
@@ -69,11 +76,14 @@ class AdWordsService {
    * @author dulin
    * @template K
    * @param {K} key
-   * @param {Partial<IServiceOpts>} [options]
+   * @param {Partial<IServiceOpts & IServiceDeps>} [options]
    * @returns {IServiceMap[K]}
    * @memberof AdWordsService
    */
-  public getService<K extends keyof IServiceMap>(key: K, options?: Partial<IServiceOpts>): IServiceMap[K] {
+  public getService<K extends keyof IServiceMap>(
+    key: K,
+    options?: Partial<IServiceOpts & IServiceDeps>,
+  ): IServiceMap[K] {
     const ServiceClass: IServiceMap[K] | undefined = this.registryService.get<K>(key);
     if (!ServiceClass) {
       throw new Error(`Service: ${key} has not been registered yet.`);
@@ -112,7 +122,7 @@ class AdWordsService {
     const httpService = new HttpService(httpServiceOpts);
     const reportService = new ReportService({ httpService });
 
-    return new (ServiceClass as any)(Object.assign({}, options, { soapService, httpService, reportService }));
+    return new (ServiceClass as any)(Object.assign({}, { soapService, httpService, reportService }, options));
   }
 }
 
