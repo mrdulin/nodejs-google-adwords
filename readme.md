@@ -2,6 +2,7 @@
 
 [![NPM Downloads][downloads-image]][downloads-url]
 ![LICENSE][license-image]
+[![Build Status](https://travis-ci.org/mrdulin/nodejs-google-adwords.svg?branch=master)](https://travis-ci.org/mrdulin/nodejs-google-adwords)
 
 Google Ads API Client Library for Node.js. This library is developed for Google Adwords SOAP + WSDL API (v201809).
 
