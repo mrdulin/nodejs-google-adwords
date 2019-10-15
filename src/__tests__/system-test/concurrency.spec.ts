@@ -71,7 +71,7 @@ async function createAdGroupCriterion(adGroupId) {
   ];
   return await adGroupCriterionService.add(adGroupCrierions);
 }
-describe('concurrency test suites', () => {
+describe.skip('concurrency test suites', () => {
   it('#1', async () => {
     expect.assertions(1);
     const adGroupId = '78662713588';

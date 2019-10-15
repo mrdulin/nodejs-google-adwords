@@ -8,7 +8,7 @@ import { CriterionTypeGroup } from '../../../../services/adwords/AdGroupService/
 import { AdRotationMode } from '../../../../services/adwords/AdGroupService/enum/AdRotationMode';
 import { BiddingStrategyType } from '../../../../services/adwords/AdGroupService/BiddingStrategyConfiguration';
 
-describe('AdGroupService test suites', () => {
+describe.skip('AdGroupService test suites', () => {
   const adGroupService = adwordsService.getService('AdGroupService', { verbose: false });
   it('#getAll', async () => {
     const actualValue = await adGroupService.getAll();

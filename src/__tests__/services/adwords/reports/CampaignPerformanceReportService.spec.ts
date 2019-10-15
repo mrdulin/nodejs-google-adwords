@@ -1,67 +1,68 @@
-import { pd } from 'pretty-data';
 import { adwordsService } from '../../../initialize';
 import { IReportDefinition } from '../../../../services/adwords/ReportDefinitionService/ReportDefinition';
 import { ReportDefinition } from '../../../../services/adwords/ReportDefinitionService';
 import { ISelector, Predicate } from '../../../../types/adwords';
-import { CampaignStatus } from '../../../../services/adwords/CampaignService';
+import { reportServiceMocked } from '../../../depsMocked';
+import { CampaignPerformanceReportService } from '../../../../services/adwords/Reports';
 
 describe('CampaignPerformanceReportService test suites', () => {
   const campaignPerformanceReportService = adwordsService.getService('CampaignPerformanceReportService', {
-    verbose: true,
-  });
-  it.skip('#reportDownload - all time', async () => {
-    const actualvalue = await campaignPerformanceReportService.get({});
-    console.log(pd.xml(actualvalue));
+    reportService: reportServiceMocked,
   });
 
-  it('#reportDownload - with fields', async () => {
-    const selector: ISelector = {
-      fields: ['CampaignId', 'CampaignName', 'CampaignStatus', 'BudgetId'],
-      predicates: [
-        {
-          field: 'CampaignStatus',
-          operator: Predicate.Operator.NOT_IN,
-          values: [CampaignStatus.REMOVED],
+  describe('#get', () => {
+    const mReport = 'campaign performance report xml';
+    it('should get report correctly with default report definition', async () => {
+      reportServiceMocked.reportDownload.mockResolvedValueOnce(mReport);
+      const actualvalue = await campaignPerformanceReportService.get({});
+      expect(actualvalue).toBe(mReport);
+      expect(reportServiceMocked.reportDownload).toBeCalledWith({
+        selector: {
+          fields: [
+            'CampaignId',
+            'CampaignName',
+            'CampaignStatus',
+            'StartDate',
+            'EndDate',
+            'Clicks',
+            'Conversions',
+            'Ctr',
+            'Cost',
+            'Impressions',
+            'ConversionRate',
+            'AverageCpc',
+          ],
         },
-      ],
-    };
-    const reportDefinition: Partial<IReportDefinition> = { selector };
-    const actualvalue = await campaignPerformanceReportService.get(reportDefinition);
-    console.log(pd.xml(actualvalue));
-  });
+        reportName: CampaignPerformanceReportService.reportName,
+        reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
+        dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
+      });
+    });
 
-  it.skip('#reportDownload - with predicates', async () => {
-    const selector: ISelector = {
-      fields: [
-        'CampaignId',
-        'CampaignName',
-        'CampaignStatus',
-        'StartDate',
-        'EndDate',
-        'Clicks',
-        'Conversions',
-        'Ctr',
-        'Cost',
-        'Impressions',
-        'ConversionRate',
-        'AverageCpc',
-      ],
-      predicates: [
-        {
-          field: 'CampaignId',
-          operator: Predicate.Operator.IN,
-          values: ['1532562169'],
-        },
-      ],
-    };
-    const reportDefinition: Partial<IReportDefinition> = { selector };
-    const actualvalue = await campaignPerformanceReportService.get(reportDefinition);
-    console.log(pd.xml(actualvalue));
-  });
-
-  it.skip('#reportDownload - yesterday', async () => {
-    const reportDefinition: Partial<IReportDefinition> = { dateRangeType: ReportDefinition.DateRangeType.YESTERDAY };
-    const actualvalue = await campaignPerformanceReportService.get(reportDefinition);
-    console.log(pd.xml(actualvalue));
+    it('should get report correctly with user custom report definition', async () => {
+      reportServiceMocked.reportDownload.mockResolvedValueOnce(mReport);
+      const selector: ISelector = {
+        fields: ['CampaignId', 'CampaignName', 'CampaignStatus'],
+        predicates: [
+          {
+            field: 'CampaignId',
+            operator: Predicate.Operator.IN,
+            values: ['1532562169'],
+          },
+        ],
+      };
+      const reportDefinition: Partial<IReportDefinition> = {
+        selector,
+        dateRangeType: ReportDefinition.DateRangeType.YESTERDAY,
+      };
+      const actualvalue = await campaignPerformanceReportService.get(reportDefinition);
+      expect(actualvalue).toBe(mReport);
+      expect(reportServiceMocked.reportDownload).toBeCalledWith({
+        selector: reportDefinition.selector,
+        reportName: CampaignPerformanceReportService.reportName,
+        reportType: ReportDefinition.ReportType.CAMPAIGN_PERFORMANCE_REPORT,
+        dateRangeType: reportDefinition.dateRangeType,
+      });
+    });
   });
 });

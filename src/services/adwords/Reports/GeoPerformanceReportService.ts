@@ -1,9 +1,9 @@
-import { ReportService } from '../ReportService';
+import { ReportService, IClientReportService } from '../ReportService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import { ReportDefinition } from '../ReportDefinitionService';
 import _ from 'lodash';
 
-class GeoPerformanceReportService {
+class GeoPerformanceReportService implements IClientReportService {
   public static readonly reportName: string = 'Geo Performance Report';
   private static readonly attributes: string[] = [
     'CampaignId',
@@ -31,7 +31,7 @@ class GeoPerformanceReportService {
   ];
 
   private reportService: ReportService;
-  constructor(opts: { reportService: ReportService }) {
+  private constructor(opts: { reportService: ReportService }) {
     this.reportService = opts.reportService;
   }
 

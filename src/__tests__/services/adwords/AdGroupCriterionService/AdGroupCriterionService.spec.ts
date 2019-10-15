@@ -11,7 +11,7 @@ import { AgeRange } from '../../../../services/adwords/AdGroupCriterionService/e
 import { Gender } from '../../../../services/adwords/AdGroupCriterionService/enum/Gender';
 import { CriterionUse } from '../../../../services/adwords/AdGroupCriterionService/enum/CriterionUse';
 
-describe('AdGroupCriterionService test suites', () => {
+describe.skip('AdGroupCriterionService test suites', () => {
   const adGroupCriterionService = adwordsService.getService('AdGroupCriterionService', {
     verbose: false,
     partialFailure: true,

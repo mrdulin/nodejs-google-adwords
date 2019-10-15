@@ -17,7 +17,7 @@ import { IGeoTargetTypeSetting } from '../../../../services/adwords/CampaignServ
 import { GeoTargetTypeSetting } from '../../../../services/adwords/CampaignService/enum/GeoTargetTypeSetting';
 import { BiddingStrategyType } from '../../../../services/adwords/CampaignService/BiddingStrategyConfiguration';
 
-describe('CampaignService test suites', () => {
+describe.skip('CampaignService test suites', () => {
   const campaignService = adwordsService.getService('CampaignService', {
     verbose: false,
   });

@@ -3,7 +3,7 @@ import faker from 'faker';
 import { adwordsService } from '../../../initialize';
 import { ITextLabel } from '../../../../services/adwords/LabelService/Label';
 
-describe('LabelService test suites', () => {
+describe.skip('LabelService test suites', () => {
   const labelService = adwordsService.getService('LabelService', { verbose: false });
   it.skip('#getAll', async () => {
     const actualValue = await labelService.getAll();

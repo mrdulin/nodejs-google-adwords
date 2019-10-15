@@ -1,36 +1,40 @@
 import { adwordsService } from '../../../initialize';
+import { AdGroupPerformanceReportService } from '../../../../services/adwords/Reports';
 import { reportServiceMocked } from '../../../depsMocked';
 import { ReportDefinition } from '../../../../services/adwords/ReportDefinitionService';
-import { AgeRangePerformanceReportService } from '../../../../services/adwords/Reports';
 
-describe('AgeRangePerformanceReportService test suites', () => {
-  const ageRangePerformanceReportService = adwordsService.getService('AgeRangePerformanceReportService', {
+describe('AdGroupPerformanceReportService', () => {
+  const adGroupPerformanceReportService = adwordsService.getService('AdGroupPerformanceReportService', {
     reportService: reportServiceMocked,
   });
+
   describe('#get', () => {
-    const mReport = 'age range performance report xml';
+    const mReport = 'ad group performance report xml';
     it('should get report correctly with default report definition', async () => {
       reportServiceMocked.reportDownload.mockResolvedValueOnce(mReport);
-      const actualValue = await ageRangePerformanceReportService.get({});
+      const actualValue = await adGroupPerformanceReportService.get({});
       expect(actualValue).toBe(mReport);
       expect(reportServiceMocked.reportDownload).toBeCalledWith({
         selector: {
           fields: [
+            'AdGroupId',
+            'AdGroupName',
+            'AdGroupStatus',
             'CampaignId',
             'CampaignName',
             'CampaignStatus',
-            'Criteria',
+            'Device',
             'Clicks',
-            'Conversions',
-            'ConversionRate',
-            'Cost',
-            'Ctr',
             'Impressions',
+            'Ctr',
             'AverageCpc',
+            'Cost',
+            'Conversions',
+            'AveragePosition',
           ],
         },
-        reportName: AgeRangePerformanceReportService.reportName,
-        reportType: ReportDefinition.ReportType.AGE_RANGE_PERFORMANCE_REPORT,
+        reportName: AdGroupPerformanceReportService.reportName,
+        reportType: ReportDefinition.ReportType.AD_GROUP_PERFORMANCE_REPORT,
         dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
       });
     });

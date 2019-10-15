@@ -1,13 +1,13 @@
 import { IHttpServiceOpts, IAuthService, IHttpHeaders, IHttpService } from '../services/core';
-import { IReportServiceOpts } from '../services/adwords/ReportService';
+import { IReportServiceOpts, IReportService } from '../services/adwords/ReportService';
 
-export const authServiceMocked: IAuthService = {
+export const authServiceMocked: jest.Mocked<IAuthService> = {
   refreshCredentials: jest.fn(),
   getCredentials: jest.fn(),
   setCredentials: jest.fn(),
 };
 
-const httpServiceMocked: IHttpService = {
+const httpServiceMocked: jest.Mocked<IHttpService> = {
   request: jest.fn(),
 };
 
@@ -24,4 +24,9 @@ export const httpServiceOptsMocked: jest.Mocked<IHttpServiceOpts> = {
 
 export const reportServiceOptsMocked: jest.Mocked<IReportServiceOpts> = {
   httpService: httpServiceMocked,
+};
+
+export const reportServiceMocked: jest.Mocked<IReportService> = {
+  reportDownload: jest.fn(),
+  setVerbose: jest.fn(),
 };

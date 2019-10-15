@@ -13,7 +13,7 @@ function soapErrorFormat(error: Error) {
     .replace('soap:Client: ', '');
 }
 
-describe('AdGroupAdService test suites', () => {
+describe.skip('AdGroupAdService test suites', () => {
   const adGroupAdService = adwordsService.getService('AdGroupAdService', { verbose: false });
   it.skip('#getAll', async () => {
     const actualValue = await adGroupAdService.getAll();
