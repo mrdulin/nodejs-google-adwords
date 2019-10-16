@@ -40,7 +40,7 @@ class AdGroupPerformanceReportService implements IClientReportService {
       // order is matter
       selector: _.get(reportDefinition, 'selector', { fields: AdGroupPerformanceReportService.selectorFields }),
       reportName: AdGroupPerformanceReportService.reportName,
-      reportType: ReportDefinition.ReportType.AD_GROUP_PERFORMANCE_REPORT,
+      reportType: ReportDefinition.ReportType.ADGROUP_PERFORMANCE_REPORT,
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
