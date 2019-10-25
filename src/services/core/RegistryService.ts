@@ -19,8 +19,8 @@ class RegistryService<T> {
     this.registry = registry;
   }
 
-  public register<K extends string, S>(key: K, service: S) {
-    (this.registry as any)[key] = service;
+  public register<S extends new () => S>(service: S) {
+    this.registry[service.name] = service;
     return this;
   }
 
