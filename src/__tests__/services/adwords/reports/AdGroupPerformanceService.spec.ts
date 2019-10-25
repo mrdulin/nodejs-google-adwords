@@ -34,7 +34,7 @@ describe('AdGroupPerformanceReportService', () => {
           ],
         },
         reportName: AdGroupPerformanceReportService.reportName,
-        reportType: ReportDefinition.ReportType.AD_GROUP_PERFORMANCE_REPORT,
+        reportType: ReportDefinition.ReportType.ADGROUP_PERFORMANCE_REPORT,
         dateRangeType: ReportDefinition.DateRangeType.ALL_TIME,
       });
     });

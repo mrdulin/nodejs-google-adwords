@@ -4,3 +4,4 @@ export * from './GenderPerformanceReportService';
 export * from './AgeRangePerformanceReportService';
 export * from './AdPerformanceReportService';
 export * from './AdGroupPerformanceService';
+export * from './AudiencePerformanceService';
