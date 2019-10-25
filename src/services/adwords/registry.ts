@@ -17,6 +17,7 @@ import {
   AgeRangePerformanceReportService,
   AdPerformanceReportService,
   AdGroupPerformanceReportService,
+  AudiencePerformanceReportService,
 } from './Reports';
 import { BatchJobService } from './BatchJobService';
 import { MediaService } from './MediaService';
@@ -41,27 +42,29 @@ interface IServiceMap {
   AgeRangePerformanceReportService: AgeRangePerformanceReportService;
   AdPerformanceReportService: AdPerformanceReportService;
   AdGroupPerformanceReportService: AdGroupPerformanceReportService;
+  AudiencePerformanceReportService: AudiencePerformanceReportService;
 }
 
 const registryService = RegistryService.init()
-  .register(CampaignService.name, CampaignService)
-  .register(AdGroupService.name, AdGroupService)
-  .register(AdGroupAdService.name, AdGroupAdService)
-  .register(BudgetService.name, BudgetService)
-  .register(LabelService.name, LabelService)
-  .register(AdGroupCriterionService.name, AdGroupCriterionService)
-  .register(CampaignCriterionService.name, CampaignCriterionService)
-  .register(LocationCriterionService.name, LocationCriterionService)
-  .register(ManagedCustomerService.name, ManagedCustomerService)
-  .register(CustomerService.name, CustomerService)
-  .register(ReportDefinitionService.name, ReportDefinitionService)
-  .register(BatchJobService.name, BatchJobService)
-  .register(MediaService.name, MediaService)
-  .register(CampaignPerformanceReportService.name, CampaignPerformanceReportService)
-  .register(GeoPerformanceReportService.name, GeoPerformanceReportService)
-  .register(GenderPerformanceReportService.name, GenderPerformanceReportService)
-  .register(AgeRangePerformanceReportService.name, AgeRangePerformanceReportService)
-  .register(AdPerformanceReportService.name, AdPerformanceReportService)
-  .register(AdGroupPerformanceReportService.name, AdGroupPerformanceReportService);
+  .register(CampaignService)
+  .register(AdGroupService)
+  .register(AdGroupAdService)
+  .register(BudgetService)
+  .register(LabelService)
+  .register(AdGroupCriterionService)
+  .register(CampaignCriterionService)
+  .register(LocationCriterionService)
+  .register(ManagedCustomerService)
+  .register(CustomerService)
+  .register(ReportDefinitionService)
+  .register(BatchJobService)
+  .register(MediaService)
+  .register(CampaignPerformanceReportService)
+  .register(GeoPerformanceReportService)
+  .register(GenderPerformanceReportService)
+  .register(AgeRangePerformanceReportService)
+  .register(AdPerformanceReportService)
+  .register(AdGroupPerformanceReportService)
+  .register(AudiencePerformanceReportService);
 
 export { registryService, IServiceMap };
