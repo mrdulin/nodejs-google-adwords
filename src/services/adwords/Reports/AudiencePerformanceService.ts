@@ -25,7 +25,7 @@ class AudiencePerformanceReportService implements IClientReportService {
       // order is matter
       selector: _.get(reportDefinition, 'selector', { fields: AudiencePerformanceReportService.selectorFields }),
       reportName: AudiencePerformanceReportService.reportName,
-      reportType: ReportDefinition.ReportType.ADGROUP_PERFORMANCE_REPORT,
+      reportType: ReportDefinition.ReportType.AUDIENCE_PERFORMANCE_REPORT,
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
