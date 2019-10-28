@@ -46,7 +46,7 @@ interface IServiceMap {
   AdGroupPerformanceReportService: AdGroupPerformanceReportService;
   AudiencePerformanceReportService: AudiencePerformanceReportService;
   KeywordsPerformanceReportService: KeywordsPerformanceReportService;
-  KeywordlessQueryPerformanceService: KeywordlessQueryReportService;
+  KeywordlessQueryReportService: KeywordlessQueryReportService;
 }
 
 const registryService = RegistryService.init()
