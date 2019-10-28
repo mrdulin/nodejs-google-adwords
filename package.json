@@ -29,7 +29,7 @@
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
     "@types/faker": "^4.1.6",
-    "@types/jest": "^24.0.19",
+    "@types/jest": "^24.0.20",
     "@types/lodash": "^4.14.144",
     "@types/node": "^11.13.7",
     "@types/request": "^2.48.3",
@@ -53,7 +53,7 @@
     "pretty-data": "^0.40.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "soap": "^0.29.0",
+    "soap": "^0.30.0",
     "xml2js": "^0.4.22"
   },
   "engines": {
