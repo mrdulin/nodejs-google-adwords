@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 class AudiencePerformanceReportService implements IClientReportService {
   public static readonly reportName: string = 'Audience Performance Report';
-  private static readonly attributes: string[] = ['Criteria'];
+  private static readonly attributes: string[] = ['Id', 'CampaignId', 'CampaignName', 'Criteria'];
   private static readonly segments: string[] = [];
   private static readonly metrics: string[] = ['Clicks', 'Impressions', 'Cost', 'Conversions'];
 
