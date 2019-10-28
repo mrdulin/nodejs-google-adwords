@@ -7,10 +7,14 @@ import { ClientReportService } from './AbstractClientReportService';
 class KeywordsPerformanceReportService extends ClientReportService implements IClientReportService {
   public static readonly reportName: string = 'Keywords Performance Report';
   private static readonly attributes: string[] = [
+    'Id',
+    'AdGroupId',
+    'AdGroupName',
+    'AdGroupStatus',
+    'CampaignId',
+    'CampaignName',
     'Criteria',
     'Status',
-    'CampaignName',
-    'AdGroupStatus',
     'CpcBid',
     'FirstPageCpc',
     'TopOfPageCpc',

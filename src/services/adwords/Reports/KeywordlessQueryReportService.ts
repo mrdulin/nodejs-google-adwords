@@ -5,7 +5,14 @@ import _ from 'lodash';
 
 class KeywordlessQueryReportService implements IClientReportService {
   public static readonly reportName: string = 'Keywordless Performance Report';
-  private static readonly attributes: string[] = ['Query', 'CampaignName'];
+  private static readonly attributes: string[] = [
+    'AdGroupId',
+    'AdGroupName',
+    'CampaignId',
+    'CampaignName',
+    'CriterionId',
+    'Query',
+  ];
   private static readonly segments: string[] = [];
   private static readonly metrics: string[] = ['Clicks', 'Impressions', 'Cost'];
 
