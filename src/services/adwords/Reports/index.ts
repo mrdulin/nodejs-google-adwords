@@ -5,3 +5,5 @@ export * from './AgeRangePerformanceReportService';
 export * from './AdPerformanceReportService';
 export * from './AdGroupPerformanceService';
 export * from './AudiencePerformanceService';
+export * from './KeywordsPerformanceReportService';
+export * from './KeywordlessQueryReportService';
