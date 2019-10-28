@@ -3,16 +3,16 @@ import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
 
-class AudiencePerformanceReportService implements IClientReportService {
-  public static readonly reportName: string = 'Audience Performance Report';
-  private static readonly attributes: string[] = ['Criteria'];
+class KeywordlessQueryReportService implements IClientReportService {
+  public static readonly reportName: string = 'Keywordless Performance Report';
+  private static readonly attributes: string[] = ['Query', 'CampaignName'];
   private static readonly segments: string[] = [];
-  private static readonly metrics: string[] = ['Clicks', 'Impressions', 'Cost', 'Conversions'];
+  private static readonly metrics: string[] = ['Clicks', 'Impressions', 'Cost'];
 
   private static readonly selectorFields = [
-    ...AudiencePerformanceReportService.attributes,
-    ...AudiencePerformanceReportService.segments,
-    ...AudiencePerformanceReportService.metrics,
+    ...KeywordlessQueryReportService.attributes,
+    ...KeywordlessQueryReportService.segments,
+    ...KeywordlessQueryReportService.metrics,
   ];
 
   private reportService: IReportService;
@@ -23,9 +23,9 @@ class AudiencePerformanceReportService implements IClientReportService {
   public async get(reportDefinition: Partial<IReportDefinition>) {
     const reportDef: IReportDefinition = {
       // order is matter
-      selector: _.get(reportDefinition, 'selector', { fields: AudiencePerformanceReportService.selectorFields }),
-      reportName: AudiencePerformanceReportService.reportName,
-      reportType: ReportDefinition.ReportType.AUDIENCE_PERFORMANCE_REPORT,
+      selector: _.get(reportDefinition, 'selector', { fields: KeywordlessQueryReportService.selectorFields }),
+      reportName: KeywordlessQueryReportService.reportName,
+      reportType: ReportDefinition.ReportType.KEYWORDLESS_QUERY_REPORT,
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
@@ -33,4 +33,4 @@ class AudiencePerformanceReportService implements IClientReportService {
   }
 }
 
-export { AudiencePerformanceReportService };
+export { KeywordlessQueryReportService };
