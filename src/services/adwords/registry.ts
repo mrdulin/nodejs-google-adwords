@@ -20,6 +20,7 @@ import {
   AudiencePerformanceReportService,
   KeywordlessQueryReportService,
   KeywordsPerformanceReportService,
+  SearchQueryPerformanceReportService,
 } from './Reports';
 import { BatchJobService } from './BatchJobService';
 import { MediaService } from './MediaService';
@@ -47,6 +48,7 @@ interface IServiceMap {
   AudiencePerformanceReportService: AudiencePerformanceReportService;
   KeywordsPerformanceReportService: KeywordsPerformanceReportService;
   KeywordlessQueryReportService: KeywordlessQueryReportService;
+  SearchQueryPerformanceReportService: SearchQueryPerformanceReportService;
 }
 
 const registryService = RegistryService.init()
@@ -71,6 +73,7 @@ const registryService = RegistryService.init()
   .register(AdGroupPerformanceReportService)
   .register(AudiencePerformanceReportService)
   .register(KeywordsPerformanceReportService)
-  .register(KeywordlessQueryReportService);
+  .register(KeywordlessQueryReportService)
+  .register(SearchQueryPerformanceReportService);
 
 export { registryService, IServiceMap };
