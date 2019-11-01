@@ -7,3 +7,4 @@ export * from './AdGroupPerformanceService';
 export * from './AudiencePerformanceService';
 export * from './KeywordsPerformanceReportService';
 export * from './KeywordlessQueryReportService';
+export * from './SearchQueryPerformanceReportService';
