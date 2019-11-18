@@ -51,7 +51,7 @@ class KeywordsPerformanceReportService extends ClientReportService implements IC
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
-    return this.reportService.reportDownload(reportDef);
+    return this.reportService.reportDownload(reportDef, this.getOptions());
   }
 }
 

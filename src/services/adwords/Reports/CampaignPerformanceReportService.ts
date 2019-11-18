@@ -2,6 +2,7 @@ import { ReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService/enum/ReportDefinition';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
+import { ClientReportService } from './AbstractClientReportService';
 
 /**
  * https://developers.google.com/adwords/api/docs/appendix/reports/campaign-performance-report
@@ -10,7 +11,7 @@ import _ from 'lodash';
  * @class CampaignPerformanceReportService
  * @implements {IClientReportService}
  */
-class CampaignPerformanceReportService implements IClientReportService {
+class CampaignPerformanceReportService extends ClientReportService implements IClientReportService {
   public static readonly reportName: string = 'Campaign Performance Report';
   private static readonly attributes: string[] = [
     'CampaignId',
@@ -37,6 +38,7 @@ class CampaignPerformanceReportService implements IClientReportService {
 
   private reportService: ReportService;
   private constructor(opts: { reportService: ReportService }) {
+    super();
     this.reportService = opts.reportService;
   }
 
@@ -49,7 +51,7 @@ class CampaignPerformanceReportService implements IClientReportService {
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
     };
 
-    return this.reportService.reportDownload(reportDef);
+    return this.reportService.reportDownload(reportDef, this.getOptions());
   }
 }
 
