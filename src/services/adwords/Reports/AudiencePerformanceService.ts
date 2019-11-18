@@ -2,8 +2,9 @@ import { IReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
+import { ClientReportService } from './AbstractClientReportService';
 
-class AudiencePerformanceReportService implements IClientReportService {
+class AudiencePerformanceReportService extends ClientReportService implements IClientReportService {
   public static readonly reportName: string = 'Audience Performance Report';
   private static readonly attributes: string[] = ['Id', 'CampaignId', 'CampaignName', 'Criteria'];
   private static readonly segments: string[] = [];
@@ -17,6 +18,7 @@ class AudiencePerformanceReportService implements IClientReportService {
 
   private reportService: IReportService;
   private constructor(opts: { reportService: IReportService }) {
+    super();
     this.reportService = opts.reportService;
   }
 
@@ -29,7 +31,7 @@ class AudiencePerformanceReportService implements IClientReportService {
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
-    return this.reportService.reportDownload(reportDef);
+    return this.reportService.reportDownload(reportDef, this.getOptions());
   }
 }
 

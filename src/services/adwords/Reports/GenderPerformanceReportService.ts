@@ -2,8 +2,9 @@ import { ReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
+import { ClientReportService } from './AbstractClientReportService';
 
-class GenderPerformanceReportService implements IClientReportService {
+class GenderPerformanceReportService extends ClientReportService implements IClientReportService {
   public static readonly reportName: string = 'Gender Performance Report';
   private static readonly attributes: string[] = ['CampaignId', 'CampaignName', 'CampaignStatus', 'Criteria'];
 
@@ -25,6 +26,7 @@ class GenderPerformanceReportService implements IClientReportService {
 
   private reportService: ReportService;
   private constructor(opts: { reportService: ReportService }) {
+    super();
     this.reportService = opts.reportService;
   }
 
@@ -37,7 +39,7 @@ class GenderPerformanceReportService implements IClientReportService {
       dateRangeType: reportDefinition.dateRangeType || ReportDefinition.DateRangeType.ALL_TIME,
     };
 
-    return this.reportService.reportDownload(reportDef);
+    return this.reportService.reportDownload(reportDef, this.getOptions());
   }
 }
 

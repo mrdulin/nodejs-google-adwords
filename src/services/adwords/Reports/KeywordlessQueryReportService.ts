@@ -2,8 +2,9 @@ import { IReportService, IClientReportService } from '../ReportService';
 import { ReportDefinition } from '../ReportDefinitionService';
 import { IReportDefinition } from '../ReportDefinitionService/ReportDefinition';
 import _ from 'lodash';
+import { ClientReportService } from './AbstractClientReportService';
 
-class KeywordlessQueryReportService implements IClientReportService {
+class KeywordlessQueryReportService extends ClientReportService implements IClientReportService {
   public static readonly reportName: string = 'Keywordless Performance Report';
   private static readonly attributes: string[] = [
     'AdGroupId',
@@ -24,6 +25,7 @@ class KeywordlessQueryReportService implements IClientReportService {
 
   private reportService: IReportService;
   private constructor(opts: { reportService: IReportService }) {
+    super();
     this.reportService = opts.reportService;
   }
 
@@ -36,7 +38,7 @@ class KeywordlessQueryReportService implements IClientReportService {
       dateRangeType: _.get(reportDefinition, 'dateRangeType', ReportDefinition.DateRangeType.ALL_TIME),
     };
 
-    return this.reportService.reportDownload(reportDef);
+    return this.reportService.reportDownload(reportDef, this.getOptions());
   }
 }
 
