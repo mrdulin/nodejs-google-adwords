@@ -6,10 +6,10 @@ export abstract class ClientReportService implements IClientReportService {
   public async get(reportDefinition: Partial<IReportDefinition>): Promise<string | IReport> {
     throw new Error('not implemented');
   }
-  protected setOptions(options: Partial<IReportDownloadOptions>): void {
+  public setOptions(options: Partial<IReportDownloadOptions>): void {
     this.options = options;
   }
-  protected getOptions(): Partial<IReportDownloadOptions> | undefined {
+  public getOptions(): Partial<IReportDownloadOptions> | undefined {
     return this.options;
   }
 }

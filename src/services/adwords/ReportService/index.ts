@@ -39,6 +39,8 @@ interface IReportService {
 
 interface IClientReportService {
   get(reportDefinition: Partial<IReportDefinition>): ReturnType<IReportService['reportDownload']>;
+  setOptions(options: Partial<IReportDownloadOptions>): void;
+  getOptions(): Partial<IReportDownloadOptions> | undefined;
 }
 
 class ReportService implements IReportService {
