@@ -1,6 +1,6 @@
 {
   "name": "nodejs-google-adwords",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Google Ads API Client Library for Node.js",
   "main": "./dist/index.js",
   "scripts": {
