@@ -99,7 +99,7 @@ async function getByPage() {
     startIndex: 0,
     numberResults: 2,
   };
-  const actualValue = await budgetService.getByPage(paging);
+  return await budgetService.getByPage(paging);
 }
 ```
 
@@ -119,7 +119,7 @@ async function createBudget() {
     status: Budget.BudgetStatus.ENABLED,
   };
 
-  const actualValue = await budgetService.add(budget);
+  return await budgetService.add(budget);
 }
 ```
 
@@ -131,7 +131,7 @@ async function getCampaignsByPages() {
     startIndex: 0,
     numberResults: 1,
   };
-  const actualValue = await campaignService.getByPage(paging);
+  return await campaignService.getByPage(paging);
 }
 ```
 
