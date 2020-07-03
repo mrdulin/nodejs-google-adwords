@@ -14,6 +14,7 @@
     "prettify-check": "prettier --check \"./{src,__{tests,mocks}__}/**/*.{ts,js}\"",
     "yarn:import": "rm -rf ./yarn.lock && yarn import"
   },
+  "typings": "./dist/index.d.ts",
   "keywords": [
     "Google Ads",
     "Google Adwords",
