@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';;
 
 import { adwordsService } from '../../../initialize';
 import { IPaging } from '../../../../types/adwords';

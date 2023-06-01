@@ -5,7 +5,7 @@
  * @class RegistryService
  * @template T
  */
-class RegistryService<T> {
+class RegistryService<T extends object> {
   public static instance;
   public static init() {
     if (this.instance) {
@@ -26,7 +26,7 @@ class RegistryService<T> {
 
   public get<K extends keyof T>(key: K): T[K] {
     if (!(key in this.registry)) {
-      throw new Error(`No service found for ${key}`);
+      throw new Error(`No service found for ${String(key)}`);
     }
     return this.registry[key];
   }

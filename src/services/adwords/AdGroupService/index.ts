@@ -1,4 +1,3 @@
-import { pd } from 'pretty-data';
 import { SoapService, AdwordsOperartionService } from '../../core';
 import { ISelector } from './Selector';
 import { IAdGroupPage } from './AdGroupPage';
@@ -7,8 +6,6 @@ import { IAdGroupReturnValue } from './AdGroupReturnValue';
 import { Predicate, Operator } from '../../../types/adwords';
 import { IAdGroup } from './AdGroup';
 import { ITargetingSetting, IExplorerAutoOptimizerSetting } from './Setting';
-import { settings } from 'cluster';
-import { ITargetingSettingDetail } from './TargetingSettingDetail';
 
 interface IAdGroupServiceOpts {
   soapService: SoapService;

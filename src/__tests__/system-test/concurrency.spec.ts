@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';;
 import { adwordsService } from '../initialize';
 import { IAdGroup } from '../../services/adwords/AdGroupService';
 import { AdGroupStatus } from '../../services/adwords/AdGroupService/enum/AdGroupStatus';

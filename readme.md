@@ -4,10 +4,7 @@
 ![LICENSE][license-image]
 [![Build Status](https://travis-ci.org/mrdulin/nodejs-google-adwords.svg?branch=master)](https://travis-ci.org/mrdulin/nodejs-google-adwords)
 [![Coverage Status](https://coveralls.io/repos/github/mrdulin/nodejs-google-adwords/badge.svg?branch=master)](https://coveralls.io/github/mrdulin/nodejs-google-adwords?branch=master)
-[![Dependency Status](https://david-dm.org/mrdulin/nodejs-google-adwords.svg)](https://david-dm.org/mrdulin/nodejs-google-adwords)
-[![devDependency Status](https://david-dm.org/mrdulin/nodejs-google-adwords/dev-status.svg)](https://david-dm.org/mrdulin/nodejs-google-adwords?type=dev)
 [![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/mrdulin/nodejs-google-adwords)
-[![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 
 Google Ads API Client Library for Node.js. This library is developed for Google Adwords SOAP + WSDL API (v201809).
 

@@ -150,7 +150,7 @@ class SoapService extends AdwordsOperartionService {
     const credentials: IOAuthCredential = await this.authService.refreshCredentials();
     const client = await this.createSoapClient(this.url, credentials);
 
-    return new Promise<Rval>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (!client) {
         return reject(new Error('soap client does not exist'));
       }
@@ -214,7 +214,7 @@ class SoapService extends AdwordsOperartionService {
     return parameter;
   }
 
-  private formMutateRequest(options: { operationType?: string; [key: string]: any }) {
+  private formMutateRequest(options: { operationType?: string;[key: string]: any }) {
     const request: { operations: Array<IOperation<any>> } = { operations: [] };
     const mutateMethod = this.description[this.serviceName][`${this.serviceName}InterfacePort`][options.mutateMethod];
     const operations = options.operations;
@@ -272,7 +272,7 @@ class SoapService extends AdwordsOperartionService {
         orderedObj[k] = self.matchJSONKeyOrder(src[k], v);
       } else if (canBeMore && typeof v === 'object' && _.isArray(src[k])) {
         orderedObj[k] = [];
-        _.each(src[k], function(item) {
+        _.each(src[k], function (item) {
           orderedObj[k].push(self.matchJSONKeyOrder(item, v));
         });
       } else {

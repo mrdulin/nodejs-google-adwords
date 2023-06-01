@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';;
 import { pd } from 'pretty-data';
 
 import { adwordsService } from '../../../initialize';

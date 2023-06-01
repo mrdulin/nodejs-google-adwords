@@ -118,7 +118,7 @@ describe('SoapService', () => {
       (soap.createClientAsync as jest.MockedFunction<typeof soap.createClientAsync>).mockRejectedValueOnce(
         createClientAsyncError,
       );
-      const errorSpy = jest.spyOn(console, 'error');
+      const errorSpy = jest.spyOn(console, 'error').mockImplementation()
       // tslint:disable-next-line: no-string-literal
       await expect(soapService['createSoapClient']('', mockedCredentials)).rejects.toThrowError(
         new Error('create soap client failed.'),
